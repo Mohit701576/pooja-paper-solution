@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Pooja Paper Solution
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         NAVBAR
+    ================================================== -->
+
+    <nav class="navbar">
+
+        <!-- LOGO -->
+        <div class="logo">
+            📦
+            <span>Pooja Paper Solution</span>
+        </div>
+
+
+        <!-- MOBILE USER GREETING -->
+        <div
+            id="mobileUserGreeting"
+            class="mobile-user-greeting"
+        ></div>
+
+
+        <!-- NAV LINKS -->
+        <div class="nav-links" id="navLinks">
+
+            <a
+                href="#home"
+                onclick="showNormalPage(event, 'home')"
+            >
+                Home
+            </a>
+
+            <a
+                href="#products"
+                onclick="showNormalPage(event, 'products')"
+            >
+                Products
+            </a>
+
+            <a
+                href="#my-orders"
+                id="myOrdersNavLink"
+                style="display:none;"
+                onclick="showMyOrdersPage(event)"
+            >
+                📦 My Orders
+            </a>
+
+            <a
+                href="#about"
+                onclick="showNormalPage(event, 'about')"
+            >
+                About
+            </a>
+
+            <a
+                href="#contact"
+                onclick="showNormalPage(event, 'contact')"
+            >
+                Contact
+            </a>
+
+
+            <!-- PROFILE -->
+            <li
+                id="profileNavItem"
+                style="display:none;"
+            >
+
+                <a
+                    href="javascript:void(0)"
+                    id="profileNavLink"
+                    onclick="showProfile()"
+                >
+                    Profile
+                </a>
+
+            </li>
+
+
+            <!-- =========================================
+                 MOBILE ONLY - CART
+            ========================================== -->
+
+            <li
+                class="mobile-nav-item"
+                id="mobileCartItem"
+            >
+
+                <button
+                    type="button"
+                    class="mobile-nav-btn mobile-cart-btn"
+                    onclick="openCart(); closeMobileMenu();"
+                >
+                    🛒 Cart
+                    <span id="mobileCartCount">0</span>
+                </button>
+
+            </li>
+
+
+            <!-- =========================================
+                 MOBILE ONLY - LOGIN
+            ========================================== -->
+
+            <li
+                class="mobile-nav-item"
+                id="mobileLoginItem"
+            >
+
+                <button
+                    type="button"
+                    class="mobile-nav-btn mobile-login-btn"
+                    onclick="openAuthModal(); closeMobileMenu();"
+                >
+                    🔑 Login
+                </button>
+
+            </li>
+
+
+            <!-- =========================================
+                 MOBILE ONLY - LOGOUT
+            ========================================== -->
+
+            <li
+                class="mobile-nav-item"
+                id="mobileLogoutItem"
+                style="display:none;"
+            >
+
+                <button
+                    type="button"
+                    class="mobile-nav-btn mobile-logout-btn"
+                    onclick="logoutUser(); closeMobileMenu();"
+                >
+                    🚪 Logout
+                </button>
+
+            </li>
+
+
+            <!-- =========================================
+                 MOBILE ONLY - ADMIN LOGIN
+            ========================================== -->
+
+            <li
+                class="mobile-nav-item"
+                id="mobileAdminLoginItem"
+            >
+
+                <button
+                    type="button"
+                    class="mobile-nav-btn mobile-admin-btn"
+                    onclick="goToAdminLogin(); closeMobileMenu();"
+                >
+                    🔐 Admin Login
+                </button>
+
+            </li>
+
+        </div>
+
+
+        <!-- =========================================
+             DESKTOP ACTIONS
+        ========================================== -->
+
+        <div class="nav-actions">
+
+
+            <!-- DESKTOP LOGIN / USER -->
+
+            <div id="authArea">
+
+                <button
+                    type="button"
+                    class="login-btn"
+                    onclick="openAuthModal()"
+                >
+                    Login
+                </button>
+
+            </div>
+
+
+            <!-- DESKTOP ADMIN -->
+
+            <button
+                type="button"
+                class="login-btn admin-login-btn"
+                onclick="goToAdminLogin()"
+            >
+                🔐 Admin Login
+            </button>
+
+
+            <!-- DESKTOP CART -->
+
+            <button
+                type="button"
+                class="cart-btn"
+                onclick="openCart()"
+            >
+                🛒 Cart
+                <span id="cartCount">0</span>
+            </button>
+
+
+            <!-- MOBILE MENU -->
+
+            <button
+                type="button"
+                class="menu-btn"
+                onclick="toggleMenu()"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =================================================
+         HOME
+    ================================================== -->
+
+    <section
+        class="hero"
+        id="home"
+    >
+
+        <div class="hero-content">
+
+            <p class="hero-small">
+                Welcome to
+            </p>
+
+            <h1>
+                Pooja Paper Solution
+            </h1>
+
+            <h2>
+                Disposable Products
+                <br>
+                At Best Prices
+            </h2>
+
+            <p>
+                Quality paper cups, plates, bowls,
+                spoons and other disposable products
+                for your business and daily needs.
+            </p>
+
+
+            <button
+                class="primary-btn"
+                onclick="scrollToProducts()"
+            >
+                Shop Products
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         PRODUCTS
+    ================================================== -->
+
+    <section
+        class="section"
+        id="products"
+    >
+
+        <div class="section-heading">
+
+            <p>
+                OUR PRODUCTS
+            </p>
+
+            <h2>
+                Disposable Products
+            </h2>
+
+            <span>
+                Choose the products you need
+            </span>
+
+        </div>
+
+
+        <div
+            class="product-container"
+            id="productContainer"
+        >
+
+            <!-- Products generated by JavaScript -->
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         MY ORDERS
+    ================================================== -->
+
+    <section
+        class="section my-orders-section"
+        id="my-orders"
+        style="display:none;"
+    >
+
+        <div class="section-heading">
+
+            <p>
+                MY ORDERS
+            </p>
+
+            <h2>
+                📦 My Orders
+            </h2>
+
+            <span>
+                View your orders and track their status
+            </span>
+
+        </div>
+
+
+        <!-- REFRESH BUTTON -->
+
+        <div class="my-orders-actions">
+
+            <button
+                class="primary-btn"
+                onclick="loadMyOrders()"
+            >
+                🔄 Refresh Orders
+            </button>
+
+        </div>
+
+
+        <!-- ORDERS CONTAINER -->
+
+        <div
+            id="myOrdersContainer"
+            class="my-orders-container"
+        >
+
+            <div class="empty-orders">
+
+                <div class="empty-orders-icon">
+                    📦
+                </div>
+
+                <h3>
+                    No Orders Yet
+                </h3>
+
+                <p>
+                    Your orders will appear here
+                    after you place an order.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ABOUT
+    ================================================== -->
+
+    <section
+        class="section about-section"
+        id="about"
+    >
+
+        <div class="section-heading">
+
+            <p>
+                ABOUT US
+            </p>
+
+            <h2>
+                Pooja Paper Solution
+            </h2>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <p>
+
+                Pooja Paper Solution provides disposable
+                products such as paper cups, plates,
+                bowls, spoons and other useful items.
+
+                <br><br>
+
+                Our aim is to make ordering disposable
+                products simple, convenient and reliable.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CONTACT
+    ================================================== -->
+
+    <section
+        class="section"
+        id="contact"
+    >
+
+        <div class="section-heading">
+
+            <p>
+                CONTACT
+            </p>
+
+            <h2>
+                Contact Pooja Paper Solution
+            </h2>
+
+        </div>
+
+
+        <div class="contact-box">
+
+            <p>
+                📞 Phone:
+                <strong>
+                    Add Your Number
+                </strong>
+            </p>
+
+            <p>
+                📧 Email:
+                <strong>
+                    Add Your Email
+                </strong>
+            </p>
+
+            <p>
+                📍 Address:
+                <strong>
+                    Add Your Business Address
+                </strong>
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <h3>
+            📦 Pooja Paper Solution
+        </h3>
+
+        <p>
+            Disposable Products & Supplies
+        </p>
+
+        <p>
+            © 2026 Pooja Paper Solution.
+            All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+
+    <!-- =================================================
+         AUTH MODAL
+    ================================================== -->
+
+    <div
+        class="modal"
+        id="authModal"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="close-btn"
+                onclick="closeAuthModal()"
+            >
+                ×
+            </button>
+
+
+            <h2 id="authTitle">
+                Login
+            </h2>
+
+
+
+            <!-- =================================================
+                 LOGIN
+            ================================================= -->
+
+            <form
+                id="loginForm"
+                onsubmit="loginUser(event)"
+            >
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Email"
+                    required
+                >
+
+
+                <!-- LOGIN PASSWORD -->
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('loginPassword', this)"
+                        aria-label="Show password"
+                    >
+                     <span class="eye-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+</span>
+                    </button>
+
+                </div>
+
+
+                <!-- ================= FORGOT PASSWORD ================= -->
+
+                <div class="forgot-password-row">
+
+                    <button
+                        type="button"
+                        class="forgot-password-btn"
+                        onclick="showForgotPassword()"
+                    >
+                        Forgot Password?
+                    </button>
+
+                </div>
+
+
+                <!-- ================= LOGIN ================= -->
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn"
+                >
+                    Login
+                </button>
+
+
+                <!-- ================= REGISTER ================= -->
+
+                <p class="switch-text">
+
+                    Don't have an account?
+
+                    <button
+                        type="button"
+                        onclick="showRegister()"
+                    >
+                        Register
+                    </button>
+
+                </p>
+
+            </form>
+
+
+
+            <!-- =================================================
+                 REGISTER
+            ================================================== -->
+
+            <form
+                id="registerForm"
+                onsubmit="registerUser(event)"
+                style="display:none;"
+            >
+
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Full Name"
+                    required
+                >
+
+
+                <input
+                    type="tel"
+                    id="registerPhone"
+                    placeholder="Phone Number"
+                    required
+                >
+
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="Email"
+                    required
+                >
+
+
+                <!-- REGISTER PASSWORD -->
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('registerPassword', this)"
+                        aria-label="Show password"
+                    >
+                        <span class="eye-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+</span>
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn"
+                >
+                    Create Account
+                </button>
+
+
+                <p class="switch-text">
+
+                    Already have an account?
+
+                    <button
+                        type="button"
+                        onclick="showLogin()"
+                    >
+                        Login
+                    </button>
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CART MODAL
+    ================================================== -->
+
+    <div
+        class="modal"
+        id="cartModal"
+    >
+
+        <div class="modal-box cart-box">
+
+            <button
+                class="close-btn"
+                onclick="closeCart()"
+            >
+                ×
+            </button>
+
+
+            <h2>
+                🛒 Your Cart
+            </h2>
+
+
+            <div id="cartItems">
+
+                <!-- Cart generated by JS -->
+
+            </div>
+
+
+            <div class="cart-summary">
+
+                <div>
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="cartSubtotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong id="cartDelivery">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="cart-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="cartTotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-btn full-btn"
+                onclick="checkout()"
+            >
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CHECKOUT MODAL
+    ================================================== -->
+
+    <div
+        class="modal"
+        id="checkoutModal"
+    >
+
+        <div class="modal-box checkout-box">
+
+            <button
+                class="close-btn"
+                onclick="closeCheckout()"
+            >
+                ×
+            </button>
+
+
+            <h2>
+                📦 Checkout
+            </h2>
+
+
+            <p class="checkout-note">
+                Enter your delivery details
+                to place the order.
+            </p>
+
+
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div class="checkout-section">
+
+                <h3>
+                    Customer Details
+                </h3>
+
+
+                <input
+                    type="text"
+                    id="checkoutName"
+                    placeholder="Customer Name"
+                    required
+                >
+
+
+                <input
+                    type="tel"
+                    id="checkoutPhone"
+                    placeholder="Phone Number"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="checkout-section">
+
+                <h3>
+                    Delivery Address
+                </h3>
+
+
+                <textarea
+                    id="checkoutAddress"
+                    placeholder="House No., Street / Village / Area"
+                    rows="3"
+                    required
+                ></textarea>
+
+
+                <div class="two-inputs">
+
+                    <input
+                        type="text"
+                        id="checkoutCity"
+                        placeholder="City"
+                        required
+                    >
+
+
+                    <input
+                        type="text"
+                        id="checkoutState"
+                        placeholder="State"
+                        value="Haryana"
+                        required
+                    >
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="checkoutPincode"
+                    placeholder="Pincode"
+                    maxlength="6"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- PAYMENT -->
+
+            <div class="checkout-section">
+
+                <h3>
+                    Payment Method
+                </h3>
+
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="COD"
+                        checked
+                    >
+
+                    <span>
+                        💵 Cash on Delivery
+                    </span>
+
+                </label>
+
+
+                <p class="payment-note">
+
+                    Online payment will be added
+                    in a later step.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="checkout-section">
+
+                <h3>
+                    Order Summary
+                </h3>
+
+
+                <div id="checkoutItems">
+
+                    <!-- Generated by JS -->
+
+                </div>
+
+
+                <div class="checkout-price-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="checkoutSubtotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="checkout-price-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong id="checkoutDelivery">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="checkout-price-row final-price">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="checkoutTotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <button
+                class="primary-btn full-btn"
+                onclick="placeOrder()"
+            >
+                ✅ Place Order
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ORDER SUCCESS MODAL
+    ================================================== -->
+
+    <div
+        class="modal"
+        id="orderSuccessModal"
+    >
+
+        <div class="modal-box success-box">
+
+            <div class="success-icon">
+                ✅
+            </div>
+
+
+            <h2>
+                Order Placed Successfully!
+            </h2>
+
+
+            <p>
+                Thank you for ordering from
+                Pooja Paper Solution.
+            </p>
+
+
+            <div class="order-id-box">
+
+                <span>
+                    Your Order ID
+                </span>
+
+                <strong id="successOrderId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <p class="success-message">
+
+                Please keep your Order ID safe.
+                You can track your order from
+                the My Orders section.
+
+            </p>
+
+
+            <button
+                class="primary-btn full-btn"
+                onclick="closeOrderSuccess()"
+            >
+                📦 View My Orders
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FORGOT PASSWORD MODAL
+    ===================================================== -->
+
+    <div
+        id="forgotPasswordModal"
+        class="auth-modal"
+        style="display: none;"
+    >
+
+        <div class="auth-modal-content">
+
+            <!-- Close Button -->
+
+            <button
+                type="button"
+                class="auth-modal-close"
+                onclick="closeForgotPassword()"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <!-- Icon -->
+
+            <div class="forgot-password-icon">
+                🔐
+            </div>
+
+
+            <!-- Heading -->
+
+            <h2>
+                Forgot Password?
+            </h2>
+
+
+            <!-- Description -->
+
+            <p class="forgot-password-description">
+
+                Enter the email address and phone number
+                you used during registration.
+
+            </p>
+
+
+            <!-- Form -->
+
+            <form
+                id="forgotPasswordForm"
+                onsubmit="verifyForgotPassword(event)"
+            >
+
+                <!-- Email -->
+
+                <label
+                    for="forgotPasswordEmail"
+                    class="forgot-password-label"
+                >
+                    Email Address
+                </label>
+
+
+                <input
+                    type="email"
+                    id="forgotPasswordEmail"
+                    placeholder="Enter your registered email"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <!-- Phone -->
+
+                <label
+                    for="forgotPasswordPhone"
+                    class="forgot-password-label"
+                >
+                    Phone Number
+                </label>
+
+
+                <input
+                    type="tel"
+                    id="forgotPasswordPhone"
+                    placeholder="Enter your registered phone number"
+                    autocomplete="tel"
+                    inputmode="numeric"
+                    required
+                >
+
+
+                <!-- Continue Button -->
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn forgot-submit-btn"
+                >
+                    Continue
+                </button>
+
+            </form>
+
+
+            <!-- Back to Login -->
+
+            <button
+                type="button"
+                class="back-to-login-btn"
+                onclick="closeForgotPassword()"
+            >
+                ← Back to Login
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= NEW PASSWORD MODAL ================= -->
+
+    <div
+        id="newPasswordModal"
+        class="auth-modal"
+        style="display: none;"
+    >
+
+        <div class="auth-modal-content">
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeNewPasswordModal()"
+            >
+                ×
+            </button>
+
+
+            <h2>
+                🔐 Set New Password
+            </h2>
+
+
+            <p class="modal-subtitle">
+
+                Your email and phone number have been verified.
+                Please create a new password.
+
+            </p>
+
+
+            <form
+                id="newPasswordForm"
+                onsubmit="resetForgotPassword(event)"
+            >
+
+                <!-- NEW PASSWORD -->
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="New Password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('newPassword', this)"
+                        aria-label="Show password"
+                    >
+                        <span class="eye-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+</span>
+                    </button>
+
+                </div>
+
+
+                <!-- CONFIRM NEW PASSWORD -->
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="confirmNewPassword"
+                        placeholder="Confirm New Password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('confirmNewPassword', this)"
+                        aria-label="Show password"
+                    >
+                        <span class="eye-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+</span>
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn"
+                    id="resetPasswordBtn"
+                >
+                    Reset Password
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROFILE MODAL
+    ===================================================== -->
+
+    <div
+        id="profileModal"
+        class="auth-modal"
+        style="display: none;"
+    >
+
+        <div class="auth-modal-content profile-modal-content">
+
+            <!-- CLOSE BUTTON -->
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeProfile()"
+            >
+                ×
+            </button>
+
+
+            <!-- TITLE -->
+
+            <h2>
+                👤 My Profile
+            </h2>
+
+            <p class="modal-subtitle">
+                Update your personal information.
+            </p>
+
+
+            <!-- PROFILE FORM -->
+
+            <form
+                id="profileForm"
+                onsubmit="updateProfile(event)"
+            >
+
+                <!-- USERNAME -->
+
+                <label for="profileName">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="profileName"
+                    placeholder="Enter your username"
+                    required
+                >
+
+
+                <!-- EMAIL -->
+
+                <label for="profileEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="profileEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+
+                <!-- PHONE -->
+
+                <label for="profilePhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="profilePhone"
+                    placeholder="Enter your phone number"
+                    required
+                >
+
+
+                <!-- SAVE BUTTON -->
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn"
+                    id="profileSaveBtn"
+                >
+                    💾 Save Changes
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= BACK TO TOP BUTTON ================= -->
+
+    <button
+        type="button"
+        id="backToTopBtn"
+        class="back-to-top"
+        onclick="scrollToTop()"
+        aria-label="Back to top"
+    >
+        ↑
+    </button>
+
+
+
+    <!-- =====================================================
+         CUSTOM NOTIFICATION
+    ===================================================== -->
+
+    <div
+        id="customNotification"
+        class="custom-notification"
+    >
+
+        <div
+            class="custom-notification-icon"
+            id="customNotificationIcon"
+        >
+            ✓
+        </div>
+
+        <div class="custom-notification-content">
+
+            <strong id="customNotificationTitle">
+                Success
+            </strong>
+
+            <p id="customNotificationMessage">
+                Something happened.
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            class="custom-notification-close"
+            onclick="hideNotification()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CANCEL REASON POPUP
+    ===================================================== -->
+
+    <div
+        id="cancelReasonModal"
+        class="custom-dialog-overlay"
+    >
+
+        <div class="custom-dialog-box">
+
+            <button
+                type="button"
+                class="custom-dialog-close"
+                onclick="closeCancelReasonPopup(null)"
+            >
+                ×
+            </button>
+
+
+            <div class="custom-dialog-icon cancel-dialog-icon">
+                🚫
+            </div>
+
+
+            <h3>
+                Cancel Order
+            </h3>
+
+
+            <p>
+                Please tell us why you want to cancel this order.
+            </p>
+
+
+            <textarea
+                id="cancelReasonInput"
+                class="custom-dialog-input"
+                placeholder="Enter cancellation reason..."
+                rows="4"
+            ></textarea>
+
+
+            <div class="custom-dialog-actions">
+
+                <button
+                    type="button"
+                    class="custom-dialog-btn secondary"
+                    onclick="closeCancelReasonPopup(null)"
+                >
+                    Keep Order
+                </button>
+
+
+                <button
+                    type="button"
+                    class="custom-dialog-btn danger"
+                    onclick="submitCancelReason()"
+                >
+                    Continue
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CANCEL CONFIRMATION POPUP
+    ===================================================== -->
+
+    <div
+        id="cancelConfirmModal"
+        class="custom-dialog-overlay"
+    >
+
+        <div class="custom-dialog-box">
+
+            <button
+                type="button"
+                class="custom-dialog-close"
+                onclick="closeCancelConfirmPopup(false)"
+            >
+                ×
+            </button>
+
+
+            <div class="custom-dialog-icon warning-dialog-icon">
+                ⚠️
+            </div>
+
+
+            <h3>
+                Confirm Cancellation
+            </h3>
+
+
+            <p>
+                Are you sure you want to cancel this order?
+            </p>
+
+
+            <div
+                id="cancelConfirmReason"
+                class="custom-confirm-reason"
+            ></div>
+
+
+            <div class="custom-dialog-actions">
+
+                <button
+                    type="button"
+                    class="custom-dialog-btn secondary"
+                    onclick="closeCancelConfirmPopup(false)"
+                >
+                    No, Keep Order
+                </button>
+
+
+                <button
+                    type="button"
+                    class="custom-dialog-btn danger"
+                    onclick="closeCancelConfirmPopup(true)"
+                >
+                    Yes, Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

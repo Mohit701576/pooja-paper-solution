@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin Panel - Pooja Paper Solution</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     ADMIN NAVBAR
+====================================================== -->
+
+<nav class="admin-navbar">
+
+
+<!-- ADMIN LOGO -->
+<div class="admin-logo">
+    📦 Pooja Paper Solution
+    <span>Admin Panel</span>
+</div>
+
+<!-- ADMIN ACTIONS -->
+<div class="admin-actions">
+
+    <button
+        type="button"
+        class="refresh-btn"
+        onclick="loadOrders()"
+    >
+        🔄 Refresh
+    </button>
+
+    <button
+        type="button"
+        class="logout-btn"
+        onclick="adminLogout()"
+    >
+        🚪 Logout
+    </button>
+
+    <!-- HAMBURGER - LAST -->
+    <button
+        type="button"
+        class="sidebar-toggle mobile-only-hamburger"
+        onclick="toggleAdminSidebar()"
+        aria-label="Open admin menu"
+    >
+        ☰
+    </button>
+
+</div>
+
+
+</nav>
+
+
+
+<!-- =====================================================
+     ADMIN LAYOUT
+====================================================== -->
+
+<div class="admin-layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="admin-sidebar"
+        id="adminSidebar"
+    >
+
+
+        <!-- SIDEBAR BRAND -->
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-brand-icon">
+                📦
+            </div>
+
+            <div>
+
+                <strong>
+                    Pooja Paper
+                </strong>
+
+                <span>
+                    Solution
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDEBAR MENU -->
+
+        <div class="sidebar-menu">
+
+
+            <p class="sidebar-title">
+                MAIN
+            </p>
+
+
+            <button
+                type="button"
+                class="sidebar-link active"
+                onclick="showAdminSection('dashboard', this)"
+            >
+
+                <span>
+                    📊
+                </span>
+
+                Dashboard
+
+            </button>
+
+
+            <button
+                type="button"
+                class="sidebar-link"
+                onclick="showAdminSection('pending-orders', this)"
+            >
+
+                <span>
+                    ⏳
+                </span>
+
+                Pending Orders
+
+            </button>
+
+
+            <p class="sidebar-title">
+                PRODUCTS
+            </p>
+
+
+            <button
+                type="button"
+                class="sidebar-link"
+                onclick="showAdminSection('products', this)"
+            >
+
+                <span>
+                    🥤
+                </span>
+
+                Products
+
+            </button>
+
+
+            <button
+                type="button"
+                class="sidebar-link"
+                onclick="showAdminSection('stock', this)"
+            >
+
+                <span>
+                    📦
+                </span>
+
+                Stock
+
+            </button>
+
+
+            <p class="sidebar-title">
+                ORDERS
+            </p>
+
+
+            <button
+                type="button"
+                class="sidebar-link"
+                onclick="showAdminSection('bills', this)"
+            >
+
+                <span>
+                    🧾
+                </span>
+
+                Bills
+
+            </button>
+
+
+            <button
+                type="button"
+                class="sidebar-link"
+                onclick="showAdminSection('delivery', this)"
+            >
+
+                <span>
+                    🚚
+                </span>
+
+                Delivery
+
+            </button>
+
+
+            <!-- TOTAL EARNINGS -->
+
+            <button
+                type="button"
+                class="sidebar-link"
+                onclick="showAdminSection('earnings', this)"
+            >
+
+                <span>
+                    💰
+                </span>
+
+                Total Earnings
+
+            </button>
+
+
+        </div>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <button
+                type="button"
+                class="sidebar-link sidebar-logout"
+                onclick="adminLogout()"
+            >
+
+                <span>
+                    🚪
+                </span>
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MOBILE SIDEBAR OVERLAY
+    ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        onclick="closeAdminSidebar()"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- =================================================
+             DASHBOARD SECTION
+        ================================================== -->
+
+        <section
+            id="dashboard"
+            class="admin-section active-section"
+        >
+
+
+            <section class="page-header">
+
+
+                <div>
+
+                    <p class="small-title">
+                        DASHBOARD
+                    </p>
+
+
+                    <h1>
+                        Customer Orders
+                    </h1>
+
+
+                    <p>
+                        Manage customer orders and your product inventory.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- STATS -->
+
+            <section class="stats-grid">
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-icon">
+                        📦
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Total Orders
+                        </span>
+
+
+                        <strong id="totalOrders">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-icon">
+                        ⏳
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Pending
+                        </span>
+
+
+                        <strong id="pendingOrders">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-icon">
+                        ✅
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Accepted
+                        </span>
+
+
+                        <strong id="acceptedOrders">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-icon">
+                        🚚
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Completed
+                        </span>
+
+
+                        <strong id="completedOrders">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ORDERS -->
+
+            <section class="orders-section">
+
+
+                <div class="section-top">
+
+
+                    <div>
+
+                        <h2>
+                            Orders
+                        </h2>
+
+
+                        <p>
+                            Latest customer orders
+                        </p>
+
+                    </div>
+
+
+
+                    <select
+                        id="statusFilter"
+                        onchange="loadOrders()"
+                    >
+
+                        <option value="all">
+                            All Orders
+                        </option>
+
+                        <option value="pending">
+                            Pending
+                        </option>
+
+                        <option value="accepted">
+                            Accepted
+                        </option>
+
+                        <option value="bill_generated">
+                            Bill Generated
+                        </option>
+
+                        <option value="assigned">
+                            Assigned
+                        </option>
+
+                        <option value="out_for_delivery">
+                            Out for Delivery
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="cancelled">
+                            Cancelled
+                        </option>
+
+                        <option value="rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+
+
+                <div
+                    id="ordersContainer"
+                    class="orders-container"
+                >
+
+                    <div class="loading-box">
+                        Loading orders...
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             PENDING ORDERS SECTION
+        ================================================== -->
+
+        <section
+            id="pending-orders"
+            class="admin-section"
+        >
+
+
+            <div class="section-page-heading">
+
+
+                <div>
+
+                    <p class="small-title">
+                        ORDER MANAGEMENT
+                    </p>
+
+
+                    <h1>
+                        ⏳ Pending Orders
+                    </h1>
+
+
+                    <p>
+                        Orders waiting for admin approval.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-admin-btn"
+                    onclick="loadOrders()"
+                >
+                    🔄 Refresh Orders
+                </button>
+
+
+            </div>
+
+
+
+            <div class="orders-section">
+
+
+                <div class="section-top">
+
+
+                    <div>
+
+                        <h2>
+                            Pending Orders
+                        </h2>
+
+
+                        <p>
+                            Accept customer orders from here.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    id="pendingOrdersContainer"
+                    class="orders-container"
+                >
+
+                    <div class="loading-box">
+                        Pending orders will appear here.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             PRODUCTS SECTION
+        ================================================== -->
+
+        <section
+            id="products"
+            class="admin-section"
+        >
+
+
+            <div class="section-page-heading">
+
+
+                <div>
+
+                    <p class="small-title">
+                        PRODUCT MANAGEMENT
+                    </p>
+
+
+                    <h1>
+                        🥤 Products
+                    </h1>
+
+
+                    <p>
+                        Add, update and manage your disposable products.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-admin-btn"
+                    onclick="openProductModal()"
+                >
+                    ➕ Add Product
+                </button>
+
+
+            </div>
+
+
+
+            <!-- PRODUCT SEARCH -->
+
+            <div class="product-toolbar">
+
+
+                <div class="product-search">
+
+                    <span>
+                        🔎
+                    </span>
+
+                    <input
+                        type="text"
+                        id="productSearch"
+                        placeholder="Search products..."
+                    >
+
+                </div>
+
+
+                <select
+                    id="productStatusFilter"
+                >
+
+                    <option value="all">
+                        All Products
+                    </option>
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                    <option value="out">
+                        Out of Stock
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- PRODUCTS CONTAINER -->
+
+            <div
+                id="adminProductsContainer"
+                class="admin-products-grid"
+            >
+
+
+                <div class="empty-product-box">
+
+                    <div>
+                        🥤
+                    </div>
+
+                    <h3>
+                        Products
+                    </h3>
+
+                    <p>
+                        Your products will appear here.
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="primary-admin-btn"
+                        onclick="openProductModal()"
+                    >
+                        ➕ Add First Product
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             STOCK SECTION
+        ================================================== -->
+
+        <section
+            id="stock"
+            class="admin-section"
+        >
+
+
+            <div class="section-page-heading">
+
+
+                <div>
+
+                    <p class="small-title">
+                        INVENTORY MANAGEMENT
+                    </p>
+
+
+                    <h1>
+                        📦 Stock Management
+                    </h1>
+
+
+                    <p>
+                        Check and update product stock.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-admin-btn"
+                    onclick="loadAdminProducts()"
+                >
+                    🔄 Refresh Stock
+                </button>
+
+
+            </div>
+
+
+
+            <div
+                id="stockContainer"
+                class="stock-container"
+            >
+
+
+                <div class="empty-product-box">
+
+                    <div>
+                        📦
+                    </div>
+
+                    <h3>
+                        Stock Management
+                    </h3>
+
+                    <p>
+                        Product stock will appear here.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             BILLS SECTION
+        ================================================== -->
+
+        <section
+            id="bills"
+            class="admin-section"
+        >
+
+
+            <div class="section-page-heading">
+
+
+                <div>
+
+                    <p class="small-title">
+                        BILL MANAGEMENT
+                    </p>
+
+
+                    <h1>
+                        🧾 Bills
+                    </h1>
+
+
+                    <p>
+                        Generate and view customer bills.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-admin-btn"
+                    onclick="loadOrders()"
+                >
+                    🔄 Refresh
+                </button>
+
+
+            </div>
+
+
+
+            <div
+                id="billsContainer"
+                class="bills-container"
+            >
+
+
+                <div class="empty-product-box">
+
+                    <div>
+                        🧾
+                    </div>
+
+                    <h3>
+                        Bill Management
+                    </h3>
+
+                    <p>
+                        Generated bills will appear here.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             DELIVERY SECTION
+        ================================================== -->
+
+        <section
+            id="delivery"
+            class="admin-section"
+        >
+
+
+            <div class="section-page-heading">
+
+
+                <div>
+
+                    <p class="small-title">
+                        DELIVERY MANAGEMENT
+                    </p>
+
+
+                    <h1>
+                        🚚 Delivery
+                    </h1>
+
+
+                    <p>
+                        Manage delivery assignments and order progress.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div
+                id="deliveryContainer"
+                class="delivery-container"
+            >
+
+
+                <div class="empty-product-box">
+
+                    <div>
+                        🚚
+                    </div>
+
+                    <h3>
+                        Delivery Management
+                    </h3>
+
+                    <p>
+                        Delivery orders will appear here.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             TOTAL EARNINGS SECTION
+        ================================================== -->
+
+        <section
+            id="earnings"
+            class="admin-section"
+        >
+
+
+            <div class="section-page-heading">
+
+
+                <div>
+
+                    <p class="small-title">
+                        SALES & EARNINGS
+                    </p>
+
+
+                    <h1>
+                        💰 Total Earnings
+                    </h1>
+
+
+                    <p>
+                        Calculate earnings from completed orders
+                        for a selected date range.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DATE FILTER -->
+
+            <div class="earnings-filter">
+
+
+                <div class="earnings-date-group">
+
+                    <label for="earningFromDate">
+                        From Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="earningFromDate"
+                    >
+
+                </div>
+
+
+
+                <div class="earnings-date-group">
+
+                    <label for="earningToDate">
+                        To Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="earningToDate"
+                    >
+
+                </div>
+
+
+
+                <div class="earnings-filter-actions">
+
+
+                    <button
+                        type="button"
+                        class="primary-admin-btn"
+                        onclick="calculateEarnings()"
+                    >
+                        🔍 Calculate
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-admin-btn"
+                        onclick="resetEarnings()"
+                    >
+                        🔄 Reset
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- EARNING SUMMARY -->
+
+            <div class="earnings-summary-grid">
+
+
+                <div class="earning-stat-card">
+
+
+                    <div class="earning-stat-icon">
+                        💰
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Total Earning
+                        </span>
+
+
+                        <strong id="totalEarning">
+                            ₹0.00
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="earning-stat-card">
+
+
+                    <div class="earning-stat-icon">
+                        📦
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Completed Orders
+                        </span>
+
+
+                        <strong id="earningTotalOrders">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="earning-stat-card">
+
+
+                    <div class="earning-stat-icon">
+                        🔢
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Total Quantity Sold
+                        </span>
+
+
+                        <strong id="earningTotalQuantity">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- PRODUCT WISE EARNING -->
+
+            <div class="earnings-table-wrapper">
+
+
+                <div class="earnings-table-header">
+
+
+                    <div>
+
+                        <h3>
+                            📊 Product-wise Earnings
+                        </h3>
+
+
+                        <p id="earningDateLabel">
+                            All completed orders
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="earnings-table-scroll">
+
+
+                    <table class="earnings-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Product
+                                </th>
+
+
+                                <th>
+                                    Price
+                                </th>
+
+
+                                <th>
+                                    Quantity
+                                </th>
+
+
+                                <th>
+                                    Earning
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="earningsTableBody">
+
+
+                            <tr>
+
+                                <td
+                                    colspan="4"
+                                    class="earnings-empty"
+                                >
+                                    No earning data available.
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     ADD / UPDATE PRODUCT MODAL
+====================================================== -->
+
+<div
+    class="modal"
+    id="productModal"
+>
+
+
+    <div class="modal-box product-modal-box">
+
+
+        <button
+            type="button"
+            class="close-btn"
+            onclick="closeProductModal()"
+        >
+            ×
+        </button>
+
+
+        <div class="product-modal-header">
+
+
+            <div class="product-modal-icon">
+                🥤
+            </div>
+
+
+            <div>
+
+                <p class="small-title">
+                    PRODUCT MANAGEMENT
+                </p>
+
+
+                <h2 id="productModalTitle">
+                    Add New Product
+                </h2>
+
+
+                <p>
+                    Add product details, price, stock and image.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- PRODUCT FORM -->
+
+        <form
+            id="productForm"
+            onsubmit="saveProduct(event)"
+        >
+
+
+            <input
+                type="hidden"
+                id="productId"
+            >
+
+
+
+            <!-- PRODUCT NAME -->
+
+            <div class="form-group">
+
+
+                <label for="productName">
+                    Product Name
+                </label>
+
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Example: Tea Paper Cups"
+                    required
+                >
+
+
+            </div>
+
+
+
+            <!-- PACK -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+
+                    <label for="productPack">
+                        Pack
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="productPack"
+                        placeholder="Example: 100 Pieces"
+                        required
+                    >
+
+
+                </div>
+
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+
+                    <label for="productPrice">
+                        Price (₹)
+                    </label>
+
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="120"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- STOCK -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+
+                    <label for="productStock">
+                        Stock
+                    </label>
+
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="50"
+                        min="0"
+                        step="1"
+                        required
+                    >
+
+
+                </div>
+
+
+
+                <!-- ICON -->
+
+                <div class="form-group">
+
+
+                    <label for="productIcon">
+                        Product Icon
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="productIcon"
+                        placeholder="☕"
+                        maxlength="10"
+                    >
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- IMAGE -->
+
+            <div class="form-group">
+
+
+                <label for="productImage">
+                    Product Image
+                </label>
+
+
+                <input
+                    type="file"
+                    id="productImage"
+                    accept="image/*"
+                >
+
+
+                <small class="form-help">
+                    JPG, PNG or WEBP image.
+                </small>
+
+
+            </div>
+
+
+
+            <!-- IMAGE PREVIEW -->
+
+            <div
+                id="productImagePreview"
+                class="product-image-preview"
+            >
+
+                <span>
+                    🖼️
+                </span>
+
+                <p>
+                    Image preview
+                </p>
+
+            </div>
+
+
+
+            <!-- ACTIVE -->
+
+            <div class="product-active-row">
+
+
+                <label class="checkbox-label">
+
+
+                    <input
+                        type="checkbox"
+                        id="productActive"
+                        checked
+                    >
+
+
+                    <span>
+                        Product is Active
+                    </span>
+
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- FORM BUTTONS -->
+
+            <div class="product-form-actions">
+
+
+                <button
+                    type="button"
+                    class="secondary-admin-btn"
+                    onclick="closeProductModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-admin-btn"
+                >
+                    💾 Save Product
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     ORDER DETAILS MODAL
+====================================================== -->
+
+<div
+    class="modal"
+    id="orderModal"
+>
+
+
+    <div class="modal-box">
+
+
+        <button
+            type="button"
+            class="close-btn"
+            onclick="closeOrderModal()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            Order Details
+        </h2>
+
+
+        <div
+            id="orderDetails"
+            class="order-details"
+        ></div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     BACK TO TOP BUTTON
+====================================================== -->
+
+<button
+    type="button"
+    id="backToTopBtn"
+    class="back-to-top"
+    onclick="scrollAdminToTop()"
+    aria-label="Back to top"
+>
+    ↑
+</button>
+
+
+
+<!-- =====================================================
+     CUSTOM NOTIFICATION
+====================================================== -->
+
+<div
+    id="customNotification"
+    class="custom-notification"
+>
+
+
+    <div
+        class="custom-notification-icon"
+        id="customNotificationIcon"
+    >
+        ✓
+    </div>
+
+
+    <div class="custom-notification-content">
+
+
+        <strong id="customNotificationTitle">
+            Success
+        </strong>
+
+
+        <p id="customNotificationMessage">
+            Something happened.
+        </p>
+
+
+    </div>
+
+
+    <button
+        type="button"
+        class="custom-notification-close"
+        onclick="hideNotification()"
+        aria-label="Close notification"
+    >
+        ×
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CUSTOM ADMIN DIALOG
+====================================================== -->
+
+<div
+    id="customAdminDialog"
+    class="custom-dialog-overlay"
+    style="display: none;"
+>
+
+
+    <div class="custom-dialog-box">
+
+
+        <button
+            type="button"
+            class="custom-dialog-close"
+            onclick="closeAdminDialog()"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <div
+            id="customAdminDialogIcon"
+            class="custom-dialog-icon"
+        >
+            📦
+        </div>
+
+
+        <h3 id="customAdminDialogTitle">
+            Update Stock
+        </h3>
+
+
+        <p id="customAdminDialogMessage">
+            Enter new stock.
+        </p>
+
+
+        <input
+            type="number"
+            id="customAdminDialogInput"
+            class="custom-dialog-input"
+            min="0"
+            step="1"
+        >
+
+
+        <div class="custom-dialog-actions">
+
+
+            <button
+                type="button"
+                class="custom-dialog-secondary"
+                onclick="closeAdminDialog()"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                type="button"
+                class="custom-dialog-primary"
+                id="customAdminDialogConfirmBtn"
+                onclick="confirmAdminDialog()"
+            >
+                Confirm
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CUSTOM CANCEL ORDER MODAL
+====================================================== -->
+
+<div
+    id="cancelOrderModal"
+    class="custom-cancel-overlay"
+    style="display: none;"
+>
+
+
+    <div class="custom-cancel-box">
+
+
+        <button
+            type="button"
+            class="custom-cancel-close"
+            onclick="closeCancelOrderModal()"
+        >
+            ×
+        </button>
+
+
+        <div class="custom-cancel-icon">
+            📦
+        </div>
+
+
+        <h2>
+            Cancel Order
+        </h2>
+
+
+        <p>
+            Please tell us why you want to cancel this order.
+        </p>
+
+
+        <textarea
+            id="cancelOrderReason"
+            class="custom-cancel-textarea"
+            placeholder="Enter cancellation reason..."
+            maxlength="500"
+        ></textarea>
+
+
+        <div class="custom-cancel-actions">
+
+
+            <button
+                type="button"
+                class="custom-cancel-secondary"
+                onclick="closeCancelOrderModal()"
+            >
+                Keep Order
+            </button>
+
+
+            <button
+                type="button"
+                class="custom-cancel-primary"
+                onclick="submitCancelOrderReason()"
+            >
+                Continue
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CANCEL CONFIRM MODAL
+====================================================== -->
+
+<div
+    id="cancelConfirmModal"
+    class="custom-cancel-overlay"
+    style="display: none;"
+>
+
+
+    <div class="custom-cancel-box">
+
+
+        <button
+            type="button"
+            class="custom-cancel-close"
+            onclick="closeCancelConfirmModal()"
+        >
+            ×
+        </button>
+
+
+        <div class="custom-cancel-icon warning">
+            ⚠️
+        </div>
+
+
+        <h2>
+            Confirm Cancellation
+        </h2>
+
+
+        <p>
+            Are you sure you want to cancel this order?
+        </p>
+
+
+        <div
+            id="cancelConfirmReason"
+            class="cancel-confirm-reason"
+        ></div>
+
+
+        <div class="custom-cancel-actions">
+
+
+            <button
+                type="button"
+                class="custom-cancel-secondary"
+                onclick="closeCancelConfirmModal()"
+            >
+                No, Keep Order
+            </button>
+
+
+            <button
+                type="button"
+                class="custom-cancel-primary danger"
+                onclick="confirmCancelOrder()"
+            >
+                Yes, Cancel Order
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     SUPABASE + QR CODE
+====================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"
+></script>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>

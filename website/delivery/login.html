@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Delivery Boy Login - Pooja Paper Solution
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f5f7fb;
+
+            color:
+                #111827;
+        }
+
+
+        .login-page {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+
+        .login-card {
+
+            width: 100%;
+
+            max-width: 420px;
+
+            background:
+                #ffffff;
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius:
+                20px;
+
+            padding:
+                35px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+        /* =====================================================
+   LOGIN CARD - MOVING RAINBOW BORDER
+===================================================== */
+
+.login-card {
+    border: 3px solid transparent;
+    border-radius: 20px;
+
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(
+            90deg,
+            #ff004c,
+            #ff7a00,
+            #ffd500,
+            #22c55e,
+            #00c7be,
+            #008cff,
+            #6d5dfc,
+            #c026d3,
+            #ff004c
+        ) border-box;
+
+    background-size:
+        100% 100%,
+        300% 300%;
+
+    background-position:
+        center,
+        0% 50%;
+
+    animation: loginCardRainbow 5s linear infinite;
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes loginCardRainbow {
+
+    0% {
+        background-position: center, 0% 50%;
+    }
+
+    25% {
+        background-position: center, 50% 0%;
+    }
+
+    50% {
+        background-position: center, 100% 50%;
+    }
+
+    75% {
+        background-position: center, 50% 100%;
+    }
+
+    100% {
+        background-position: center, 0% 50%;
+    }
+}
+
+
+        .login-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin:
+                0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                #f3f4f6;
+
+            border-radius:
+                50%;
+
+            font-size:
+                34px;
+        }
+
+
+        .login-card h1 {
+
+            margin:
+                0 0 8px;
+
+            font-size:
+                26px;
+        }
+
+
+        .login-subtitle {
+
+            margin:
+                0 0 28px;
+
+            color:
+                #6b7280;
+
+            font-size:
+                14px;
+        }
+
+
+        .form-group {
+
+            text-align:
+                left;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .form-group label {
+
+            display:
+                block;
+
+            margin-bottom:
+                7px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                700;
+
+            color:
+                #374151;
+        }
+
+
+        .form-group input {
+
+            width:
+                100%;
+
+            height:
+                48px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius:
+                10px;
+
+            font-size:
+                15px;
+
+            outline:
+                none;
+        }
+
+
+        .form-group input:focus {
+
+            border-color:
+                #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+
+        .login-btn {
+
+            width:
+                100%;
+
+            height:
+                50px;
+
+            border:
+                none;
+
+            border-radius:
+                10px;
+
+            background:
+                #111827;
+
+            color:
+                #ffffff;
+
+            font-size:
+                15px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+            margin-top:
+                5px;
+        }
+
+
+        .login-btn:hover {
+
+            background:
+                #1f2937;
+        }
+
+
+        .login-btn:disabled {
+
+            opacity:
+                0.6;
+
+            cursor:
+                not-allowed;
+        }
+
+
+        .login-message {
+
+            margin-top:
+                18px;
+
+            padding:
+                12px 14px;
+
+            border-radius:
+                10px;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+            line-height:
+                1.5;
+        }
+
+
+        .login-message.error {
+
+            background:
+                #fef2f2;
+
+            border:
+                1px solid #fecaca;
+
+            color:
+                #b91c1c;
+        }
+
+
+        .login-message.success {
+
+            background:
+                #f0fdf4;
+
+            border:
+                1px solid #bbf7d0;
+
+            color:
+                #15803d;
+        }
+
+
+        @media (
+            max-width: 500px
+        ) {
+
+            .login-card {
+
+                padding:
+                    28px 20px;
+            }
+
+
+            .login-card h1 {
+
+                font-size:
+                    23px;
+            }
+
+        }
+
+        /* =====================================================
+   DELIVERY LOGIN PASSWORD SHOW / HIDE
+===================================================== */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+/* INPUT SAME DESIGN RAHEGA */
+
+.password-wrapper input {
+    width: 100%;
+
+    height: 48px;
+
+    padding:
+        0 52px 0 14px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius:
+        10px;
+
+    font-size:
+        15px;
+
+    outline:
+        none;
+
+    box-sizing:
+        border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* FOCUS */
+
+.password-wrapper input:focus {
+    border-color:
+        #2563eb;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, 0.10);
+}
+
+
+/* EYE BUTTON */
+
+.password-toggle {
+    position: absolute;
+
+    right: 7px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 40px;
+
+    height: 40px;
+
+    padding: 0;
+
+    margin: 0;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    z-index: 10;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+/* HOVER */
+
+.password-toggle:hover {
+    background:
+        #f1f1f1;
+}
+
+
+/* EYE ICON */
+
+.eye-icon {
+    position: relative;
+
+    width: 21px;
+
+    height: 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* SVG */
+
+.eye-icon svg {
+    width: 21px;
+
+    height: 21px;
+
+    fill: none;
+
+    stroke: #555;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+    transition:
+        stroke 0.2s ease;
+}
+
+
+/* PUPIL */
+
+.eye-icon svg circle {
+    fill: none;
+}
+
+
+/* HOVER EYE */
+
+.password-toggle:hover
+.eye-icon svg {
+    stroke: #222;
+}
+
+
+/* =====================================================
+   PASSWORD VISIBLE → DIAGONAL LINE
+===================================================== */
+
+.eye-icon.eye-hidden::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 26px;
+
+    height: 2px;
+
+    background: #555;
+
+    border-radius: 10px;
+
+    left: -2px;
+
+    top: 9px;
+
+    transform:
+        rotate(45deg);
+
+    z-index: 5;
+}
+
+
+/* HOVER LINE */
+
+.password-toggle:hover
+.eye-icon.eye-hidden::before {
+
+    background: #222;
+}
+
+
+/* CLICK EFFECT */
+
+.password-toggle:active {
+
+    transform:
+        translateY(-50%)
+        scale(0.94);
+}
+
+
+/* KEYBOARD FOCUS */
+
+.password-toggle:focus-visible {
+
+    background:
+        #f1f1f1;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(37, 99, 235, 0.15);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .password-toggle {
+
+        right: 6px;
+
+        width: 40px;
+
+        height: 40px;
+    }
+
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-page">
+
+
+        <div class="login-card">
+
+
+            <div class="login-icon">
+                🚚
+            </div>
+
+
+            <h1>
+                Delivery Boy Login
+            </h1>
+
+
+            <p class="login-subtitle">
+                Login to manage your deliveries
+            </p>
+
+
+            <form
+                id="deliveryLoginForm"
+            >
+
+
+                <div class="form-group">
+
+                    <label
+                        for="deliveryUsername"
+                    >
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="deliveryUsername"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        for="deliveryPassword"
+                    >
+                        Password
+                    </label>
+
+                   <div class="password-wrapper">
+
+    <input
+        type="password"
+        id="deliveryPassword"
+        placeholder="Enter password"
+        autocomplete="current-password"
+        required
+    >
+
+    <button
+        type="button"
+        class="password-toggle"
+        onclick="toggleDeliveryPassword()"
+        aria-label="Show password"
+        title="Show password"
+    >
+        <span class="eye-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"
+                ></path>
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                ></circle>
+
+            </svg>
+
+        </span>
+    </button>
+
+</div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="deliveryLoginBtn"
+                >
+                    🔐 Login
+                </button>
+
+
+                <div
+                    id="loginMessage"
+                    class="login-message"
+                    style="display:none;"
+                ></div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        const form =
+            document.getElementById(
+                "deliveryLoginForm"
+            );
+
+
+        const loginBtn =
+            document.getElementById(
+                "deliveryLoginBtn"
+            );
+
+
+        const message =
+            document.getElementById(
+                "loginMessage"
+            );
+
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const username =
+                    document
+                        .getElementById(
+                            "deliveryUsername"
+                        )
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById(
+                            "deliveryPassword"
+                        )
+                        .value;
+
+
+                message.style.display =
+                    "none";
+
+
+                loginBtn.disabled =
+                    true;
+
+
+                loginBtn.textContent =
+                    "⏳ Logging in...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:3000/api/delivery/login",
+                            {
+                                method:
+                                    "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        username:
+                                            username,
+
+                                        password:
+                                            password
+
+                                    })
+
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    console.log(
+                        "LOGIN RESPONSE:",
+                        result
+                    );
+
+
+                    console.log(
+                        "STATUS:",
+                        response.status
+                    );
+
+
+                    if (
+                        !response.ok ||
+                        !result.success
+                    ) {
+
+                        message.textContent =
+                            result.message ||
+                            "Invalid username or password.";
+
+                        message.className =
+                            "login-message error";
+
+                        message.style.display =
+                            "block";
+
+                        return;
+                    }
+
+
+                    localStorage.setItem(
+                        "deliveryLoggedIn",
+                        "true"
+                    );
+
+
+                    localStorage.setItem(
+                        "deliveryUsername",
+                        username
+                    );
+
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "DELIVERY LOGIN ERROR:",
+                        error
+                    );
+
+
+                    message.textContent =
+                        "Could not connect to the backend server.";
+
+                    message.className =
+                        "login-message error";
+
+                    message.style.display =
+                        "block";
+
+                }
+
+
+                finally {
+
+                    loginBtn.disabled =
+                        false;
+
+                    loginBtn.textContent =
+                        "🔐 Login";
+
+                }
+
+            }
+        );
+
+        /* =====================================================
+   DELIVERY PASSWORD SHOW / HIDE
+===================================================== */
+
+function toggleDeliveryPassword() {
+
+    const passwordInput =
+        document.getElementById(
+            "deliveryPassword"
+        );
+
+    const toggleButton =
+        document.querySelector(
+            ".password-toggle"
+        );
+
+    const eye =
+        toggleButton.querySelector(
+            ".eye-icon"
+        );
+
+
+    /* PASSWORD HIDDEN HAI
+       → PASSWORD DIKHAO */
+
+    if (
+        passwordInput.type ===
+        "password"
+    ) {
+
+        passwordInput.type =
+            "text";
+
+
+        /* EYE PAR DIAGONAL LINE */
+
+        eye.classList.add(
+            "eye-hidden"
+        );
+
+
+        toggleButton.setAttribute(
+            "aria-label",
+            "Hide password"
+        );
+
+        toggleButton.setAttribute(
+            "title",
+            "Hide password"
+        );
+
+    }
+
+
+    /* PASSWORD VISIBLE HAI
+       → PASSWORD HIDE KARO */
+
+    else {
+
+        passwordInput.type =
+            "password";
+
+
+        /* DIAGONAL LINE REMOVE */
+
+        eye.classList.remove(
+            "eye-hidden"
+        );
+
+
+        toggleButton.setAttribute(
+            "aria-label",
+            "Show password"
+        );
+
+        toggleButton.setAttribute(
+            "title",
+            "Show password"
+        );
+
+    }
+
+}
+
+    </script>
+
+
+</body>
+
+</html>

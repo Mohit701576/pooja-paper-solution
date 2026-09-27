@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Login - Pooja Paper Solution</title>
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f8fafc,
+                    #e0f2fe
+                );
+
+            padding: 20px;
+        }
+
+
+        /* =====================================================
+           LOGIN BOX
+        ===================================================== */
+
+        .admin-login-box {
+
+            width: 100%;
+
+            max-width: 420px;
+
+            background: #ffffff;
+
+            padding: 35px;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 45px rgba(
+                    0,
+                    0,
+                    0,
+                    0.12
+                );
+
+            border: 1px solid #e5e7eb;
+        }
+
+        /* =====================================================
+   ADMIN LOGIN - MOVING RAINBOW BORDER
+===================================================== */
+
+.admin-login-box {
+    border: 3px solid transparent;
+    border-radius: 20px;
+
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(
+            90deg,
+            #ff004c,
+            #ff7a00,
+            #ffd500,
+            #22c55e,
+            #00c7be,
+            #008cff,
+            #6d5dfc,
+            #c026d3,
+            #ff004c
+        ) border-box;
+
+    background-size:
+        100% 100%,
+        300% 300%;
+
+    background-position:
+        center,
+        0% 50%;
+
+    animation: adminRainbowBorder 5s linear infinite;
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes adminRainbowBorder {
+    0% {
+        background-position: center, 0% 50%;
+    }
+
+    25% {
+        background-position: center, 50% 0%;
+    }
+
+    50% {
+        background-position: center, 100% 50%;
+    }
+
+    75% {
+        background-position: center, 50% 100%;
+    }
+
+    100% {
+        background-position: center, 0% 50%;
+    }
+}
+
+
+        /* =====================================================
+           ICON
+        ===================================================== */
+
+        .admin-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 34px;
+
+            background: #eef2ff;
+
+            box-shadow:
+                0 8px 20px rgba(
+                    79,
+                    70,
+                    229,
+                    0.15
+                );
+        }
+
+
+        /* =====================================================
+           HEADING
+        ===================================================== */
+
+        h1 {
+
+            text-align: center;
+
+            margin: 0 0 8px;
+
+            color: #111827;
+
+            font-size: 28px;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #6b7280;
+
+            margin-bottom: 28px;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: 700;
+
+            color: #374151;
+
+            font-size: 14px;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus {
+
+            border-color: #4f46e5;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    79,
+                    70,
+                    229,
+                    0.12
+                );
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
+
+        .login-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #2563eb
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            margin-top: 5px;
+        }
+
+
+        .login-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(
+                    37,
+                    99,
+                    235,
+                    0.25
+                );
+        }
+
+
+        .login-btn:disabled {
+
+            opacity: 0.7;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-btn {
+
+            width: 100%;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border: 2px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .back-btn:hover {
+
+            background: #f8fafc;
+
+            border-color: #c7d2fe;
+
+            color: #4f46e5;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .message {
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            min-height: 20px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 500px) {
+
+            .admin-login-box {
+
+                padding: 25px 20px;
+            }
+
+
+            h1 {
+
+                font-size: 24px;
+            }
+
+        }
+
+        /* =====================================================
+   ADMIN PASSWORD SHOW / HIDE EYE
+===================================================== */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+/* PASSWORD INPUT */
+
+.password-wrapper input {
+    width: 100%;
+
+    padding: 13px 52px 13px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+
+/* FOCUS */
+
+.password-wrapper input:focus {
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(
+            79,
+            70,
+            229,
+            0.12
+        );
+}
+
+
+/* EYE BUTTON */
+
+.password-toggle {
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    z-index: 10;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+/* HOVER */
+
+.password-toggle:hover {
+    background: #f1f1f1;
+}
+
+
+/* EYE ICON */
+
+.eye-icon {
+    position: relative;
+
+    width: 21px;
+    height: 21px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* SVG */
+
+.eye-icon svg {
+    width: 21px;
+    height: 21px;
+
+    fill: none;
+
+    stroke: #555;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        stroke 0.2s ease;
+}
+
+
+.eye-icon svg circle {
+    fill: none;
+}
+
+
+/* HOVER EYE */
+
+.password-toggle:hover .eye-icon svg {
+    stroke: #222;
+}
+
+
+/* =====================================================
+   DIAGONAL LINE WHEN PASSWORD IS VISIBLE
+===================================================== */
+
+.eye-icon.eye-hidden::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 26px;
+    height: 2px;
+
+    background: #555;
+
+    border-radius: 10px;
+
+    left: -2px;
+    top: 9px;
+
+    transform: rotate(45deg);
+
+    z-index: 5;
+}
+
+
+.password-toggle:hover
+.eye-icon.eye-hidden::before {
+
+    background: #222;
+}
+
+
+/* CLICK EFFECT */
+
+.password-toggle:active {
+
+    transform:
+        translateY(-50%)
+        scale(0.94);
+}
+
+
+/* KEYBOARD FOCUS */
+
+.password-toggle:focus-visible {
+
+    background: #f1f1f1;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(79, 70, 229, 0.18);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .password-toggle {
+
+        right: 6px;
+
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         ADMIN LOGIN BOX
+    ===================================================== -->
+
+    <div class="admin-login-box">
+
+
+        <div class="admin-icon">
+            🔐
+        </div>
+
+
+        <h1>
+            Admin Login
+        </h1>
+
+
+        <div class="subtitle">
+            Login to manage Pooja Paper Solution
+        </div>
+
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================= -->
+
+        <form id="adminLoginForm">
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="adminUsername">
+                    Admin Username
+                </label>
+
+
+                <input
+                    type="text"
+                    id="adminUsername"
+                    name="username"
+                    placeholder="Enter admin username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="adminPassword">
+                    Admin Password
+                </label>
+
+
+                <div class="password-wrapper">
+
+    <input
+        type="password"
+        id="adminPassword"
+        name="password"
+        placeholder="Enter admin password"
+        autocomplete="current-password"
+        required
+    >
+
+    <button
+        type="button"
+        class="password-toggle"
+        onclick="toggleAdminPassword()"
+        aria-label="Show password"
+        title="Show password"
+    >
+        <span class="eye-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"
+                ></path>
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                ></circle>
+
+            </svg>
+
+        </span>
+    </button>
+
+</div>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton"
+            >
+                🔐 Admin Login
+            </button>
+
+
+        </form>
+
+
+        <!-- =================================================
+             BACK TO MAIN WEBSITE
+        ================================================= -->
+
+        <button
+            type="button"
+            class="back-btn"
+            onclick="goToMainPage()"
+        >
+            ← Back to Main Page
+        </button>
+
+
+        <!-- =================================================
+             LOGIN MESSAGE
+        ================================================= -->
+
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
+
+
+    </div>
+
+
+    <script>
+
+        /* =====================================================
+           BACKEND CONFIGURATION
+        ===================================================== */
+
+        /*
+           Local development backend:
+
+           http://localhost:3000
+
+           Baad mein jab backend Render par deploy hoga,
+           yahan Render backend URL set karenge.
+        */
+
+        const BACKEND_URL =
+            "http://localhost:3000";
+
+
+        /* =====================================================
+           GET ELEMENTS
+        ===================================================== */
+
+        const form =
+            document.getElementById(
+                "adminLoginForm"
+            );
+
+
+        const usernameInput =
+            document.getElementById(
+                "adminUsername"
+            );
+
+
+        const passwordInput =
+            document.getElementById(
+                "adminPassword"
+            );
+
+
+        const message =
+            document.getElementById(
+                "loginMessage"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+        /* =====================================================
+   ADMIN PASSWORD SHOW / HIDE
+===================================================== */
+
+function toggleAdminPassword() {
+
+    const passwordInput =
+        document.getElementById(
+            "adminPassword"
+        );
+
+    const toggleButton =
+        document.querySelector(
+            ".password-toggle"
+        );
+
+    const eye =
+        toggleButton.querySelector(
+            ".eye-icon"
+        );
+
+
+    /* PASSWORD HIDDEN HAI */
+
+    if (
+        passwordInput.type ===
+        "password"
+    ) {
+
+        /* Password dikhao */
+
+        passwordInput.type =
+            "text";
+
+
+        /* Eye par diagonal line */
+
+        eye.classList.add(
+            "eye-hidden"
+        );
+
+
+        /* Accessibility */
+
+        toggleButton.setAttribute(
+            "aria-label",
+            "Hide password"
+        );
+
+        toggleButton.setAttribute(
+            "title",
+            "Hide password"
+        );
+
+    }
+
+
+    /* PASSWORD VISIBLE HAI */
+
+    else {
+
+        /* Password hide karo */
+
+        passwordInput.type =
+            "password";
+
+
+        /* Diagonal line hatao */
+
+        eye.classList.remove(
+            "eye-hidden"
+        );
+
+
+        /* Accessibility */
+
+        toggleButton.setAttribute(
+            "aria-label",
+            "Show password"
+        );
+
+        toggleButton.setAttribute(
+            "title",
+            "Show password"
+        );
+
+    }
+
+}
+        /* =====================================================
+           SHOW MESSAGE
+        ===================================================== */
+
+        function showMessage(
+            text,
+            color
+        ) {
+
+            message.textContent = text;
+
+            message.style.color = color;
+
+        }
+
+
+        /* =====================================================
+           ADMIN LOGIN
+        ===================================================== */
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                /* =============================================
+                   GET USERNAME
+                ============================================= */
+
+                const username =
+                    usernameInput
+                        .value
+                        .trim();
+
+
+                /* =============================================
+                   GET PASSWORD
+                ============================================= */
+
+                const password =
+                    passwordInput
+                        .value;
+
+
+                /* =============================================
+                   VALIDATION
+                ============================================= */
+
+                if (!username) {
+
+                    showMessage(
+                        "Please enter admin username.",
+                        "#dc2626"
+                    );
+
+                    usernameInput.focus();
+
+                    return;
+                }
+
+
+                if (!password) {
+
+                    showMessage(
+                        "Please enter admin password.",
+                        "#dc2626"
+                    );
+
+                    passwordInput.focus();
+
+                    return;
+                }
+
+
+                /* =============================================
+                   BUTTON LOADING
+                ============================================= */
+
+                loginButton.disabled = true;
+
+                loginButton.textContent =
+                    "🔄 Logging in...";
+
+
+                showMessage(
+                    "Checking admin credentials...",
+                    "#2563eb"
+                );
+
+
+                try {
+
+                    /* =========================================
+                       SEND LOGIN REQUEST
+                    ========================================= */
+
+                    const response =
+                        await fetch(
+                            `${BACKEND_URL}/api/admin/login`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        username:
+                                            username,
+
+                                        password:
+                                            password
+                                    })
+                            }
+                        );
+
+
+                    /* =========================================
+                       READ RESPONSE
+                    ========================================= */
+
+                    let result = {};
+
+                    try {
+
+                        result =
+                            await response.json();
+
+                    } catch (jsonError) {
+
+                        throw new Error(
+                            "Server returned an invalid response."
+                        );
+
+                    }
+
+
+                    console.log(
+                        "ADMIN LOGIN RESPONSE:",
+                        result
+                    );
+
+
+                    /* =========================================
+                       LOGIN FAILED
+                    ========================================= */
+
+                    if (
+                        !response.ok ||
+                        !result.success
+                    ) {
+
+                        throw new Error(
+                            result.message ||
+                            "Invalid username or password."
+                        );
+
+                    }
+
+
+                    /* =========================================
+                       CHECK TOKEN
+                    ========================================= */
+
+                    const token =
+                        result.token;
+
+
+                    if (!token) {
+
+                        throw new Error(
+                            "Login successful, but admin session token was not received."
+                        );
+
+                    }
+
+
+                    /* =========================================
+                       SAVE ADMIN SESSION
+                    ========================================= */
+
+                    localStorage.setItem(
+                        "adminToken",
+                        token
+                    );
+
+
+                    localStorage.setItem(
+                        "adminLoggedIn",
+                        "true"
+                    );
+
+
+                    localStorage.setItem(
+                        "adminUsername",
+                        username
+                    );
+
+
+                    /* =========================================
+                       SAVE SERVER USERNAME
+                    ========================================= */
+
+                    if (
+                        result.admin &&
+                        result.admin.username
+                    ) {
+
+                        localStorage.setItem(
+                            "adminUsername",
+                            result.admin.username
+                        );
+
+                    }
+
+
+                    /* =========================================
+                       SUCCESS
+                    ========================================= */
+
+                    showMessage(
+                        "Login successful! Opening dashboard...",
+                        "#16a34a"
+                    );
+
+
+                    loginButton.textContent =
+                        "✅ Login Successful";
+
+
+                    console.log(
+                        "================================="
+                    );
+
+                    console.log(
+                        "ADMIN LOGIN SUCCESS"
+                    );
+
+                    console.log(
+                        "Username:",
+                        username
+                    );
+
+                    console.log(
+                        "Admin token received:",
+                        true
+                    );
+
+                    console.log(
+                        "================================="
+                    );
+
+
+                    /* =========================================
+                       OPEN ADMIN DASHBOARD
+                    ========================================= */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "index.html";
+
+                        },
+                        700
+                    );
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "ADMIN LOGIN ERROR:",
+                        error
+                    );
+
+
+                    /* =========================================
+                       USER-FRIENDLY ERROR
+                    ========================================= */
+
+                    let errorMessage =
+                        error.message ||
+                        "Unable to login.";
+
+
+                    /*
+                       Fetch failed means backend is probably
+                       not running or URL is incorrect.
+                    */
+
+                    if (
+                        error.name ===
+                        "TypeError"
+                    ) {
+
+                        errorMessage =
+                            "Unable to connect to server. Please start the backend server.";
+
+                    }
+
+
+                    showMessage(
+                        errorMessage,
+                        "#dc2626"
+                    );
+
+
+                    /* =========================================
+                       RESET BUTTON
+                    ========================================= */
+
+                    loginButton.disabled =
+                        false;
+
+                    loginButton.textContent =
+                        "🔐 Admin Login";
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           BACK TO MAIN PAGE
+        ===================================================== */
+
+        function goToMainPage() {
+
+            /*
+               Agar admin-login.html admin folder ke andar hai
+               to ../index.html correct rahega.
+            */
+
+            window.location.href =
+                "../index.html";
+
+        }
+
+
+        /* =====================================================
+           CLEAR OLD INVALID LOGIN STATE
+        ===================================================== */
+
+        /*
+           Agar kisi previous session ka incomplete data ho,
+           login page par fresh state rakhenge.
+        */
+
+        if (
+            !localStorage.getItem(
+                "adminToken"
+            )
+        ) {
+
+            localStorage.removeItem(
+                "adminLoggedIn"
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+
