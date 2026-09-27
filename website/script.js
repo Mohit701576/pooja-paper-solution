@@ -27,7 +27,7 @@ const supabaseClient =
 ===================================================== */
 
 const BACKEND_URL =
-    "http://localhost:3000";
+    "https://pooja-paper-solution-backend.onrender.com";
 
 
 /* =====================================================

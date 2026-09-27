@@ -26,7 +26,7 @@ const supabaseClient =
 ===================================================== */
 
 const BACKEND_URL =
-    "http://localhost:3000";
+    "https://pooja-paper-solution-backend.onrender.com";
 
 
 /* =====================================================
@@ -1383,74 +1383,180 @@ async function loadOrders() {
         "ADMIN: Loading orders..."
     );
 
-    console.log(
-        "Supabase URL:",
-        SUPABASE_URL
-    );
-
 
     try {
 
-        /*
-         * IMPORTANT:
-         * Abhi testing ke liye "*" use kar rahe hain.
-         *
-         * Isse agar koi selected column missing hai,
-         * to query us wajah se fail nahi hogi.
-         */
+        /* =========================================
+           ADMIN TOKEN
+        ========================================= */
 
-        const {
-            data,
-            error,
-            count
-        } = await supabaseClient
+        const adminToken =
+            localStorage.getItem(
+                "adminToken"
+            );
 
-            .from("orders")
 
-            .select(
-                "*",
+        /* =========================================
+           TOKEN CHECK
+        ========================================= */
+
+        if (!adminToken) {
+
+            console.error(
+                "❌ Admin token not found."
+            );
+
+
+            if (container) {
+
+                container.innerHTML =
+                    `
+                    <div class="empty-box">
+
+                        ❌ Admin session expired.
+
+                        <br><br>
+
+                        Please login again.
+
+                    </div>
+                    `;
+
+            }
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "login.html";
+
+                },
+                1200
+            );
+
+
+            return;
+        }
+
+
+        /* =========================================
+           BACKEND REQUEST
+        ========================================= */
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/api/admin/orders`,
                 {
-                    count: "exact"
-                }
-            )
+                    method: "GET",
 
-            .order(
-                "created_at",
-                {
-                    ascending: false
+                    headers: {
+
+                        "Authorization":
+                            `Bearer ${adminToken}`,
+
+                        "Content-Type":
+                            "application/json"
+
+                    }
                 }
             );
 
 
         console.log(
-            "ORDERS RESPONSE:"
-        );
-
-        console.log(
-            "Data:",
-            data
-        );
-
-        console.log(
-            "Count:",
-            count
-        );
-
-        console.log(
-            "Error:",
-            error
+            "Backend response status:",
+            response.status
         );
 
 
         /* =========================================
-           SUPABASE ERROR
+           RESPONSE JSON
         ========================================= */
 
-        if (error) {
+        const result =
+            await response.json();
+
+
+        console.log(
+            "ADMIN ORDERS RESPONSE:",
+            result
+        );
+
+
+        /* =========================================
+           UNAUTHORIZED
+        ========================================= */
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
 
             console.error(
-                "❌ ORDERS SUPABASE ERROR:",
-                error
+                "❌ Admin authentication failed."
+            );
+
+
+            localStorage.removeItem(
+                "adminToken"
+            );
+
+            localStorage.removeItem(
+                "adminUser"
+            );
+
+
+            if (container) {
+
+                container.innerHTML =
+                    `
+                    <div class="empty-box">
+
+                        ❌ Admin session expired.
+
+                        <br><br>
+
+                        Please login again.
+
+                    </div>
+                    `;
+
+            }
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "login.html";
+
+                },
+                1000
+            );
+
+
+            return;
+        }
+
+
+        /* =========================================
+           BACKEND ERROR
+        ========================================= */
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            const errorMessage =
+                result.message ||
+                result.error ||
+                "Could not load orders.";
+
+
+            console.error(
+                "❌ Backend orders error:",
+                errorMessage
             );
 
 
@@ -1465,27 +1571,14 @@ async function loadOrders() {
                         <br><br>
 
                         <strong>
-                            Supabase Error:
+                            Backend Error:
                         </strong>
 
                         <br>
 
                         ${escapeHtml(
-                            error.message ||
-                            "Unknown Supabase error"
+                            errorMessage
                         )}
-
-                        <br><br>
-
-                        <small>
-
-                            Code:
-                            ${escapeHtml(
-                                error.code ||
-                                "-"
-                            )}
-
-                        </small>
 
                     </div>
                     `;
@@ -1502,9 +1595,15 @@ async function loadOrders() {
         ========================================= */
 
         allOrders =
-            Array.isArray(data)
-                ? data
-                : [];
+            Array.isArray(
+                result.orders
+            )
+                ? result.orders
+                : Array.isArray(
+                    result.data
+                )
+                    ? result.data
+                    : [];
 
 
         console.log(
@@ -1523,7 +1622,7 @@ async function loadOrders() {
         ) {
 
             console.warn(
-                "⚠️ Supabase returned 0 orders."
+                "⚠️ Backend returned 0 orders."
             );
 
 
@@ -1538,7 +1637,7 @@ async function loadOrders() {
                         <br><br>
 
                         <small>
-                            Supabase se 0 orders return hue.
+                            Backend se 0 orders return hue.
                         </small>
 
                     </div>
@@ -3000,6 +3099,11 @@ async function viewOrder(orderId) {
    CUSTOM CONFIRM DIALOG
 ===================================================== */
 
+/* =====================================================
+   ACCEPT ORDER
+   BACKEND API + CUSTOM CONFIRM DIALOG
+===================================================== */
+
 async function acceptOrder(orderId) {
 
     openAdminConfirmDialog(
@@ -3009,63 +3113,117 @@ async function acceptOrder(orderId) {
 
             try {
 
-                const {
-                    data,
-                    error
-                } = await supabaseClient
+                /* =========================================
+                   ADMIN TOKEN
+                ========================================= */
 
-                    .from("orders")
-
-                    .update({
-
-                        status:
-                            "accepted",
-
-                        admin_accepted:
-                            true,
-
-                        accepted_at:
-                            new Date().toISOString()
-
-                    })
-
-                    .eq(
-                        "id",
-                        orderId
-                    )
-
-                    .select()
-                    .maybeSingle();
-
-
-                if (error) {
-
-                    console.error(
-                        "Accept order error:",
-                        error
+                const adminToken =
+                    localStorage.getItem(
+                        "adminToken"
                     );
 
+
+                if (!adminToken) {
+
+                    alert(
+                        "Admin session expired. Please login again."
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                /* =========================================
+                   BACKEND REQUEST
+                ========================================= */
+
+                const response =
+                    await fetch(
+                        `${BACKEND_URL}/api/admin/orders/${encodeURIComponent(orderId)}/accept`,
+                        {
+                            method: "POST",
+
+                            headers: {
+
+                                "Authorization":
+                                    `Bearer ${adminToken}`,
+
+                                "Content-Type":
+                                    "application/json"
+
+                            }
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                console.log(
+                    "Accept order response:",
+                    result
+                );
+
+
+                /* =========================================
+                   SESSION EXPIRED
+                ========================================= */
+
+                if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    localStorage.removeItem(
+                        "adminToken"
+                    );
+
+                    localStorage.removeItem(
+                        "adminUser"
+                    );
+
+
+                    alert(
+                        "Admin session expired. Please login again."
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                /* =========================================
+                   BACKEND ERROR
+                ========================================= */
+
+                if (
+                    !response.ok ||
+                    !result.success
+                ) {
 
                     alert(
                         "Order could not be accepted.\n\n" +
-                        error.message
+                        (
+                            result.message ||
+                            result.error ||
+                            "Unknown error"
+                        )
                     );
-
 
                     return;
                 }
 
 
-                if (!data) {
-
-                    alert(
-                        "Order could not be updated."
-                    );
-
-
-                    return;
-                }
-
+                /* =========================================
+                   SUCCESS
+                ========================================= */
 
                 alert(
                     "✅ Order accepted successfully."
@@ -3095,12 +3253,12 @@ async function acceptOrder(orderId) {
 
 }
 
+
 /* =====================================================
    REJECT ORDER
-   CUSTOM INPUT + CUSTOM CONFIRM DIALOG
+   BACKEND API + CUSTOM INPUT + CUSTOM CONFIRM
 ===================================================== */
 
- javascript
 async function rejectOrder(orderId) {
 
     openAdminInputDialog(
@@ -3110,7 +3268,9 @@ async function rejectOrder(orderId) {
         function(reason) {
 
             const cleanReason =
-                String(reason || "").trim();
+                String(
+                    reason || ""
+                ).trim();
 
 
             /* =========================================
@@ -3143,70 +3303,118 @@ async function rejectOrder(orderId) {
 
                     try {
 
-                        const {
-                            data,
-                            error
-                        } = await supabaseClient
-
-                            .from("orders")
-
-                            .update({
-
-                                status:
-                                    "rejected",
-
-                                rejection_reason:
-                                    cleanReason,
-
-                                rejected_at:
-                                    new Date().toISOString(),
-
-                                admin_accepted:
-                                    false
-
-                            })
-
-                            .eq(
-                                "id",
-                                orderId
-                            )
-
-                            .select()
-                            .maybeSingle();
-
-
                         /* =================================
-                           SUPABASE ERROR
+                           ADMIN TOKEN
                         ================================= */
 
-                        if (error) {
-
-                            console.error(
-                                "Reject order error:",
-                                error
+                        const adminToken =
+                            localStorage.getItem(
+                                "adminToken"
                             );
 
+
+                        if (!adminToken) {
 
                             alert(
-                                "Order could not be rejected.\n\n" +
-                                error.message
+                                "Admin session expired. Please login again."
                             );
 
+                            window.location.href =
+                                "login.html";
 
                             return;
                         }
 
 
                         /* =================================
-                           NO DATA
+                           BACKEND REQUEST
                         ================================= */
 
-                        if (!data) {
+                        const response =
+                            await fetch(
+                                `${BACKEND_URL}/api/admin/orders/${encodeURIComponent(orderId)}/reject`,
+                                {
+                                    method: "POST",
 
-                            alert(
-                                "Order could not be updated."
+                                    headers: {
+
+                                        "Authorization":
+                                            `Bearer ${adminToken}`,
+
+                                        "Content-Type":
+                                            "application/json"
+
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            reason:
+                                                cleanReason
+
+                                        })
+
+                                }
                             );
 
+
+                        const result =
+                            await response.json();
+
+
+                        console.log(
+                            "Reject order response:",
+                            result
+                        );
+
+
+                        /* =================================
+                           SESSION EXPIRED
+                        ================================= */
+
+                        if (
+                            response.status === 401 ||
+                            response.status === 403
+                        ) {
+
+                            localStorage.removeItem(
+                                "adminToken"
+                            );
+
+                            localStorage.removeItem(
+                                "adminUser"
+                            );
+
+
+                            alert(
+                                "Admin session expired. Please login again."
+                            );
+
+
+                            window.location.href =
+                                "login.html";
+
+                            return;
+                        }
+
+
+                        /* =================================
+                           BACKEND ERROR
+                        ================================= */
+
+                        if (
+                            !response.ok ||
+                            !result.success
+                        ) {
+
+                            alert(
+                                "Order could not be rejected.\n\n" +
+                                (
+                                    result.message ||
+                                    result.error ||
+                                    "Unknown error"
+                                )
+                            );
 
                             return;
                         }
@@ -3250,8 +3458,6 @@ async function rejectOrder(orderId) {
     );
 
 }
- 
-
 /* =====================================================
    GENERATE BILL
    CUSTOM CONFIRM DIALOG
@@ -5762,7 +5968,7 @@ async function quickStockUpdate(productId) {
 
 
         const product =
-            products.find(function(item) {
+            allProducts.find(function(item) {
 
                 return Number(item.id) ===
                     numericProductId;
@@ -6088,15 +6294,7 @@ async function deactivateProduct(productId) {
                    koi specific reload function hai.
                 */
 
-                if (
-                    typeof loadProducts ===
-                    "function"
-                ) {
-
-                    await loadProducts();
-
-                }
-
+                await loadAdminProducts();
 
             } catch (error) {
 
@@ -7571,11 +7769,26 @@ document.addEventListener(
 
 async function adminLogout() {
 
+    const adminToken =
+        localStorage.getItem("adminToken");
+
     try {
 
-        await supabaseClient
-            .auth
-            .signOut();
+        if (adminToken) {
+
+            await fetch(
+                `${BACKEND_URL}/api/admin/logout`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Authorization":
+                            `Bearer ${adminToken}`
+                    }
+                }
+            );
+
+        }
 
     } catch (error) {
 
@@ -7586,16 +7799,20 @@ async function adminLogout() {
 
     }
 
+    // Admin token remove
+    localStorage.removeItem(
+        "adminToken"
+    );
 
+    // Admin user remove
     localStorage.removeItem(
         "adminUser"
     );
 
-
+    // Login page par wapas
     window.location.href =
         "login.html";
 }
-
 
 /* =====================================================
    PRINT CARTON STICKER
