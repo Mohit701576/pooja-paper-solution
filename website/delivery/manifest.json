@@ -1,0 +1,10 @@
+{
+    "name": "Pooja Paper Solution Delivery",
+    "short_name": "PPS Delivery",
+    "description": "Pooja Paper Solution Delivery Boy App",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4f46e5",
+    "orientation": "portrait-primary"
+}
