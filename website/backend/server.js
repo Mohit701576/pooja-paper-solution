@@ -2870,10 +2870,10 @@ const orderDate =
         }
     );
                 doc.text(
-                    `Date: ${orderDate}`,
-                    left,
-                    infoTop + 47
-                );
+    `Date: ${orderDate} (+5:30)`,
+    left,
+    infoTop + 47
+);
 
 
                 doc
