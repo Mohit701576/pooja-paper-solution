@@ -3827,10 +3827,11 @@ async function placeOrder() {
 
         if (addressError) {
 
-            console.error(
-                "Address Error:",
-                addressError
-            );
+            console.error("Address Error:", error);
+console.error("Address Error Code:", error?.code);
+console.error("Address Error Message:", error?.message);
+console.error("Address Error Details:", error?.details);
+console.error("Address Error Hint:", error?.hint);
 
             throw new Error(
                 "Address could not be saved."
