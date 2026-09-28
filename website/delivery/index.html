@@ -1,6467 +1,872 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pooja Paper Solution - Delivery</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   MAIN SCREEN
+===================================================== */
+
+.welcome-screen {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    min-height: 560px;
+    overflow: hidden;
+    perspective: 1000px;
+    background:
+        linear-gradient(
+            to bottom,
+            #dff5ff 0%,
+            #f5fbff 52%,
+            #eaf4f8 100%
+        );
+}
+
+
+/* =====================================================
+   BRAND AREA
+===================================================== */
+
+.brand-area {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    text-align: center;
+    z-index: 30;
+}
+
+.brand {
+    font-size: clamp(28px, 4vw, 58px);
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #111827;
+    text-shadow:
+        0 3px 8px rgba(0,0,0,0.12);
+}
+
+.brand span {
+    display: inline-block;
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.info-container {
+    position: absolute;
+    top: 30.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    text-align: center;
+    z-index: 35;
+}
+
+.subtitle {
+    font-size: clamp(16px, 2vw, 27px);
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.tagline {
+    margin-top: 8px;
+    font-size: clamp(12px, 1.5vw, 18px);
+    color: #6b7280;
+}
 
-    <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+/* =====================================================
+   CITY / BUILDINGS
+===================================================== */
 
-    <title>Delivery Boy Panel - Pooja Paper Solution</title>
+.city {
+    position: absolute;
+    bottom: 34%;
+    left: 0;
 
-    <script
-        src="https://unpkg.com/html5-qrcode"
-        type="text/javascript"
-    ></script>
+    width: 100%;
+    height: 115px;
 
-    <style>
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f8;
-            color: #1f2937;
-            min-height: 100vh;
-        }
-
-        button,
-        input,
-        textarea {
-            font-family: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        /* =====================================================
-           APP
-        ===================================================== */
-
-        .app {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
-
-        .sidebar {
-            width: 250px;
-            background: #111827;
-            color: white;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            padding: 20px 15px;
-            transition: 0.3s ease;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            margin-bottom: 25px;
-        }
-
-        .brand-icon {
-            font-size: 30px;
-        }
-
-        .brand-text {
-            font-size: 19px;
-            font-weight: 700;
-        }
-
-        /* =====================================================
-           BRAND RAINBOW
-        ===================================================== */
-
-        .brand-text {
-            background: linear-gradient(
-                90deg,
-                #ff004c,
-                #ff7a00,
-                #ffd500,
-                #22c55e,
-                #00c7be,
-                #008cff,
-                #6d5dfc,
-                #c026d3,
-                #ff004c
-            );
-
-            background-size: 300% 100%;
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-
-            animation: brandRainbow 4s linear infinite;
-        }
-
-        @keyframes brandRainbow {
-
-            0% {
-                background-position: 0% 50%;
-            }
-
-            100% {
-                background-position: 300% 50%;
-            }
-
-        }
-
-        .delivery-name {
-            background: #1f2937;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .delivery-name strong {
-            display: block;
-            margin-top: 5px;
-            color: #93c5fd;
-        }
-
-        .nav {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .nav button {
-            width: 100%;
-            border: none;
-            background: transparent;
-            color: #d1d5db;
-            text-align: left;
-            padding: 13px 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .nav button:hover,
-        .nav button.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        .logout-button {
-            margin-top: 25px;
-            background: #dc2626 !important;
-            color: white !important;
-        }
-
-        /* =====================================================
-           MAIN
-        ===================================================== */
-
-        .main {
-            margin-left: 250px;
-            width: calc(100% - 250px);
-            min-height: 100vh;
-        }
-
-        .topbar {
-            background: white;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 25px;
-            border-bottom: 1px solid #e5e7eb;
-            position: sticky;
-            top: 0;
-            z-index: 500;
-        }
-
-        .menu-button {
-            display: none;
-            border: none;
-            background: #2563eb;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            font-size: 20px;
-        }
-
-        .top-title {
-            font-size: 21px;
-            font-weight: 700;
-        }
-
-        .top-user {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .content {
-            padding: 25px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .page-heading {
-            margin-bottom: 20px;
-        }
-
-        .page-heading-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .page-heading-text {
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .page-heading h1 {
-            font-size: 25px;
-            margin-bottom: 6px;
-        }
-
-        .page-heading p {
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        /* =====================================================
-           REFRESH
-        ===================================================== */
-
-        .dashboard-refresh-btn {
-            border: none;
-            background: #2563eb;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            min-height: 42px;
-            white-space: nowrap;
-            transition: 0.2s ease;
-        }
-
-        .dashboard-refresh-btn:hover {
-            background: #1d4ed8;
-        }
+    opacity: 0.30;
 
-        .dashboard-refresh-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        /* =====================================================
-           STATS
-        ===================================================== */
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 18px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-size: 26px;
-            font-weight: 700;
-        }
-
-        /* =====================================================
-           CARD
-        ===================================================== */
-
-        .card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .card-subtitle {
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 18px;
-        }
-
-        /* =====================================================
-           FLOW
-        ===================================================== */
-
-        .flow-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .flow-step {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            font-size: 14px;
-        }
-
-        .flow-number {
-            width: 27px;
-            height: 27px;
-            border-radius: 50%;
-            background: #2563eb;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
+    z-index: 2;
 
-        /* =====================================================
-           QR
-        ===================================================== */
-
-        #qr-reader {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 18px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #f9fafb;
-        }
-
-        #qr-reader video {
-            width: 100% !important;
-            height: auto !important;
-        }
+    pointer-events: none;
+}
 
-        .scanner-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-        }
+.building {
+    position: relative;
+    flex: 1;
+    min-width: 30px;
 
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
-
-        .btn {
-            border: none;
-            border-radius: 8px;
-            padding: 11px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: 0.2s;
-        }
+    background:
+        linear-gradient(
+            to bottom,
+            #7c8794,
+            #59636e
+        );
 
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
+    border-radius: 3px 3px 0 0;
+}
 
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
+.building:nth-child(1) {
+    height: 58%;
+}
 
-        .btn-success {
-            background: #16a34a;
-            color: white;
-        }
+.building:nth-child(2) {
+    height: 82%;
+}
 
-        .btn-success:hover {
-            background: #15803d;
-        }
+.building:nth-child(3) {
+    height: 66%;
+}
 
-        .btn-secondary {
-            background: #475569;
-            color: white;
-        }
+.building:nth-child(4) {
+    height: 94%;
+}
 
-        .btn-secondary:hover {
-            background: #334155;
-        }
+.building:nth-child(5) {
+    height: 70%;
+}
 
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-        }
+.building:nth-child(6) {
+    height: 88%;
+}
 
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
+.building:nth-child(7) {
+    height: 62%;
+}
 
-        .btn-light {
-            background: #e5e7eb;
-            color: #111827;
-        }
+.building:nth-child(8) {
+    height: 97%;
+}
 
-        .btn-light:hover {
-            background: #d1d5db;
-        }
+.building:nth-child(9) {
+    height: 73%;
+}
 
-        .btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
+.building:nth-child(10) {
+    height: 90%;
+}
 
-        #galleryScanBtn {
-            width: 190px !important;
-            height: 44px !important;
-            min-width: 190px !important;
-            max-width: 190px !important;
-            padding: 0 !important;
-            box-sizing: border-box !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            border: none !important;
-            border-radius: 8px !important;
-            font-size: 14px !important;
-            font-weight: 600 !important;
-        }
+.building:nth-child(11) {
+    height: 64%;
+}
 
-        /* =====================================================
-           FORM
-        ===================================================== */
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+.building:nth-child(12) {
+    height: 84%;
+}
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
 
-        .form-group.full {
-            grid-column: 1 / -1;
-        }
+/* =====================================================
+   BUILDING WINDOWS
+===================================================== */
 
-        .form-group label {
-            font-size: 13px;
-            font-weight: 600;
-        }
+.building::before {
+    content: "";
 
-        .form-group input,
-        .custom-delivery-dialog-input {
-            width: 100%;
-            height: 44px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 0 12px;
-            font-size: 14px;
-            outline: none;
-        }
+    position: absolute;
+    top: 12px;
+    left: 10px;
 
-        .form-group input:focus {
-            border-color: #2563eb;
-        }
+    width: calc(100% - 20px);
+    height: calc(100% - 22px);
 
-        /* =====================================================
-           OTP
-        ===================================================== */
-
-        #otpSection {
-            display: none;
-            margin-top: 20px;
-            padding: 18px;
-            border: 1px solid #bfdbfe;
-            background: #eff6ff;
-            border-radius: 10px;
-        }
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.65) 2px,
+            transparent 2px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.65) 2px,
+            transparent 2px
+        );
 
-        #otpSection.show {
-            display: block;
-        }
+    background-size: 15px 17px;
 
-        .otp-info {
-            font-size: 14px;
-            margin-bottom: 15px;
-            color: #1e3a8a;
-        }
+    opacity: 0.7;
+}
 
-        #deliveryOTP {
-            max-width: 250px;
-            letter-spacing: 5px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-        }
 
-        /* =====================================================
-           INLINE MESSAGE
-        ===================================================== */
-
-        .message {
-            display: none;
-            padding: 12px 14px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 14px;
-        }
+/* =====================================================
+   ROAD AREA
+===================================================== */
 
-        .message.show {
-            display: block;
-        }
+.road-area {
+    position: absolute;
 
-        .message.info {
-            background: #dbeafe;
-            color: #1e40af;
-        }
+    left: 0;
+    bottom: 0;
 
-        .message.success {
-            background: #dcfce7;
-            color: #166534;
-        }
+    width: 100%;
+    height: 37%;
+    min-height: 215px;
 
-        .message.error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+    overflow: hidden;
 
-        /* =====================================================
-           SUCCESS
-        ===================================================== */
-
-        #successBox {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: #dcfce7;
-            border: 1px solid #86efac;
-            color: #166534;
-            border-radius: 10px;
-        }
+    z-index: 5;
 
-        #successBox.show {
-            display: block;
-        }
+    background:
+        linear-gradient(
+            to bottom,
+            #d8e5ea 0%,
+            #c9d9df 14%,
+            #b7c8cf 15%,
+            #aabdc5 100%
+        );
+}
 
-        .success-title {
-            font-size: 19px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
 
-        #completedOrderInfo {
-            margin-top: 8px;
-            font-size: 14px;
-            line-height: 1.7;
-        }
+/* =====================================================
+   SIDEWALK
+===================================================== */
 
-        /* =====================================================
-           ORDERS
-        ===================================================== */
-
-        .order-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+.sidewalk {
+    position: absolute;
 
-        .delivery-order-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 16px;
-            background: #ffffff;
-            transition: 0.2s;
-        }
+    left: 0;
+    top: 0;
 
-        .delivery-order-card:hover {
-            border-color: #93c5fd;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
+    width: 100%;
+    height: 28%;
 
-        .order-card-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #dfe8eb 0px,
+            #dfe8eb 50px,
+            #c8d4d9 51px,
+            #c8d4d9 53px
+        );
 
-        .order-number {
-            font-size: 17px;
-            font-weight: 700;
-            color: #111827;
-        }
+    border-top: 2px solid rgba(0,0,0,0.08);
 
-        .order-id-text {
-            margin-top: 5px;
-            font-size: 12px;
-            color: #6b7280;
-            word-break: break-all;
-        }
+    z-index: 1;
+}
 
-        .order-status {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 10px;
-            border-radius: 20px;
-            background: #dbeafe;
-            color: #1d4ed8;
-            font-size: 12px;
-            font-weight: 700;
-        }
 
-        .status-completed {
-            background: #dcfce7;
-            color: #166534;
-        }
+/* =====================================================
+   ROAD
+===================================================== */
 
-        .status-cancelled {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+.road {
+    position: absolute;
 
-        .status-out {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
+    left: -5%;
+    bottom: -7%;
 
-        .order-details-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 15px;
-        }
+    width: 110%;
+    height: 64%;
 
-        .order-detail {
-            background: #f8fafc;
-            border-radius: 8px;
-            padding: 10px;
-        }
+    background:
+        linear-gradient(
+            to bottom,
+            #50565c 0%,
+            #3d4348 55%,
+            #2f3438 100%
+        );
 
-        .order-detail-label {
-            color: #6b7280;
-            font-size: 11px;
-            margin-bottom: 4px;
-        }
+    transform:
+        perspective(650px)
+        rotateX(7deg);
 
-        .order-detail-value {
-            font-size: 13px;
-            font-weight: 600;
-            word-break: break-word;
-        }
+    border-top: 3px solid rgba(255,255,255,0.18);
 
-        .order-card-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 15px;
-        }
+    z-index: 1;
+}
 
-        .qr-status {
-            font-size: 12px;
-            color: #166534;
-            margin-top: 10px;
-        }
 
-        .reason-box {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-        }
+/* =====================================================
+   ROAD LANE MARKING
+===================================================== */
 
-        .reason-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #9a3412;
-            margin-bottom: 5px;
-        }
+.road::after {
+    content: "";
 
-        .reason-text {
-            font-size: 13px;
-            color: #7c2d12;
-            line-height: 1.5;
-            word-break: break-word;
-        }
+    position: absolute;
 
-        .history-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-        }
+    left: -5%;
+    top: 48%;
 
-        .empty-box {
-            text-align: center;
-            padding: 50px 20px;
-            color: #6b7280;
-        }
+    width: 110%;
+    height: 5px;
 
-        .empty-icon {
-            font-size: 45px;
-            margin-bottom: 12px;
-        }
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,0.75) 0px,
+            rgba(255,255,255,0.75) 70px,
+            transparent 70px,
+            transparent 135px
+        );
 
-        .loading {
-            display: none;
-            margin-top: 10px;
-            font-size: 13px;
-            color: #6b7280;
-        }
+    opacity: 0.8;
+}
 
-        .loading.show {
-            display: block;
-        }
 
-        /* =====================================================
-           SIDEBAR OVERLAY
-        ===================================================== */
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 900;
-        }
+/* =====================================================
+   DELIVERY GROUP
+   IMPORTANT:
+   IT IS OUTSIDE ROAD-AREA
+   SO IT CAN STAY ABOVE BUILDINGS
+===================================================== */
 
-        .sidebar-overlay.show {
-            display: block;
-        }
+.delivery-group {
+    position: absolute;
 
-        /* =====================================================
-           CUSTOM NOTIFICATION
-        ===================================================== */
+    left: -360px;
 
-        .custom-notification {
-            position: fixed;
-            top: 22px;
-            right: 22px;
-            width: min(430px, calc(100% - 30px));
-            min-height: 78px;
+    /*
+       Because delivery-group is now directly inside
+       welcome-screen, bottom is calculated from screen.
+    */
+    bottom: 8%;
 
-            display: flex;
-            align-items: center;
-            gap: 13px;
+    width: 270px;
+    height: auto;
 
-            padding: 14px 15px;
+    z-index: 99999;
 
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
+    pointer-events: none;
 
-            box-shadow:
-                0 20px 50px rgba(0,0,0,0.18);
+    animation:
+        deliveryRide
+        6s
+        cubic-bezier(.20,.70,.30,1)
+        forwards;
+}
 
-            z-index: 10000000;
 
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+/* =====================================================
+   DELIVERY IMAGE
+===================================================== */
 
-            transform: translateY(-18px) scale(.97);
+.delivery-image {
+    position: relative;
 
-            transition:
-                opacity .25s ease,
-                transform .25s ease,
-                visibility .25s ease;
-        }
+    display: block;
 
-        .custom-notification.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transform: translateY(0) scale(1);
-        }
+    width: 100%;
+    height: auto;
 
-        .custom-notification-icon {
-            width: 45px;
-            height: 45px;
-            min-width: 45px;
+    object-fit: contain;
 
-            border-radius: 50%;
+    z-index: 99999;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    filter:
+        drop-shadow(
+            0 10px 8px rgba(0,0,0,0.25)
+        );
 
-            background: #dcfce7;
-            color: #15803d;
+    animation:
+        riderBounce
+        0.32s
+        ease-in-out
+        infinite
+        alternate;
+}
 
-            font-size: 22px;
-            font-weight: 800;
-        }
 
-        .custom-notification-content {
-            flex: 1;
-            min-width: 0;
-        }
+/* =====================================================
+   RIDER BOUNCE
+===================================================== */
 
-        .custom-notification-content strong {
-            display: block;
-            color: #111827;
-            font-size: 15px;
-            margin-bottom: 4px;
-        }
+@keyframes riderBounce {
 
-        .custom-notification-content p {
-            margin: 0;
-            color: #6b7280;
-            font-size: 13px;
-            line-height: 1.45;
-            word-break: break-word;
-        }
+    from {
+        transform: translateY(0);
+    }
 
-        .custom-notification-close {
-            width: 32px;
-            height: 32px;
-            min-width: 32px;
+    to {
+        transform: translateY(-3px);
+    }
+}
 
-            border: none;
-            border-radius: 50%;
 
-            background: #f3f4f6;
-            color: #6b7280;
+/* =====================================================
+   DESKTOP DELIVERY ANIMATION
+===================================================== */
 
-            font-size: 22px;
-            line-height: 1;
+@keyframes deliveryRide {
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    0% {
+        left: -360px;
+        transform:
+            translateY(0)
+            scale(0.90);
+    }
 
-        .custom-notification-close:hover {
-            background: #e5e7eb;
-            color: #111827;
-        }
+    18% {
+        left: 10%;
+        transform:
+            translateY(-3px)
+            scale(0.95);
+    }
 
-        .custom-notification.error
-        .custom-notification-icon {
-            background: #fee2e2;
-            color: #dc2626;
-        }
+    42% {
+        left: 36%;
+        transform:
+            translateY(0)
+            scale(1);
+    }
 
-        .custom-notification.warning
-        .custom-notification-icon {
-            background: #fef3c7;
-            color: #d97706;
-        }
+    65% {
+        left: 61%;
+        transform:
+            translateY(-3px)
+            scale(1.02);
+    }
 
-        .custom-notification.info
-        .custom-notification-icon {
-            background: #dbeafe;
-            color: #2563eb;
-        }
+    100% {
+        left: calc(100% + 30px);
+        transform:
+            translateY(0)
+            scale(1.04);
+    }
+}
 
-        /* =====================================================
-           CUSTOM DELIVERY DIALOG
-        ===================================================== */
 
-        .custom-delivery-dialog {
-            position: fixed;
-            inset: 0;
+/* =====================================================
+   LOADING AREA
+===================================================== */
 
-            display: none;
+.loading-area {
+    position: absolute;
 
-            align-items: center;
-            justify-content: center;
+    left: 50%;
+    bottom: 5%;
 
-            padding: 20px;
+    transform: translateX(-50%);
 
-            background: rgba(0,0,0,.58);
+    text-align: center;
 
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+    z-index: 150;
+}
 
-            z-index: 10000001;
-        }
+.loading-text {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+}
 
-        .custom-delivery-dialog.show {
-            display: flex;
-        }
+.loading-dots {
+    margin-top: 7px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
 
-        .custom-delivery-dialog-box {
-            position: relative;
+.loading-dots span {
+    width: 6px;
+    height: 6px;
 
-            width: min(450px, 100%);
+    border-radius: 50%;
 
-            background: #ffffff;
+    background: #374151;
 
-            border-radius: 20px;
+    animation:
+        loadingDot
+        1s
+        infinite
+        ease-in-out;
+}
 
-            padding: 28px;
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
 
-            text-align: center;
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.30s;
+}
 
-            box-shadow:
-                0 25px 70px rgba(0,0,0,.30);
+@keyframes loadingDot {
 
-            animation: deliveryDialogIn .22s ease;
-        }
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.35;
+    }
 
-        @keyframes deliveryDialogIn {
+    40% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
 
-            from {
-                opacity: 0;
-                transform: translateY(18px) scale(.96);
-            }
 
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+/* =====================================================
+   EXIT ANIMATION
+===================================================== */
 
-        }
+.welcome-screen.exit {
+    animation:
+        screenExit
+        0.8s
+        ease
+        forwards;
+}
 
-        .custom-delivery-dialog-close {
-            position: absolute;
+@keyframes screenExit {
 
-            top: 12px;
-            right: 12px;
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
 
-            width: 35px;
-            height: 35px;
+    to {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+}
 
-            border: none;
-            border-radius: 50%;
 
-            background: #f3f4f6;
-            color: #6b7280;
+/* =====================================================
+   MOBILE
+===================================================== */
 
-            font-size: 23px;
+@media (max-width: 600px) {
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .welcome-screen {
+        min-height: 500px;
+    }
 
-        .custom-delivery-dialog-close:hover {
-            background: #e5e7eb;
-            color: #111827;
-        }
 
-        .custom-delivery-dialog-icon {
-            width: 64px;
-            height: 64px;
+    /* BRAND */
 
-            margin: 0 auto 15px;
+    .brand-area {
+        top: 7%;
+        width: 94%;
+    }
 
-            border-radius: 50%;
+    .brand {
+        font-size: clamp(24px, 7vw, 34px);
+        letter-spacing: 1px;
+        line-height: 1.2;
+    }
 
-            background: #fee2e2;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    /* INFO */
 
-            font-size: 29px;
-        }
+    .info-container {
+        top: 27%;
+        width: 90%;
+    }
 
-        .custom-delivery-dialog-box h3 {
-            color: #111827;
-            font-size: 21px;
-            margin-bottom: 8px;
-        }
+    .subtitle {
+        font-size: 15px;
+        line-height: 1.4;
+    }
 
-        .custom-delivery-dialog-box p {
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.5;
+    .tagline {
+        font-size: 11px;
+        margin-top: 6px;
+    }
 
-            margin-bottom: 18px;
 
-            white-space: pre-line;
-        }
+    /* CITY */
 
-        .custom-delivery-dialog-input {
-            display: none;
+    .city {
+        bottom: 38%;
 
-            height: auto !important;
-            min-height: 110px;
+        height: 70px;
 
-            resize: vertical;
+        gap: 3px;
 
-            padding: 13px;
+        z-index: 2;
+    }
 
-            background: #f9fafb;
 
-            line-height: 1.5;
-        }
+    /* ROAD */
 
-        .custom-delivery-dialog-input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37,99,235,.12);
-        }
+    .road-area {
+        height: 40%;
+        min-height: 215px;
 
-        .custom-delivery-dialog-actions {
-            display: flex;
-            gap: 10px;
+        z-index: 5;
+    }
 
-            margin-top: 20px;
-        }
 
-        .custom-delivery-dialog-btn {
-            flex: 1;
+    /* DELIVERY */
 
-            min-height: 44px;
+    .delivery-group {
+        bottom: 9%;
 
-            padding: 10px 16px;
+        width: 240px;
 
-            border: none;
-            border-radius: 10px;
+        z-index: 99999;
 
-            font-size: 14px;
-            font-weight: 700;
-        }
+        animation-name: deliveryRideMobile;
+    }
 
-        .custom-delivery-dialog-btn.secondary {
-            background: #f3f4f6;
-            color: #374151;
-        }
 
-        .custom-delivery-dialog-btn.secondary:hover {
-            background: #e5e7eb;
-        }
+    /* MOBILE DELIVERY ANIMATION */
 
-        .custom-delivery-dialog-btn.danger {
-            background: #dc2626;
-            color: white;
-        }
+    @keyframes deliveryRideMobile {
 
-        .custom-delivery-dialog-btn.danger:hover {
-            background: #b91c1c;
+        0% {
+            left: -245px;
+            transform:
+                translateY(0)
+                scale(0.70);
         }
 
-        .custom-delivery-dialog-btn.primary {
-            background: #2563eb;
-            color: white;
+        18% {
+            left: 2%;
+            transform:
+                translateY(-2px)
+                scale(0.72);
         }
 
-        .custom-delivery-dialog-btn.primary:hover {
-            background: #1d4ed8;
+        42% {
+            left: 27%;
+            transform:
+                translateY(0)
+                scale(0.74);
         }
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
-
-        @media (max-width: 1000px) {
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .order-details-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
+        65% {
+            left: 53%;
+            transform:
+                translateY(-2px)
+                scale(0.75);
         }
-
-        @media (max-width: 768px) {
-
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .topbar {
-                padding: 12px 15px;
-            }
-
-            .menu-button {
-                display: block;
-            }
-
-            .top-title {
-                font-size: 17px;
-            }
-
-            .top-user {
-                display: none;
-            }
-
-            .content {
-                padding: 15px;
-            }
-
-            .page-heading-top {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .dashboard-refresh-btn {
-                width: 100%;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-
-            .stat-card {
-                padding: 14px;
-            }
-
-            .stat-value {
-                font-size: 22px;
-            }
-
-            .card {
-                padding: 16px;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full {
-                grid-column: auto;
-            }
-
-            .scanner-buttons {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .scanner-buttons .btn {
-                width: 100%;
-            }
-
-            #galleryScanBtn {
-                width: 100% !important;
-                min-width: 100% !important;
-                max-width: 100% !important;
-                height: 40px !important;
-                min-height: 40px !important;
-                max-height: 40px !important;
-                padding: 0 15px !important;
-            }
-
-            #qr-reader {
-                max-width: 100%;
-            }
-
-            #deliveryOTP {
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .order-details-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .order-card-actions {
-                justify-content: stretch;
-            }
-
-            .order-card-actions .btn {
-                width: 100%;
-            }
-
-            .custom-notification {
-                top: 12px;
-                right: 12px;
-                width: calc(100% - 24px);
-            }
-
-            .custom-delivery-dialog {
-                padding: 15px;
-            }
-
-            .custom-delivery-dialog-box {
-                padding: 24px 18px;
-                border-radius: 17px;
-            }
-
-            .custom-delivery-dialog-icon {
-                width: 56px;
-                height: 56px;
-                font-size: 25px;
-            }
-
-            .custom-delivery-dialog-box h3 {
-                font-size: 19px;
-            }
-
-            .custom-delivery-dialog-box p {
-                font-size: 13px;
-            }
-
-            .custom-delivery-dialog-actions {
-                flex-direction: column;
-            }
-
-            .custom-delivery-dialog-btn {
-                width: 100%;
-            }
 
+        100% {
+            left: calc(100% + 15px);
+            transform:
+                translateY(0)
+                scale(0.76);
         }
+    }
 
-        @media (max-width: 430px) {
 
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+    /* LOADING */
 
-            .page-heading h1 {
-                font-size: 21px;
-            }
+    .loading-area {
+        bottom: 5%;
+    }
 
-            .card-title {
-                font-size: 17px;
-            }
-
-            .order-card-top {
-                flex-direction: column;
-            }
-
-        }
+    .loading-text {
+        font-size: 11px;
+    }
+}
 
-    </style>
 
-<!-- PWA APP CONFIG -->
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
 
-<link
-    rel="manifest"
-    href="manifest.json"
->
+@media (max-width: 380px) {
 
-<meta
-    name="theme-color"
-    content="#4f46e5"
->
+    .brand {
+        font-size: 23px;
+    }
 
-<meta
-    name="mobile-web-app-capable"
-    content="yes"
->
+    .subtitle {
+        font-size: 14px;
+    }
 
-<meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
->
+    .tagline {
+        font-size: 10px;
+    }
 
-<meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="default"
->
 
-<meta
-    name="apple-mobile-web-app-title"
-    content="PPS Delivery"
->
+    .delivery-group {
+        bottom: 10%;
+        width: 220px;
+        z-index: 99999;
+    }
+}
 
+</style>
 </head>
+
 
 <body>
 
-
-<!-- =========================================================
-     CUSTOM NOTIFICATION
-========================================================= -->
-
-<div
-    id="customNotification"
-    class="custom-notification"
->
-
-    <div
-        id="customNotificationIcon"
-        class="custom-notification-icon"
-    >
-        ✓
-    </div>
-
-    <div class="custom-notification-content">
-
-        <strong id="customNotificationTitle">
-            Success
-        </strong>
-
-        <p id="customNotificationMessage">
-            Something happened.
-        </p>
-
-    </div>
-
-    <button
-        type="button"
-        class="custom-notification-close"
-        onclick="hideNotification()"
-        aria-label="Close notification"
-    >
-        ×
-    </button>
-
-</div>
+<div class="welcome-screen" id="welcomeScreen">
 
 
-<!-- =========================================================
-     CUSTOM DELIVERY DIALOG
-========================================================= -->
+    <!-- =================================================
+         BRAND
+    ================================================== -->
 
-<div
-    id="customDeliveryDialog"
-    class="custom-delivery-dialog"
->
-
-    <div class="custom-delivery-dialog-box">
-
-        <button
-            type="button"
-            class="custom-delivery-dialog-close"
-            onclick="closeDeliveryDialog()"
-            aria-label="Close"
-        >
-            ×
-        </button>
-
-        <div
-            id="customDeliveryDialogIcon"
-            class="custom-delivery-dialog-icon"
-        >
-            ⚠️
-        </div>
-
-        <h3 id="customDeliveryDialogTitle">
-            Confirm Action
-        </h3>
-
-        <p id="customDeliveryDialogMessage">
-            Are you sure?
-        </p>
-
-        <textarea
-            id="customDeliveryDialogInput"
-            class="custom-delivery-dialog-input"
-            placeholder="Enter reason..."
-            maxlength="500"
-        ></textarea>
-
-        <div class="custom-delivery-dialog-actions">
-
-            <button
-                type="button"
-                class="custom-delivery-dialog-btn secondary"
-                onclick="closeDeliveryDialog()"
-            >
-                Cancel
-            </button>
-
-            <button
-                type="button"
-                id="customDeliveryDialogConfirmBtn"
-                class="custom-delivery-dialog-btn danger"
-                onclick="confirmDeliveryDialog()"
-            >
-                Confirm
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<div class="app">
-
-
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
-
-    <aside
-        class="sidebar"
-        id="sidebar"
-    >
+    <div class="brand-area">
 
         <div class="brand">
+            <span>POOJA PAPER SOLUTION</span>
+        </div>
 
-            <div class="brand-icon">
-                📦
+    </div>
+
+
+    <!-- =================================================
+         INFO
+    ================================================== -->
+
+    <div class="info-container">
+
+        <div class="subtitle">
+            Your trusted partner for quality disposable products
+        </div>
+
+        <div class="tagline">
+            Fast Delivery • Quality Products • Easy Ordering
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CITY / BUILDINGS
+    ================================================== -->
+
+    <div class="city">
+
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+
+    </div>
+
+
+    <!-- =================================================
+         ROAD
+    ================================================== -->
+
+    <div class="road-area">
+
+        <div class="sidewalk"></div>
+
+        <div class="road"></div>
+
+        <div class="loading-area">
+
+            <div class="loading-text">
+                Preparing your experience...
             </div>
 
-            <div class="brand-text">
-                Pooja Paper Solution
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
 
         </div>
 
-        <div class="delivery-name">
+    </div>
 
-            Delivery Boy
 
-            <strong id="deliveryBoyName">
-                Delivery Boy
-            </strong>
+    <!-- =================================================
+         DELIVERY BOY
 
-        </div>
+         IMPORTANT:
+         THIS IS OUTSIDE ROAD-AREA
 
-        <nav class="nav">
+         Therefore:
+         Building z-index = 2
+         Road z-index = 5
+         Delivery z-index = 99999
 
-            <button
-                class="active"
-                data-page="dashboardPage"
-                onclick="showPage('dashboardPage', this)"
-            >
-                🏠 Dashboard
-            </button>
+         Delivery image will appear in front.
+    ================================================== -->
 
-            <button
-                data-page="ordersPage"
-                onclick="showPage('ordersPage', this)"
-            >
-                📦 My Orders
-            </button>
+    <div class="delivery-group" id="deliveryGroup">
 
-            <button
-                data-page="onWayPage"
-                onclick="showPage('onWayPage', this)"
-            >
-                🚚 On The Way
-            </button>
+        <img
+            src="delivery-boy.png"
+            alt="Delivery Partner"
+            class="delivery-image"
+        >
 
-            <button
-                data-page="completedPage"
-                onclick="showPage('completedPage', this)"
-            >
-                ✅ Completed
-            </button>
+    </div>
 
-            <button
-                data-page="cancelledPage"
-                onclick="showPage('cancelledPage', this)"
-            >
-                ❌ Cancelled
-            </button>
-
-            <button
-                class="logout-button"
-                onclick="logoutDeliveryBoy()"
-            >
-                🚪 Logout
-            </button>
-
-        </nav>
-
-    </aside>
-
-
-    <div
-        class="sidebar-overlay"
-        id="sidebarOverlay"
-        onclick="closeSidebar()"
-    ></div>
-
-
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
-    <main class="main">
-
-
-        <!-- =================================================
-             TOPBAR
-        ================================================== -->
-
-        <header class="topbar">
-
-            <div
-                style="
-                    display:flex;
-                    align-items:center;
-                    gap:12px;
-                "
-            >
-
-                <button
-                    class="menu-button"
-                    onclick="toggleSidebar()"
-                    type="button"
-                >
-                    ☰
-                </button>
-
-                <div class="top-title">
-                    Delivery Boy Panel
-                </div>
-
-            </div>
-
-            <div class="top-user">
-
-                Logged in as:
-
-                <strong id="topDeliveryName">
-                    Delivery Boy
-                </strong>
-
-            </div>
-
-        </header>
-
-
-        <section class="content">
-
-
-            <!-- =================================================
-                 DASHBOARD
-            ================================================== -->
-
-            <div
-                class="page active"
-                id="dashboardPage"
-            >
-
-                <div class="page-heading">
-
-                    <div class="page-heading-top">
-
-                        <div class="page-heading-text">
-
-                            <h1>
-                                Delivery Dashboard
-                            </h1>
-
-                            <p>
-                                Scan carton QR, start delivery and complete delivery using customer OTP.
-                            </p>
-
-                        </div>
-
-                        <button
-                            id="dashboardRefreshBtn"
-                            type="button"
-                            class="dashboard-refresh-btn"
-                            onclick="refreshDeliveryDashboard()"
-                        >
-                            🔄 Refresh Dashboard
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="stats-grid">
-
-                    <div class="stat-card">
-
-                        <div class="stat-label">
-                            Total Orders
-                        </div>
-
-                        <div
-                            class="stat-value"
-                            id="totalOrders"
-                        >
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="stat-label">
-                            On The Way
-                        </div>
-
-                        <div
-                            class="stat-value"
-                            id="onWayOrdersCount"
-                        >
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="stat-label">
-                            Completed
-                        </div>
-
-                        <div
-                            class="stat-value"
-                            id="completedOrders"
-                        >
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="stat-label">
-                            Cancelled
-                        </div>
-
-                        <div
-                            class="stat-value"
-                            id="cancelledOrders"
-                        >
-                            0
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-title">
-                        🚚 Delivery Verification
-                    </div>
-
-                    <div class="card-subtitle">
-                        Follow the steps below to complete the delivery.
-                    </div>
-
-
-                    <div class="flow-box">
-
-                        <div class="flow-step">
-                            <div class="flow-number">1</div>
-                            <div>Scan carton QR</div>
-                        </div>
-
-                        <div class="flow-step">
-                            <div class="flow-number">2</div>
-                            <div>Start delivery</div>
-                        </div>
-
-                        <div class="flow-step">
-                            <div class="flow-number">3</div>
-                            <div>Scan the same carton QR again</div>
-                        </div>
-
-                        <div class="flow-step">
-                            <div class="flow-number">4</div>
-                            <div>Enter customer OTP</div>
-                        </div>
-
-                        <div class="flow-step">
-                            <div class="flow-number">5</div>
-                            <div>Complete delivery</div>
-                        </div>
-
-                    </div>
-
-
-                    <div id="qr-reader"></div>
-
-
-                    <div class="scanner-buttons">
-
-                        <button
-                            id="cameraScanBtn"
-                            class="btn btn-primary"
-                            type="button"
-                            onclick="startQRScanner()"
-                        >
-                            📷 Scan With Camera
-                        </button>
-
-                        <button
-                            id="galleryScanBtn"
-                            class="btn btn-secondary"
-                            type="button"
-                            onclick="openGalleryScanner()"
-                        >
-                            🖼️ Scan From Gallery
-                        </button>
-
-                    </div>
-
-
-                    <input
-                        type="file"
-                        id="galleryQRInput"
-                        accept="image/*"
-                        style="display:none;"
-                    >
-
-
-                    <div class="form-grid">
-
-                        <div class="form-group">
-
-                            <label for="orderId">
-                                Order ID
-                            </label>
-
-                            <input
-                                type="text"
-                                id="orderId"
-                                placeholder="Scan carton QR"
-                                readonly
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="qrToken">
-                                QR Token
-                            </label>
-
-                            <input
-                                type="text"
-                                id="qrToken"
-                                placeholder="QR token"
-                                readonly
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        style="
-                            margin-top:18px;
-                            display:flex;
-                            gap:10px;
-                            flex-wrap:wrap;
-                            align-items:center;
-                        "
-                    >
-
-                        <button
-                            id="startDeliveryBtn"
-                            class="btn btn-success"
-                            type="button"
-                            onclick="startDelivery()"
-                            disabled
-                        >
-                            🚚 Start Delivery
-                        </button>
-
-
-                        <div
-                            id="deliveryActionButtons"
-                            style="
-                                display:none;
-                                gap:10px;
-                                flex-wrap:wrap;
-                            "
-                        >
-
-                            <button
-                                id="completeDeliveryBtn"
-                                class="btn btn-success"
-                                type="button"
-                                onclick="completeDeliveryStartScan()"
-                            >
-                                ✅ Complete Delivery
-                            </button>
-
-                            <button
-                                id="cancelDeliveryBtn"
-                                class="btn btn-danger"
-                                type="button"
-                                onclick="cancelDeliveryFlow()"
-                            >
-                                ❌ Cancel Delivery
-                            </button>
-
-                        </div>
-
-
-                        <button
-                            class="btn btn-light"
-                            type="button"
-                            onclick="resetDeliveryForm()"
-                        >
-                            🔄 Reset
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        class="loading"
-                        id="deliveryLoading"
-                    >
-                        Please wait...
-                    </div>
-
-
-                    <div
-                        class="message"
-                        id="deliveryMessage"
-                    ></div>
-
-
-                    <div id="otpSection">
-
-                        <div class="otp-info">
-
-                            📦 Carton QR verified.
-
-                            <br>
-
-                            Now enter the
-                            <strong>6-digit customer OTP</strong>
-                            to complete this delivery.
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="deliveryOTP">
-                                Customer OTP
-                            </label>
-
-                            <input
-                                type="text"
-                                id="deliveryOTP"
-                                inputmode="numeric"
-                                maxlength="6"
-                                autocomplete="one-time-code"
-                                placeholder="Enter 6-digit OTP"
-                            >
-
-                        </div>
-
-
-                        <div
-                            style="
-                                margin-top:15px;
-                                display:flex;
-                                gap:10px;
-                                flex-wrap:wrap;
-                            "
-                        >
-
-                            <button
-                                id="verifyBtn"
-                                class="btn btn-primary"
-                                type="button"
-                                onclick="verifyDelivery()"
-                            >
-                                🔐 Verify OTP
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <div id="successBox">
-
-                        <div class="success-title">
-                            ✅ Delivery Completed
-                        </div>
-
-                        <div id="completedOrderInfo"></div>
-
-                        <div style="margin-top:15px;">
-
-                            <button
-                                class="btn btn-primary"
-                                type="button"
-                                onclick="resetDeliveryForm()"
-                            >
-                                ➕ Next Delivery
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 MY ORDERS
-            ================================================== -->
-
-            <div
-                class="page"
-                id="ordersPage"
-            >
-
-                <div class="page-heading">
-
-                    <h1>
-                        My Orders
-                    </h1>
-
-                    <p>
-                        Orders currently handled by this delivery panel.
-                    </p>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="empty-box">
-
-                        <div class="empty-icon">
-                            📦
-                        </div>
-
-                        <h3>
-                            My Orders
-                        </h3>
-
-                        <p style="margin-top:8px;">
-                            My Orders section will be connected separately.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 ON THE WAY
-            ================================================== -->
-
-            <div
-                class="page"
-                id="onWayPage"
-            >
-
-                <div class="page-heading">
-
-                    <h1>
-                        On The Way
-                    </h1>
-
-                    <p>
-                        Orders currently being delivered.
-                    </p>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="history-header">
-
-                        <div>
-
-                            <div class="card-title">
-                                🚚 On The Way Orders
-                            </div>
-
-                            <div class="card-subtitle">
-                                Select an order to continue the delivery.
-                            </div>
-
-                        </div>
-
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            onclick="loadDeliveryOrders()"
-                        >
-                            🔄 Refresh Orders
-                        </button>
-
-                    </div>
-
-
-                    <div id="onTheWayOrders">
-
-                        <div class="empty-box">
-
-                            <div class="empty-icon">
-                                ⏳
-                            </div>
-
-                            <h3>
-                                Loading Orders...
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 COMPLETED
-            ================================================== -->
-
-            <div
-                class="page"
-                id="completedPage"
-            >
-
-                <div class="page-heading">
-
-                    <h1>
-                        Completed
-                    </h1>
-
-                    <p>
-                        Successfully completed deliveries with complete details.
-                    </p>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="history-header">
-
-                        <div>
-
-                            <div class="card-title">
-                                ✅ Completed Orders
-                            </div>
-
-                            <div class="card-subtitle">
-                                All successfully completed deliveries.
-                            </div>
-
-                        </div>
-
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            onclick="loadCompletedOrders()"
-                        >
-                            🔄 Refresh
-                        </button>
-
-                    </div>
-
-
-                    <div id="completedOrdersList">
-
-                        <div class="empty-box">
-
-                            <div class="empty-icon">
-                                ⏳
-                            </div>
-
-                            <h3>
-                                Loading Completed Orders...
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 CANCELLED
-            ================================================== -->
-
-            <div
-                class="page"
-                id="cancelledPage"
-            >
-
-                <div class="page-heading">
-
-                    <h1>
-                        Cancelled
-                    </h1>
-
-                    <p>
-                        Cancelled deliveries and their cancellation reasons.
-                    </p>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="history-header">
-
-                        <div>
-
-                            <div class="card-title">
-                                ❌ Cancelled Orders
-                            </div>
-
-                            <div class="card-subtitle">
-                                All cancelled deliveries with cancellation details.
-                            </div>
-
-                        </div>
-
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            onclick="loadCancelledOrders()"
-                        >
-                            🔄 Refresh
-                        </button>
-
-                    </div>
-
-
-                    <div id="cancelledOrdersList">
-
-                        <div class="empty-box">
-
-                            <div class="empty-icon">
-                                ⏳
-                            </div>
-
-                            <h3>
-                                Loading Cancelled Orders...
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
 
 </div>
 
 
 <script>
 
-/* =========================================================
-   CONFIG
-========================================================= */
+/* =====================================================
+   POOJA PAPER SOLUTION
+   WELCOME SCREEN
+===================================================== */
 
-const BACKEND_URL =
-    "https://pooja-paper-solution-backend.onrender.com";
+const welcomeScreen =
+    document.getElementById("welcomeScreen");
 
 
-/* =========================================================
-   STATE
-========================================================= */
+/*
+   Delivery animation = 6 seconds
 
-let html5QrCode = null;
+   After animation finishes,
+   open index.html
+*/
 
-let scannerRunning = false;
+const duration = 5000;
 
-let scannerLocked = false;
 
-let deliveryStarted = false;
+/* =====================================================
+   REDIRECT
+===================================================== */
 
-let waitingForSecondScan = false;
+setTimeout(function () {
 
-let selectedFromOnWay = false;
+    welcomeScreen.classList.add("exit");
 
-let deliveryOrders = [];
+    setTimeout(function () {
 
+        window.location.href = "login.html";
 
-/* =========================================================
-   CUSTOM NOTIFICATION STATE
-========================================================= */
+    }, 800);
 
-let notificationTimer = null;
-
-
-/* =========================================================
-   CUSTOM DIALOG STATE
-========================================================= */
-
-let deliveryDialogMode = "";
-
-let deliveryDialogCallback = null;
-
-
-/* =========================================================
-   DOM READY
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const loggedIn =
-            localStorage.getItem(
-                "deliveryLoggedIn"
-            );
-
-        if (loggedIn !== "true") {
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-        loadDeliveryBoyName();
-
-        setupGalleryInput();
-
-        setupOTPInput();
-
-        updateFlowButtons();
-
-        updateDashboardStats();
-
-        loadDeliveryOrders();
-
-    }
-);
-
-
-/* =========================================================
-   DELIVERY BOY NAME
-========================================================= */
-
-function loadDeliveryBoyName() {
-
-    const name =
-        localStorage.getItem(
-            "deliveryUsername"
-        ) ||
-        "Delivery Boy";
-
-    const nameElement =
-        document.getElementById(
-            "deliveryBoyName"
-        );
-
-    const topNameElement =
-        document.getElementById(
-            "topDeliveryName"
-        );
-
-    if (nameElement) {
-        nameElement.textContent = name;
-    }
-
-    if (topNameElement) {
-        topNameElement.textContent = name;
-    }
-
-}
-
-
-/* =========================================================
-   CUSTOM NOTIFICATION
-========================================================= */
-
-function showNotification(
-    message,
-    type = "success",
-    title = ""
-) {
-
-    const notification =
-        document.getElementById(
-            "customNotification"
-        );
-
-    const icon =
-        document.getElementById(
-            "customNotificationIcon"
-        );
-
-    const notificationTitle =
-        document.getElementById(
-            "customNotificationTitle"
-        );
-
-    const notificationMessage =
-        document.getElementById(
-            "customNotificationMessage"
-        );
-
-    if (
-        !notification ||
-        !icon ||
-        !notificationTitle ||
-        !notificationMessage
-    ) {
-        console.warn(
-            "Custom notification HTML not found."
-        );
-        return;
-    }
-
-    if (notificationTimer) {
-        clearTimeout(notificationTimer);
-    }
-
-    notification.classList.remove(
-        "error",
-        "warning",
-        "info",
-        "show"
-    );
-
-    const text =
-        String(message || "");
-
-    const lowerText =
-        text.toLowerCase();
-
-    let notificationType =
-        type;
-
-    let notificationTitleText =
-        title || "Success";
-
-
-    /* ERROR DETECTION */
-
-    if (
-        lowerText.includes("error") ||
-        lowerText.includes("failed") ||
-        lowerText.includes("failure") ||
-        lowerText.includes("could not") ||
-        lowerText.includes("unable") ||
-        lowerText.includes("invalid") ||
-        lowerText.includes("wrong") ||
-        lowerText.includes("exception")
-    ) {
-
-        notificationType =
-            "error";
-
-        notificationTitleText =
-            title || "Error";
-
-    }
-
-
-    /* WARNING DETECTION */
-
-    else if (
-        lowerText.includes("please") ||
-        lowerText.includes("required") ||
-        lowerText.includes("cannot") ||
-        lowerText.includes("must be") ||
-        lowerText.includes("missing") ||
-        lowerText.includes("not found")
-    ) {
-
-        notificationType =
-            "warning";
-
-        notificationTitleText =
-            title || "Please Check";
-
-    }
-
-
-    /* SPECIAL SUCCESS */
-
-    if (
-        lowerText.includes("welcome")
-    ) {
-
-        notificationType =
-            "success";
-
-        notificationTitleText =
-            "Welcome";
-
-    }
-
-
-    if (
-        lowerText.includes("logged out") ||
-        lowerText.includes("logout")
-    ) {
-
-        notificationType =
-            "success";
-
-        notificationTitleText =
-            "Logged Out";
-
-    }
-
-
-    if (
-        lowerText.includes("successfully")
-    ) {
-
-        notificationType =
-            "success";
-
-    }
-
-
-    /* ICON */
-
-    if (
-        notificationType ===
-        "error"
-    ) {
-
-        icon.textContent =
-            "✕";
-
-        notification.classList.add(
-            "error"
-        );
-
-    }
-
-    else if (
-        notificationType ===
-        "warning"
-    ) {
-
-        icon.textContent =
-            "⚠";
-
-        notification.classList.add(
-            "warning"
-        );
-
-    }
-
-    else if (
-        notificationType ===
-        "info"
-    ) {
-
-        icon.textContent =
-            "ℹ";
-
-        notification.classList.add(
-            "info"
-        );
-
-    }
-
-    else {
-
-        icon.textContent =
-            "✓";
-
-    }
-
-
-    notificationTitle.textContent =
-        notificationTitleText;
-
-    notificationMessage.textContent =
-        text;
-
-
-    requestAnimationFrame(
-        function () {
-
-            notification.classList.add(
-                "show"
-            );
-
-        }
-    );
-
-
-    notificationTimer =
-        setTimeout(
-            function () {
-
-                hideNotification();
-
-            },
-            4000
-        );
-
-}
-
-
-/* =========================================================
-   HIDE NOTIFICATION
-========================================================= */
-
-function hideNotification() {
-
-    const notification =
-        document.getElementById(
-            "customNotification"
-        );
-
-    if (!notification) {
-        return;
-    }
-
-    notification.classList.remove(
-        "show"
-    );
-
-    if (notificationTimer) {
-
-        clearTimeout(
-            notificationTimer
-        );
-
-        notificationTimer = null;
-
-    }
-
-}
-
-
-/* =========================================================
-   REPLACE NATIVE ALERT
-========================================================= */
-
-window.alert =
-    function (message) {
-
-        showNotification(
-            message,
-            "success"
-        );
-
-    };
-
-
-/* =========================================================
-   CUSTOM REASON DIALOG
-========================================================= */
-
-function openDeliveryReasonDialog(
-    title,
-    message,
-    callback
-) {
-
-    const modal =
-        document.getElementById(
-            "customDeliveryDialog"
-        );
-
-    const titleElement =
-        document.getElementById(
-            "customDeliveryDialogTitle"
-        );
-
-    const messageElement =
-        document.getElementById(
-            "customDeliveryDialogMessage"
-        );
-
-    const input =
-        document.getElementById(
-            "customDeliveryDialogInput"
-        );
-
-    const button =
-        document.getElementById(
-            "customDeliveryDialogConfirmBtn"
-        );
-
-    const icon =
-        document.getElementById(
-            "customDeliveryDialogIcon"
-        );
-
-    if (
-        !modal ||
-        !titleElement ||
-        !messageElement ||
-        !input ||
-        !button
-    ) {
-
-        console.warn(
-            "Custom delivery dialog HTML not found."
-        );
-
-        return;
-
-    }
-
-    deliveryDialogMode =
-        "reason";
-
-    deliveryDialogCallback =
-        callback;
-
-    titleElement.textContent =
-        title;
-
-    messageElement.textContent =
-        message;
-
-    if (icon) {
-        icon.textContent = "❌";
-    }
-
-    input.value = "";
-
-    input.style.display =
-        "block";
-
-    input.placeholder =
-        "Enter cancellation reason...";
-
-    button.textContent =
-        "Cancel Delivery";
-
-    button.classList.remove(
-        "primary"
-    );
-
-    button.classList.add(
-        "danger"
-    );
-
-    modal.classList.add(
-        "show"
-    );
-
-    setTimeout(
-        function () {
-
-            input.focus();
-
-        },
-        100
-    );
-
-}
-
-
-/* =========================================================
-   CUSTOM CONFIRM DIALOG
-========================================================= */
-
-function openDeliveryConfirmDialog(
-    title,
-    message,
-    callback
-) {
-
-    const modal =
-        document.getElementById(
-            "customDeliveryDialog"
-        );
-
-    const titleElement =
-        document.getElementById(
-            "customDeliveryDialogTitle"
-        );
-
-    const messageElement =
-        document.getElementById(
-            "customDeliveryDialogMessage"
-        );
-
-    const input =
-        document.getElementById(
-            "customDeliveryDialogInput"
-        );
-
-    const button =
-        document.getElementById(
-            "customDeliveryDialogConfirmBtn"
-        );
-
-    const icon =
-        document.getElementById(
-            "customDeliveryDialogIcon"
-        );
-
-    if (
-        !modal ||
-        !titleElement ||
-        !messageElement ||
-        !input ||
-        !button
-    ) {
-        return;
-    }
-
-    deliveryDialogMode =
-        "confirm";
-
-    deliveryDialogCallback =
-        callback;
-
-    titleElement.textContent =
-        title;
-
-    messageElement.textContent =
-        message;
-
-    if (icon) {
-        icon.textContent =
-            "⚠️";
-    }
-
-    input.value = "";
-
-    input.style.display =
-        "none";
-
-    button.textContent =
-        "Yes, Continue";
-
-    button.classList.remove(
-        "danger"
-    );
-
-    button.classList.add(
-        "primary"
-    );
-
-    modal.classList.add(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   CONFIRM DIALOG
-========================================================= */
-
-function confirmDeliveryDialog() {
-
-    const input =
-        document.getElementById(
-            "customDeliveryDialogInput"
-        );
-
-    let value = "";
-
-    if (
-        deliveryDialogMode ===
-        "reason" &&
-        input
-    ) {
-
-        value =
-            String(
-                input.value || ""
-            ).trim();
-
-    }
-
-    const callback =
-        deliveryDialogCallback;
-
-    const mode =
-        deliveryDialogMode;
-
-    closeDeliveryDialog();
-
-    if (
-        typeof callback ===
-        "function"
-    ) {
-
-        callback(
-            mode === "reason"
-                ? value
-                : true
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   CLOSE DELIVERY DIALOG
-========================================================= */
-
-function closeDeliveryDialog() {
-
-    const modal =
-        document.getElementById(
-            "customDeliveryDialog"
-        );
-
-    if (modal) {
-
-        modal.classList.remove(
-            "show"
-        );
-
-    }
-
-    deliveryDialogMode =
-        "";
-
-    deliveryDialogCallback =
-        null;
-
-}
-
-
-/* =========================================================
-   DIALOG OUTSIDE CLICK
-========================================================= */
-
-document.addEventListener(
-    "click",
-    function (event) {
-
-        const modal =
-            document.getElementById(
-                "customDeliveryDialog"
-            );
-
-        if (!modal) {
-            return;
-        }
-
-        if (
-            modal.classList.contains(
-                "show"
-            ) &&
-            event.target === modal
-        ) {
-
-            closeDeliveryDialog();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   DIALOG ESCAPE
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            event.key !==
-            "Escape"
-        ) {
-            return;
-        }
-
-        const modal =
-            document.getElementById(
-                "customDeliveryDialog"
-            );
-
-        if (
-            modal &&
-            modal.classList.contains(
-                "show"
-            )
-        ) {
-
-            closeDeliveryDialog();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   BACKEND REQUEST
-========================================================= */
-
-async function backendRequest(
-    endpoint,
-    options = {}
-) {
-
-    const response =
-        await fetch(
-            BACKEND_URL + endpoint,
-            {
-                ...options,
-
-                headers: {
-
-                    "Content-Type":
-                        "application/json",
-
-                    ...(options.headers || {})
-
-                }
-
-            }
-        );
-
-    let result;
-
-    try {
-
-        result =
-            await response.json();
-
-    }
-
-    catch (error) {
-
-        throw new Error(
-            "Server returned an invalid response."
-        );
-
-    }
-
-    if (!response.ok) {
-
-        throw new Error(
-            result.message ||
-            "Request failed."
-        );
-
-    }
-
-    return result;
-
-}
-
-
-/* =========================================================
-   LOAD ON THE WAY ORDERS
-========================================================= */
-
-async function loadDeliveryOrders() {
-
-    const container =
-        document.getElementById(
-            "onTheWayOrders"
-        );
-
-    if (!container) {
-        return;
-    }
-
-    container.innerHTML = `
-        <div class="empty-box">
-            <div class="empty-icon">⏳</div>
-            <h3>Loading Orders...</h3>
-            <p style="margin-top:8px;">
-                Please wait.
-            </p>
-        </div>
-    `;
-
-    try {
-
-        const result =
-            await backendRequest(
-                "/api/delivery/orders"
-            );
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "Could not load delivery orders."
-            );
-
-        }
-
-        deliveryOrders =
-            Array.isArray(
-                result.orders
-            )
-                ? result.orders
-                : [];
-
-        renderOnTheWayOrders();
-
-        updateDashboardStats();
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Load delivery orders error:",
-            error
-        );
-
-        deliveryOrders = [];
-
-        container.innerHTML = `
-            <div class="empty-box">
-                <div class="empty-icon">⚠️</div>
-
-                <h3>
-                    Could Not Load Orders
-                </h3>
-
-                <p style="margin-top:8px;">
-                    ${escapeHTML(
-                        error.message ||
-                        "Please try again."
-                    )}
-                </p>
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    style="margin-top:15px;"
-                    onclick="loadDeliveryOrders()"
-                >
-                    🔄 Try Again
-                </button>
-
-            </div>
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER ON THE WAY ORDERS
-========================================================= */
-
-function renderOnTheWayOrders() {
-
-    const container =
-        document.getElementById(
-            "onTheWayOrders"
-        );
-
-    if (!container) {
-        return;
-    }
-
-    if (!deliveryOrders.length) {
-
-        container.innerHTML = `
-            <div class="empty-box">
-
-                <div class="empty-icon">
-                    🚚
-                </div>
-
-                <h3>
-                    No Orders Available
-                </h3>
-
-                <p style="margin-top:8px;">
-                    There are currently no orders waiting for delivery.
-                </p>
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-    let html =
-        '<div class="order-list">';
-
-    deliveryOrders.forEach(
-        function (order) {
-
-            const orderId =
-                order.id || "";
-
-            const orderNo =
-                order.order_no ||
-                order.orderNo ||
-                "Order";
-
-            const status =
-                String(
-                    order.status ||
-                    ""
-                ).trim();
-
-            const createdAt =
-                order.created_at
-                    ? formatDate(
-                        order.created_at
-                    )
-                    : "-";
-
-            const total =
-                order.total !== null &&
-                order.total !== undefined
-                    ? "₹" +
-                      Number(
-                          order.total
-                      ).toFixed(2)
-                    : "-";
-
-            const qrScanned =
-                order.delivery_qr_scanned_at
-                    ? "QR scanned"
-                    : "QR pending";
-
-            let statusText =
-                "Unknown";
-
-            let statusClass =
-                "status-out";
-
-            let actionButton =
-                "";
-
-            let statusMessage =
-                "";
-
-
-            /* BILL GENERATED */
-
-            if (
-                status ===
-                "bill_generated"
-            ) {
-
-                statusText =
-                    "Bill Generated";
-
-                statusClass =
-                    "status-out";
-
-                statusMessage =
-                    "📦 Bill generated by admin. Delivery can now be started.";
-
-                actionButton = `
-                    <button
-                        type="button"
-                        class="btn btn-success"
-                        onclick="selectDeliveryOrder('${escapeJSAttribute(orderId)}')"
-                    >
-                        🚚 Start Delivery
-                    </button>
-                `;
-
-            }
-
-
-            /* OUT FOR DELIVERY */
-
-            else if (
-                status ===
-                "out_for_delivery"
-            ) {
-
-                statusText =
-                    "Out For Delivery";
-
-                statusClass =
-                    "status-out";
-
-                statusMessage =
-                    "🚚 This order is currently out for delivery.";
-
-                actionButton = `
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        onclick="selectDeliveryOrder('${escapeJSAttribute(orderId)}')"
-                    >
-                        ▶️ Continue Delivery
-                    </button>
-                `;
-
-            }
-
-
-            html += `
-
-                <div class="delivery-order-card">
-
-                    <div class="order-card-top">
-
-                        <div>
-
-                            <div class="order-number">
-                                📦 ${escapeHTML(orderNo)}
-                            </div>
-
-                            <div class="order-id-text">
-                                Order ID:
-                                ${escapeHTML(orderId)}
-                            </div>
-
-                        </div>
-
-                        <div class="order-status ${statusClass}">
-                            ${escapeHTML(statusText)}
-                        </div>
-
-                    </div>
-
-
-                    <div class="order-details-grid">
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Order Number
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(orderNo)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Total
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(total)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Created
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(createdAt)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Delivery QR
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(qrScanned)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Current Status
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(statusText)}
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="qr-status">
-                        ${statusMessage}
-                    </div>
-
-
-                    <div class="order-card-actions">
-                        ${actionButton}
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-    html +=
-        "</div>";
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/* =========================================================
-   SELECT ON THE WAY ORDER
-========================================================= */
-
-function selectDeliveryOrder(
-    orderId
-) {
-
-    const order =
-        deliveryOrders.find(
-            function(item) {
-
-                return String(
-                    item.id
-                ) === String(
-                    orderId
-                );
-
-            }
-        );
-
-    if (!order) {
-
-        showMessage(
-            "Order details not found.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    stopQRScanner();
-
-    const orderStatus =
-        String(
-            order.status || ""
-        ).trim();
-
-    const orderIdInput =
-        document.getElementById(
-            "orderId"
-        );
-
-    const qrTokenInput =
-        document.getElementById(
-            "qrToken"
-        );
-
-    const startButton =
-        document.getElementById(
-            "startDeliveryBtn"
-        );
-
-    const otpSection =
-        document.getElementById(
-            "otpSection"
-        );
-
-    const successBox =
-        document.getElementById(
-            "successBox"
-        );
-
-    const otpInput =
-        document.getElementById(
-            "deliveryOTP"
-        );
-
-    if (orderIdInput) {
-        orderIdInput.value =
-            order.id || "";
-    }
-
-    if (qrTokenInput) {
-        qrTokenInput.value = "";
-    }
-
-    if (otpInput) {
-        otpInput.value = "";
-    }
-
-    otpSection?.classList.remove(
-        "show"
-    );
-
-    successBox?.classList.remove(
-        "show"
-    );
-
-
-    /* BILL GENERATED */
-
-    if (
-        orderStatus ===
-        "bill_generated"
-    ) {
-
-        selectedFromOnWay =
-            true;
-
-        deliveryStarted =
-            false;
-
-        waitingForSecondScan =
-            false;
-
-        if (startButton) {
-
-            startButton.style.display =
-                "inline-flex";
-
-            startButton.disabled =
-                false;
-
-        }
-
-        updateFlowButtons();
-
-        const dashboardButton =
-            document.querySelector(
-                '.nav button[data-page="dashboardPage"]'
-            );
-
-        showPage(
-            "dashboardPage",
-            dashboardButton
-        );
-
-        showMessage(
-            "Bill generated order selected. Click Start Delivery.",
-            "info"
-        );
-
-        return;
-
-    }
-
-
-    /* ALREADY OUT FOR DELIVERY */
-
-    if (
-        orderStatus ===
-        "out_for_delivery"
-    ) {
-
-        selectedFromOnWay =
-            true;
-
-        deliveryStarted =
-            true;
-
-        waitingForSecondScan =
-            false;
-
-        if (startButton) {
-
-            startButton.style.display =
-                "none";
-
-            startButton.disabled =
-                true;
-
-        }
-
-        updateFlowButtons();
-
-        const dashboardButton =
-            document.querySelector(
-                '.nav button[data-page="dashboardPage"]'
-            );
-
-        showPage(
-            "dashboardPage",
-            dashboardButton
-        );
-
-        showMessage(
-            "Order selected. Click Complete Delivery to scan the carton QR.",
-            "success"
-        );
-
-        setTimeout(
-            function () {
-
-                document
-                    .getElementById(
-                        "qr-reader"
-                    )
-                    ?.scrollIntoView({
-                        behavior:
-                            "smooth",
-                        block:
-                            "center"
-                    });
-
-            },
-            100
-        );
-
-        return;
-
-    }
-
-
-    showMessage(
-        "This order is not ready for delivery.",
-        "error"
-    );
-
-}
-
-
-/* =========================================================
-   QR CAMERA
-========================================================= */
-
-async function startQRScanner() {
-
-    if (
-        deliveryStarted &&
-        !waitingForSecondScan
-    ) {
-
-        showMessage(
-            "Please click Complete Delivery before scanning the carton QR again.",
-            "info"
-        );
-
-        return;
-
-    }
-
-    try {
-
-        if (scannerRunning) {
-            return;
-        }
-
-        scannerLocked =
-            false;
-
-        if (!html5QrCode) {
-
-            html5QrCode =
-                new Html5Qrcode(
-                    "qr-reader"
-                );
-
-        }
-
-        await html5QrCode.start(
-
-            {
-                facingMode:
-                    "environment"
-            },
-
-            {
-                fps: 10,
-
-                qrbox: {
-                    width: 250,
-                    height: 250
-                },
-
-                aspectRatio: 1.0
-            },
-
-            async function(
-                decodedText
-            ) {
-
-                if (scannerLocked) {
-                    return;
-                }
-
-                scannerLocked =
-                    true;
-
-                await stopQRScanner();
-
-                await handleScannedQR(
-                    decodedText
-                );
-
-            },
-
-            function() {}
-
-        );
-
-        scannerRunning =
-            true;
-
-        if (deliveryStarted) {
-
-            showMessage(
-                "Second QR scanner started. Scan the SAME carton QR.",
-                "info"
-            );
-
-        }
-
-        else {
-
-            showMessage(
-                "Camera scanner started. Point the camera at the carton QR.",
-                "info"
-            );
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "QR scanner start error:",
-            error
-        );
-
-        scannerRunning =
-            false;
-
-        showMessage(
-            "Could not start camera scanner. Please allow camera permission or use Scan From Gallery.",
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   STOP QR
-========================================================= */
-
-async function stopQRScanner() {
-
-    if (
-        !html5QrCode ||
-        !scannerRunning
-    ) {
-        return;
-    }
-
-    try {
-
-        await html5QrCode.stop();
-
-    }
-
-    catch (error) {
-
-        console.warn(
-            "QR scanner stop warning:",
-            error
-        );
-
-    }
-
-    scannerRunning =
-        false;
-
-    scannerLocked =
-        false;
-
-}
-
-
-/* =========================================================
-   GALLERY
-========================================================= */
-
-function setupGalleryInput() {
-
-    const input =
-        document.getElementById(
-            "galleryQRInput"
-        );
-
-    if (!input) {
-        return;
-    }
-
-    input.onchange =
-        handleGalleryQR;
-
-}
-
-
-function openGalleryScanner() {
-
-    if (
-        deliveryStarted &&
-        !waitingForSecondScan
-    ) {
-
-        showMessage(
-            "Please click Complete Delivery before scanning the carton QR again.",
-            "info"
-        );
-
-        return;
-
-    }
-
-    const input =
-        document.getElementById(
-            "galleryQRInput"
-        );
-
-    if (!input) {
-
-        showMessage(
-            "Gallery scanner is unavailable.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    input.value =
-        "";
-
-    input.click();
-
-}
-
-
-async function handleGalleryQR(
-    event
-) {
-
-    const file =
-        event.target.files &&
-        event.target.files[0];
-
-    if (!file) {
-        return;
-    }
-
-    await stopQRScanner();
-
-    try {
-
-        showMessage(
-            "Reading QR from selected image...",
-            "info"
-        );
-
-        if (!html5QrCode) {
-
-            html5QrCode =
-                new Html5Qrcode(
-                    "qr-reader"
-                );
-
-        }
-
-        let decodedText;
-
-        try {
-
-            decodedText =
-                await html5QrCode.scanFile(
-                    file,
-                    true
-                );
-
-        }
-
-        catch (firstError) {
-
-            decodedText =
-                await html5QrCode.scanFile(
-                    file,
-                    false
-                );
-
-        }
-
-        if (!decodedText) {
-
-            throw new Error(
-                "No QR code found in this image."
-            );
-
-        }
-
-        await handleScannedQR(
-            decodedText
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Gallery QR error:",
-            error
-        );
-
-        showMessage(
-            error.message ||
-            "Could not read a QR code from this image.",
-            "error"
-        );
-
-    }
-
-    finally {
-
-        event.target.value =
-            "";
-
-    }
-
-}
-
-
-/* =========================================================
-   UNIVERSAL QR
-========================================================= */
-
-async function handleScannedQR(
-    decodedText
-) {
-
-    if (deliveryStarted) {
-
-        if (!waitingForSecondScan) {
-
-            showMessage(
-                "Please click Complete Delivery before scanning the carton QR again.",
-                "info"
-            );
-
-            return;
-
-        }
-
-        await processSecondQRData(
-            decodedText
-        );
-
-    }
-
-    else {
-
-        processFirstQRData(
-            decodedText
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FIRST QR
-========================================================= */
-
-function processFirstQRData(
-    decodedText
-) {
-
-    try {
-
-        let qrData;
-
-        try {
-
-            qrData =
-                JSON.parse(
-                    decodedText
-                );
-
-        }
-
-        catch (error) {
-
-            throw new Error(
-                "QR does not contain valid delivery data."
-            );
-
-        }
-
-        const orderId =
-            String(
-                qrData.orderId ||
-                qrData.order_id ||
-                ""
-            ).trim();
-
-        const orderNo =
-            String(
-                qrData.orderNo ||
-                qrData.order_no ||
-                ""
-            ).trim();
-
-        const qrToken =
-            String(
-                qrData.qrToken ||
-                qrData.qr_token ||
-                ""
-            ).trim();
-
-        if (
-            !orderId ||
-            !qrToken
-        ) {
-
-            throw new Error(
-                "Invalid carton QR. Order ID or QR token is missing."
-            );
-
-        }
-
-        document.getElementById(
-            "orderId"
-        ).value =
-            orderId;
-
-        document.getElementById(
-            "qrToken"
-        ).value =
-            qrToken;
-
-        document.getElementById(
-            "startDeliveryBtn"
-        ).disabled =
-            false;
-
-        selectedFromOnWay =
-            false;
-
-        deliveryStarted =
-            false;
-
-        waitingForSecondScan =
-            false;
-
-        updateFlowButtons();
-
-        let message =
-            "Carton QR scanned successfully.";
-
-        if (orderNo) {
-
-            message +=
-                " Order No: " +
-                orderNo;
-
-        }
-
-        message +=
-            " Click Start Delivery.";
-
-        showMessage(
-            message,
-            "success"
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "First QR processing error:",
-            error
-        );
-
-        document.getElementById(
-            "startDeliveryBtn"
-        ).disabled =
-            true;
-
-        showMessage(
-            error.message ||
-            "Invalid QR code.",
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   START DELIVERY
-========================================================= */
-
-async function startDelivery() {
-
-    const orderId =
-        String(
-            document.getElementById(
-                "orderId"
-            ).value || ""
-        ).trim();
-
-    if (!orderId) {
-
-        showMessage(
-            "Please scan the carton QR first.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    const button =
-        document.getElementById(
-            "startDeliveryBtn"
-        );
-
-    button.disabled =
-        true;
-
-    showLoading(true);
-
-    try {
-
-        const result =
-            await backendRequest(
-                "/api/delivery/start-delivery",
-                {
-                    method:
-                        "POST",
-
-                    body:
-                        JSON.stringify({
-                            orderId:
-                                orderId
-                        })
-                }
-            );
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "Could not start delivery."
-            );
-
-        }
-
-        selectedFromOnWay =
-            false;
-
-        deliveryStarted =
-            true;
-
-        waitingForSecondScan =
-            false;
-
-        button.style.display =
-            "none";
-
-        document
-            .getElementById(
-                "otpSection"
-            )
-            ?.classList.remove(
-                "show"
-            );
-
-        document
-            .getElementById(
-                "successBox"
-            )
-            ?.classList.remove(
-                "show"
-            );
-
-        updateFlowButtons();
-
-        await loadDeliveryOrders();
-
-        showMessage(
-            "Delivery started successfully. Click Complete Delivery to scan the SAME carton QR again.",
-            "success"
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Start delivery error:",
-            error
-        );
-
-        button.disabled =
-            false;
-
-        showMessage(
-            error.message ||
-            "Could not start delivery.",
-            "error"
-        );
-
-    }
-
-    finally {
-
-        showLoading(false);
-
-    }
-
-}
-
-
-/* =========================================================
-   FLOW BUTTONS
-========================================================= */
-
-function updateFlowButtons() {
-
-    const actionButtons =
-        document.getElementById(
-            "deliveryActionButtons"
-        );
-
-    const startButton =
-        document.getElementById(
-            "startDeliveryBtn"
-        );
-
-    const completeButton =
-        document.getElementById(
-            "completeDeliveryBtn"
-        );
-
-    const cancelButton =
-        document.getElementById(
-            "cancelDeliveryBtn"
-        );
-
-    if (!actionButtons) {
-        return;
-    }
-
-
-    if (!deliveryStarted) {
-
-        actionButtons.style.display =
-            "none";
-
-        if (startButton) {
-
-            startButton.style.display =
-                "inline-flex";
-
-        }
-
-        return;
-
-    }
-
-
-    if (
-        deliveryStarted &&
-        !waitingForSecondScan
-    ) {
-
-        actionButtons.style.display =
-            "flex";
-
-        if (startButton) {
-
-            startButton.style.display =
-                "none";
-
-        }
-
-        if (completeButton) {
-
-            completeButton.style.display =
-                "inline-flex";
-
-        }
-
-        if (cancelButton) {
-
-            cancelButton.style.display =
-                "inline-flex";
-
-        }
-
-        return;
-
-    }
-
-
-    if (
-        deliveryStarted &&
-        waitingForSecondScan
-    ) {
-
-        actionButtons.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   COMPLETE DELIVERY -> SECOND QR
-========================================================= */
-
-async function completeDeliveryStartScan() {
-
-    if (!deliveryStarted) {
-
-        showMessage(
-            "Please start the delivery first.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (waitingForSecondScan) {
-        return;
-    }
-
-    waitingForSecondScan =
-        true;
-
-    updateFlowButtons();
-
-    showMessage(
-        "Now scan the SAME carton QR again.",
-        "info"
-    );
-
-    await startQRScanner();
-
-}
-
-
-/* =========================================================
-   SECOND QR
-========================================================= */
-
-async function processSecondQRData(
-    decodedText
-) {
-
-    try {
-
-        let qrData;
-
-        try {
-
-            qrData =
-                JSON.parse(
-                    decodedText
-                );
-
-        }
-
-        catch (error) {
-
-            throw new Error(
-                "Invalid carton QR."
-            );
-
-        }
-
-        const orderId =
-            String(
-                qrData.orderId ||
-                qrData.order_id ||
-                ""
-            ).trim();
-
-        const qrToken =
-            String(
-                qrData.qrToken ||
-                qrData.qr_token ||
-                ""
-            ).trim();
-
-        if (
-            !orderId ||
-            !qrToken
-        ) {
-
-            throw new Error(
-                "Order ID or QR token is missing."
-            );
-
-        }
-
-        const currentOrderId =
-            String(
-                document.getElementById(
-                    "orderId"
-                ).value || ""
-            ).trim();
-
-        const currentQrToken =
-            String(
-                document.getElementById(
-                    "qrToken"
-                ).value || ""
-            ).trim();
-
-        if (
-            orderId !==
-            currentOrderId
-        ) {
-
-            waitingForSecondScan =
-                true;
-
-            updateFlowButtons();
-
-            throw new Error(
-                "This QR belongs to a different order."
-            );
-
-        }
-
-        if (
-            !selectedFromOnWay &&
-            qrToken !==
-            currentQrToken
-        ) {
-
-            waitingForSecondScan =
-                true;
-
-            updateFlowButtons();
-
-            throw new Error(
-                "This is not the same carton QR."
-            );
-
-        }
-
-        showLoading(true);
-
-        const result =
-            await backendRequest(
-                "/api/delivery/scan-carton",
-                {
-                    method:
-                        "POST",
-
-                    body:
-                        JSON.stringify({
-                            orderId:
-                                orderId,
-
-                            qrToken:
-                                qrToken
-                        })
-                }
-            );
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "Carton QR could not be verified."
-            );
-
-        }
-
-        document.getElementById(
-            "qrToken"
-        ).value =
-            qrToken;
-
-        selectedFromOnWay =
-            false;
-
-        waitingForSecondScan =
-            false;
-
-        await stopQRScanner();
-
-        updateFlowButtons();
-
-        showMessage(
-            result.message ||
-            "Carton QR verified successfully. Now enter the customer OTP.",
-            "success"
-        );
-
-        document
-            .getElementById(
-                "otpSection"
-            )
-            ?.classList.add(
-                "show"
-            );
-
-        const otpInput =
-            document.getElementById(
-                "deliveryOTP"
-            );
-
-        if (otpInput) {
-
-            setTimeout(
-                function () {
-
-                    otpInput.focus();
-
-                },
-                100
-            );
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Second QR verification error:",
-            error
-        );
-
-        showMessage(
-            error.message ||
-            "Could not verify second QR scan.",
-            "error"
-        );
-
-    }
-
-    finally {
-
-        showLoading(false);
-
-    }
-
-}
-
-
-/* =========================================================
-   CANCEL DELIVERY
-   CUSTOM HTML POPUP
-========================================================= */
-
-async function cancelDeliveryFlow() {
-
-    if (!deliveryStarted) {
-
-        showMessage(
-            "Delivery has not been started.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    const orderId =
-        String(
-            document.getElementById(
-                "orderId"
-            ).value || ""
-        ).trim();
-
-    if (!orderId) {
-
-        showMessage(
-            "Order ID is missing.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    /* CUSTOM REASON POPUP */
-
-    openDeliveryReasonDialog(
-        "Cancel Delivery",
-        "Please enter the reason for cancelling this delivery.",
-
-        async function(reason) {
-
-            const cleanReason =
-                String(
-                    reason || ""
-                ).trim();
-
-
-            if (!cleanReason) {
-
-                showMessage(
-                    "Cancellation reason is required.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            if (
-                cleanReason.length >
-                500
-            ) {
-
-                showMessage(
-                    "Cancellation reason cannot exceed 500 characters.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            /* CUSTOM CONFIRM */
-
-            openDeliveryConfirmDialog(
-                "Cancel Delivery",
-                "Are you sure you want to cancel this delivery?\n\nReason: " +
-                cleanReason,
-
-                async function() {
-
-                    showLoading(true);
-
-                    try {
-
-                        await stopQRScanner();
-
-                        const result =
-                            await backendRequest(
-                                "/api/delivery/cancel-delivery",
-                                {
-                                    method:
-                                        "POST",
-
-                                    body:
-                                        JSON.stringify({
-                                            orderId:
-                                                orderId,
-
-                                            reason:
-                                                cleanReason
-                                        })
-                                }
-                            );
-
-                        if (!result.success) {
-
-                            throw new Error(
-                                result.message ||
-                                "Could not cancel delivery."
-                            );
-
-                        }
-
-                        deliveryStarted =
-                            false;
-
-                        waitingForSecondScan =
-                            false;
-
-                        selectedFromOnWay =
-                            false;
-
-                        document
-                            .getElementById(
-                                "otpSection"
-                            )
-                            ?.classList.remove(
-                                "show"
-                            );
-
-                        document
-                            .getElementById(
-                                "successBox"
-                            )
-                            ?.classList.remove(
-                                "show"
-                            );
-
-                        const startButton =
-                            document.getElementById(
-                                "startDeliveryBtn"
-                            );
-
-                        if (startButton) {
-
-                            startButton.style.display =
-                                "inline-flex";
-
-                            startButton.disabled =
-                                true;
-
-                        }
-
-                        updateFlowButtons();
-
-                        showMessage(
-                            result.message ||
-                            "Delivery cancelled successfully.",
-                            "success"
-                        );
-
-                        await loadDeliveryOrders();
-
-                        await updateDashboardStats();
-
-                    }
-
-                    catch (error) {
-
-                        console.error(
-                            "Cancel delivery error:",
-                            error
-                        );
-
-                        showMessage(
-                            error.message ||
-                            "Could not cancel delivery.",
-                            "error"
-                        );
-
-                    }
-
-                    finally {
-
-                        showLoading(false);
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   VERIFY OTP
-========================================================= */
-
-async function verifyDelivery() {
-
-    const orderId =
-        String(
-            document.getElementById(
-                "orderId"
-            ).value || ""
-        ).trim();
-
-    const qrToken =
-        String(
-            document.getElementById(
-                "qrToken"
-            ).value || ""
-        ).trim();
-
-    const otp =
-        String(
-            document.getElementById(
-                "deliveryOTP"
-            ).value || ""
-        ).trim();
-
-
-    if (!orderId) {
-
-        showMessage(
-            "Order ID is missing.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (!qrToken) {
-
-        showMessage(
-            "QR token is missing. Please scan the carton QR again.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (!deliveryStarted) {
-
-        showMessage(
-            "Delivery has not been started.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (waitingForSecondScan) {
-
-        showMessage(
-            "Please scan the same carton QR first.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (!/^\d{6}$/.test(otp)) {
-
-        showMessage(
-            "Please enter exactly 6 digits customer OTP.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "verifyBtn"
-        );
-
-    button.disabled =
-        true;
-
-    showLoading(true);
-
-
-    try {
-
-        const result =
-            await backendRequest(
-                "/api/delivery/verify-otp",
-                {
-                    method:
-                        "POST",
-
-                    body:
-                        JSON.stringify({
-
-                            orderId:
-                                orderId,
-
-                            qrToken:
-                                qrToken,
-
-                            otp:
-                                otp
-
-                        })
-                }
-            );
-
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "OTP verification failed."
-            );
-
-        }
-
-
-        await stopQRScanner();
-
-
-        deliveryStarted =
-            false;
-
-        waitingForSecondScan =
-            false;
-
-        selectedFromOnWay =
-            false;
-
-
-        document
-            .getElementById(
-                "otpSection"
-            )
-            ?.classList.remove(
-                "show"
-            );
-
-
-        const successBox =
-            document.getElementById(
-                "successBox"
-            );
-
-
-        successBox.classList.add(
-            "show"
-        );
-
-
-        const completedOrderInfo =
-            document.getElementById(
-                "completedOrderInfo"
-            );
-
-
-        const completedOrder =
-            result.order || {};
-
-
-        completedOrderInfo.innerHTML =
-
-            "Order ID: <strong>" +
-
-            escapeHTML(
-                completedOrder.id ||
-                orderId
-            ) +
-
-            "</strong><br>" +
-
-            "Order No: <strong>" +
-
-            escapeHTML(
-                completedOrder.order_no ||
-                "-"
-            ) +
-
-            "</strong><br>" +
-
-            "Status: <strong>" +
-
-            escapeHTML(
-                completedOrder.status ||
-                "completed"
-            ) +
-
-            "</strong><br>" +
-
-            "Completed At: <strong>" +
-
-            escapeHTML(
-
-                completedOrder.completed_at
-
-                    ? formatDate(
-                        completedOrder.completed_at
-                    )
-
-                    : formatDate(
-                        new Date().toISOString()
-                    )
-
-            ) +
-
-            "</strong>";
-
-
-        updateFlowButtons();
-
-
-        showMessage(
-            result.message ||
-            "Delivery completed successfully.",
-            "success"
-        );
-
-
-        await updateDashboardStats();
-
-        await loadDeliveryOrders();
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "OTP verification error:",
-            error
-        );
-
-        button.disabled =
-            false;
-
-        showMessage(
-            error.message ||
-            "Could not verify OTP.",
-            "error"
-        );
-
-    }
-
-    finally {
-
-        showLoading(false);
-
-    }
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-async function resetDeliveryForm() {
-
-    await stopQRScanner();
-
-    deliveryStarted =
-        false;
-
-    waitingForSecondScan =
-        false;
-
-    scannerLocked =
-        false;
-
-    selectedFromOnWay =
-        false;
-
-
-    const orderIdInput =
-        document.getElementById(
-            "orderId"
-        );
-
-    const qrTokenInput =
-        document.getElementById(
-            "qrToken"
-        );
-
-    const otpInput =
-        document.getElementById(
-            "deliveryOTP"
-        );
-
-
-    if (orderIdInput) {
-        orderIdInput.value =
-            "";
-    }
-
-    if (qrTokenInput) {
-        qrTokenInput.value =
-            "";
-    }
-
-    if (otpInput) {
-        otpInput.value =
-            "";
-    }
-
-
-    const startButton =
-        document.getElementById(
-            "startDeliveryBtn"
-        );
-
-
-    if (startButton) {
-
-        startButton.style.display =
-            "inline-flex";
-
-        startButton.disabled =
-            true;
-
-    }
-
-
-    const verifyButton =
-        document.getElementById(
-            "verifyBtn"
-        );
-
-
-    if (verifyButton) {
-
-        verifyButton.disabled =
-            false;
-
-    }
-
-
-    document
-        .getElementById(
-            "otpSection"
-        )
-        ?.classList.remove(
-            "show"
-        );
-
-
-    document
-        .getElementById(
-            "successBox"
-        )
-        ?.classList.remove(
-            "show"
-        );
-
-
-    updateFlowButtons();
-
-
-    showMessage(
-        "Ready for the next carton.",
-        "info"
-    );
-
-
-    const galleryInput =
-        document.getElementById(
-            "galleryQRInput"
-        );
-
-
-    if (galleryInput) {
-
-        galleryInput.value =
-            "";
-
-    }
-
-}
-
-
-/* =========================================================
-   OTP INPUT
-========================================================= */
-
-function setupOTPInput() {
-
-    const input =
-        document.getElementById(
-            "deliveryOTP"
-        );
-
-    if (!input) {
-        return;
-    }
-
-    input.addEventListener(
-        "input",
-        function() {
-
-            this.value =
-                this.value
-                    .replace(
-                        /\D/g,
-                        ""
-                    )
-                    .slice(
-                        0,
-                        6
-                    );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-function showLoading(
-    show
-) {
-
-    const element =
-        document.getElementById(
-            "deliveryLoading"
-        );
-
-    if (!element) {
-        return;
-    }
-
-    if (show) {
-
-        element.classList.add(
-            "show"
-        );
-
-    }
-
-    else {
-
-        element.classList.remove(
-            "show"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-function showMessage(
-    message,
-    type = "info"
-) {
-
-    const element =
-        document.getElementById(
-            "deliveryMessage"
-        );
-
-    if (!element) {
-        return;
-    }
-
-    element.textContent =
-        message;
-
-    element.className =
-        "message show " +
-        type;
-
-}
-
-
-/* =========================================================
-   DASHBOARD STATS
-========================================================= */
-
-async function updateDashboardStats() {
-
-    try {
-
-        const result =
-            await backendRequest(
-                "/api/delivery/stats"
-            );
-
-        if (
-            !result ||
-            !result.success
-        ) {
-
-            throw new Error(
-                result?.message ||
-                "Could not load dashboard statistics."
-            );
-
-        }
-
-        const stats =
-            result.stats || {};
-
-
-        const totalOrders =
-            Number(
-                stats.totalOrders ||
-                0
-            );
-
-
-        const onTheWayOrders =
-            Number(
-                stats.onTheWayOrders ||
-                0
-            );
-
-
-        const completedOrders =
-            Number(
-                stats.completedOrders ||
-                0
-            );
-
-
-        const cancelledOrders =
-            Number(
-                stats.cancelledOrders ||
-                0
-            );
-
-
-        const totalElement =
-            document.getElementById(
-                "totalOrders"
-            );
-
-
-        const onWayElement =
-            document.getElementById(
-                "onWayOrdersCount"
-            );
-
-
-        const completedElement =
-            document.getElementById(
-                "completedOrders"
-            );
-
-
-        const cancelledElement =
-            document.getElementById(
-                "cancelledOrders"
-            );
-
-
-        if (totalElement) {
-
-            totalElement.textContent =
-                totalOrders;
-
-        }
-
-
-        if (onWayElement) {
-
-            onWayElement.textContent =
-                onTheWayOrders;
-
-        }
-
-
-        if (completedElement) {
-
-            completedElement.textContent =
-                completedOrders;
-
-        }
-
-
-        if (cancelledElement) {
-
-            cancelledElement.textContent =
-                cancelledOrders;
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Dashboard stats error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   DASHBOARD REFRESH
-========================================================= */
-
-async function refreshDeliveryDashboard() {
-
-    const button =
-        document.getElementById(
-            "dashboardRefreshBtn"
-        );
-
-
-    if (button) {
-
-        button.disabled =
-            true;
-
-        button.innerHTML =
-            "⏳ Refreshing...";
-
-    }
-
-
-    try {
-
-        await loadDeliveryOrders();
-
-        await updateDashboardStats();
-
-
-        if (button) {
-
-            button.innerHTML =
-                "✅ Refreshed";
-
-        }
-
-
-        showMessage(
-            "Dashboard refreshed successfully.",
-            "success"
-        );
-
-
-        setTimeout(
-            function() {
-
-                if (button) {
-
-                    button.innerHTML =
-                        "🔄 Refresh Dashboard";
-
-                }
-
-            },
-            1500
-        );
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Dashboard refresh error:",
-            error
-        );
-
-
-        if (button) {
-
-            button.innerHTML =
-                "❌ Refresh Failed";
-
-        }
-
-
-        setTimeout(
-            function() {
-
-                if (button) {
-
-                    button.innerHTML =
-                        "🔄 Refresh Dashboard";
-
-                }
-
-            },
-            2000
-        );
-
-    }
-
-
-    finally {
-
-        if (button) {
-
-            button.disabled =
-                false;
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   COMPLETED ORDERS
-========================================================= */
-
-async function loadCompletedOrders() {
-
-    const container =
-        document.getElementById(
-            "completedOrdersList"
-        );
-
-    if (!container) {
-        return;
-    }
-
-    container.innerHTML = `
-        <div class="empty-box">
-
-            <div class="empty-icon">
-                ⏳
-            </div>
-
-            <h3>
-                Loading Completed Orders...
-            </h3>
-
-        </div>
-    `;
-
-
-    try {
-
-        const result =
-            await backendRequest(
-                "/api/delivery/history?status=completed"
-            );
-
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "Could not load completed orders."
-            );
-
-        }
-
-
-        const orders =
-            Array.isArray(
-                result.orders
-            )
-                ? result.orders
-                : [];
-
-
-        renderCompletedOrders(
-            orders
-        );
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Completed orders error:",
-            error
-        );
-
-
-        container.innerHTML = `
-            <div class="empty-box">
-
-                <div class="empty-icon">
-                    ⚠️
-                </div>
-
-                <h3>
-                    Could Not Load Completed Orders
-                </h3>
-
-                <p style="margin-top:8px;">
-                    ${escapeHTML(
-                        error.message ||
-                        "Please try again."
-                    )}
-                </p>
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    style="margin-top:15px;"
-                    onclick="loadCompletedOrders()"
-                >
-                    🔄 Try Again
-                </button>
-
-            </div>
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER COMPLETED
-========================================================= */
-
-function renderCompletedOrders(
-    orders
-) {
-
-    const container =
-        document.getElementById(
-            "completedOrdersList"
-        );
-
-    if (!container) {
-        return;
-    }
-
-
-    if (!orders.length) {
-
-        container.innerHTML = `
-            <div class="empty-box">
-
-                <div class="empty-icon">
-                    ✅
-                </div>
-
-                <h3>
-                    No Completed Orders
-                </h3>
-
-                <p style="margin-top:8px;">
-                    No delivery has been completed yet.
-                </p>
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    let html =
-        '<div class="order-list">';
-
-
-    orders.forEach(
-        function(order) {
-
-            const orderId =
-                order.id || "-";
-
-
-            const orderNo =
-                order.order_no ||
-                order.orderNo ||
-                "-";
-
-
-            const status =
-                order.status ||
-                "completed";
-
-
-            const total =
-                order.total !== null &&
-                order.total !== undefined
-
-                    ? "₹" +
-                      Number(
-                          order.total
-                      ).toFixed(2)
-
-                    : "-";
-
-
-            const created =
-                order.created_at
-
-                    ? formatDate(
-                        order.created_at
-                    )
-
-                    : "-";
-
-
-            const completed =
-                order.completed_at
-
-                    ? formatDate(
-                        order.completed_at
-                    )
-
-                    : "-";
-
-
-            const qrStatus =
-                order.delivery_qr_scanned_at
-                    ? "Verified"
-                    : "Not verified";
-
-
-            const otpStatus =
-                order.otp_verified
-                    ? "Verified"
-                    : "Not verified";
-
-
-            html += `
-
-                <div class="delivery-order-card">
-
-                    <div class="order-card-top">
-
-                        <div>
-
-                            <div class="order-number">
-                                📦 ${escapeHTML(orderNo)}
-                            </div>
-
-                            <div class="order-id-text">
-                                Order ID:
-                                ${escapeHTML(orderId)}
-                            </div>
-
-                        </div>
-
-                        <div class="order-status status-completed">
-                            ✅ ${escapeHTML(status)}
-                        </div>
-
-                    </div>
-
-
-                    <div class="order-details-grid">
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Order Number
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(orderNo)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Total
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(total)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Created
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(created)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Completed At
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(completed)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Carton QR
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(qrStatus)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Customer OTP
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(otpStatus)}
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-
-    html +=
-        "</div>";
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/* =========================================================
-   CANCELLED ORDERS
-========================================================= */
-
-async function loadCancelledOrders() {
-
-    const container =
-        document.getElementById(
-            "cancelledOrdersList"
-        );
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = `
-        <div class="empty-box">
-
-            <div class="empty-icon">
-                ⏳
-            </div>
-
-            <h3>
-                Loading Cancelled Orders...
-            </h3>
-
-        </div>
-    `;
-
-
-    try {
-
-        const result =
-            await backendRequest(
-                "/api/delivery/history?status=cancelled"
-            );
-
-
-        if (!result.success) {
-
-            throw new Error(
-                result.message ||
-                "Could not load cancelled orders."
-            );
-
-        }
-
-
-        const orders =
-            Array.isArray(
-                result.orders
-            )
-                ? result.orders
-                : [];
-
-
-        renderCancelledOrders(
-            orders
-        );
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Cancelled orders error:",
-            error
-        );
-
-
-        container.innerHTML = `
-            <div class="empty-box">
-
-                <div class="empty-icon">
-                    ⚠️
-                </div>
-
-                <h3>
-                    Could Not Load Cancelled Orders
-                </h3>
-
-                <p style="margin-top:8px;">
-                    ${escapeHTML(
-                        error.message ||
-                        "Please try again."
-                    )}
-                </p>
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    style="margin-top:15px;"
-                    onclick="loadCancelledOrders()"
-                >
-                    🔄 Try Again
-                </button>
-
-            </div>
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER CANCELLED
-========================================================= */
-
-function renderCancelledOrders(
-    orders
-) {
-
-    const container =
-        document.getElementById(
-            "cancelledOrdersList"
-        );
-
-    if (!container) {
-        return;
-    }
-
-
-    if (!orders.length) {
-
-        container.innerHTML = `
-            <div class="empty-box">
-
-                <div class="empty-icon">
-                    ❌
-                </div>
-
-                <h3>
-                    No Cancelled Orders
-                </h3>
-
-                <p style="margin-top:8px;">
-                    No delivery has been cancelled yet.
-                </p>
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    let html =
-        '<div class="order-list">';
-
-
-    orders.forEach(
-        function(order) {
-
-            const orderId =
-                order.id || "-";
-
-
-            const orderNo =
-                order.order_no ||
-                order.orderNo ||
-                "-";
-
-
-            const status =
-                order.status ||
-                "cancelled";
-
-
-            const total =
-                order.total !== null &&
-                order.total !== undefined
-
-                    ? "₹" +
-                      Number(
-                          order.total
-                      ).toFixed(2)
-
-                    : "-";
-
-
-            const created =
-                order.created_at
-
-                    ? formatDate(
-                        order.created_at
-                    )
-
-                    : "-";
-
-
-            const cancelled =
-                order.cancelled_at
-
-                    ? formatDate(
-                        order.cancelled_at
-                    )
-
-                    : "-";
-
-
-            const reason =
-                order.reason ||
-                order.cancellation_reason ||
-                "No cancellation reason recorded.";
-
-
-            html += `
-
-                <div class="delivery-order-card">
-
-                    <div class="order-card-top">
-
-                        <div>
-
-                            <div class="order-number">
-                                📦 ${escapeHTML(orderNo)}
-                            </div>
-
-                            <div class="order-id-text">
-                                Order ID:
-                                ${escapeHTML(orderId)}
-                            </div>
-
-                        </div>
-
-                        <div class="order-status status-cancelled">
-                            ❌ ${escapeHTML(status)}
-                        </div>
-
-                    </div>
-
-
-                    <div class="order-details-grid">
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Order Number
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(orderNo)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Total
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(total)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Created
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(created)}
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-detail">
-
-                            <div class="order-detail-label">
-                                Cancelled At
-                            </div>
-
-                            <div class="order-detail-value">
-                                ${escapeHTML(cancelled)}
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="reason-box">
-
-                        <div class="reason-title">
-                            📝 Cancellation Reason
-                        </div>
-
-                        <div class="reason-text">
-                            ${escapeHTML(reason)}
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-
-    html +=
-        "</div>";
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function showPage(
-    pageId,
-    clickedButton
-) {
-
-    document
-        .querySelectorAll(
-            ".page"
-        )
-        .forEach(
-            function(page) {
-
-                page.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    const selectedPage =
-        document.getElementById(
-            pageId
-        );
-
-
-    if (selectedPage) {
-
-        selectedPage.classList.add(
-            "active"
-        );
-
-    }
-
-
-    document
-        .querySelectorAll(
-            ".nav button"
-        )
-        .forEach(
-            function(button) {
-
-                button.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    if (clickedButton) {
-
-        clickedButton.classList.add(
-            "active"
-        );
-
-    }
-
-
-    closeSidebar();
-
-
-    if (
-        pageId ===
-        "onWayPage"
-    ) {
-
-        loadDeliveryOrders();
-
-    }
-
-
-    if (
-        pageId ===
-        "completedPage"
-    ) {
-
-        loadCompletedOrders();
-
-    }
-
-
-    if (
-        pageId ===
-        "cancelledPage"
-    ) {
-
-        loadCancelledOrders();
-
-    }
-
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-function toggleSidebar() {
-
-    const sidebar =
-        document.getElementById(
-            "sidebar"
-        );
-
-    const overlay =
-        document.getElementById(
-            "sidebarOverlay"
-        );
-
-
-    sidebar?.classList.toggle(
-        "open"
-    );
-
-    overlay?.classList.toggle(
-        "show"
-    );
-
-}
-
-
-function closeSidebar() {
-
-    const sidebar =
-        document.getElementById(
-            "sidebar"
-        );
-
-    const overlay =
-        document.getElementById(
-            "sidebarOverlay"
-        );
-
-
-    sidebar?.classList.remove(
-        "open"
-    );
-
-    overlay?.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-function formatDate(
-    value
-) {
-
-    try {
-
-        const date =
-            new Date(value);
-
-
-        if (
-            Number.isNaN(
-                date.getTime()
-            )
-        ) {
-
-            return String(value);
-
-        }
-
-
-        return date.toLocaleString(
-            "en-IN",
-            {
-                day:
-                    "2-digit",
-
-                month:
-                    "short",
-
-                year:
-                    "numeric",
-
-                hour:
-                    "2-digit",
-
-                minute:
-                    "2-digit"
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        return String(
-            value || "-"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value ?? ""
-    )
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =========================================================
-   ESCAPE JS ATTRIBUTE
-========================================================= */
-
-function escapeJSAttribute(
-    value
-) {
-
-    return String(
-        value ?? ""
-    )
-
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-
-        .replace(
-            /'/g,
-            "\\'"
-        )
-
-        .replace(
-            /\r/g,
-            "\\r"
-        )
-
-        .replace(
-            /\n/g,
-            "\\n"
-        );
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logoutDeliveryBoy() {
-
-    openDeliveryConfirmDialog(
-        "Logout",
-        "Are you sure you want to logout from the Delivery Boy Panel?",
-
-        async function() {
-
-            await stopQRScanner();
-
-            localStorage.removeItem(
-                "deliveryLoggedIn"
-            );
-
-            localStorage.removeItem(
-                "deliveryUsername"
-            );
-
-            window.location.href =
-                "login.html";
-
-        }
-    );
-
-}
+}, duration);
 
 </script>
-<!-- =====================================================
-     DELIVERY PWA SERVICE WORKER
-===================================================== -->
 
-<script>
-
-    if ("serviceWorker" in navigator) {
-
-        window.addEventListener("load", function () {
-
-            navigator.serviceWorker
-                .register("service-worker.js")
-                .then(function () {
-
-                    console.log(
-                        "Delivery PWA Service Worker registered successfully."
-                    );
-
-                })
-                .catch(function (error) {
-
-                    console.error(
-                        "Delivery PWA Service Worker registration failed:",
-                        error
-                    );
-
-                });
-
-        });
-
-    }
-
-</script>
 </body>
-
 </html>
