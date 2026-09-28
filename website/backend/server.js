@@ -2844,36 +2844,34 @@ async function createBillPDF(
                 );
 
 
-                const createdAtUTC = order.created_at;
+               const createdAtUTC = order.created_at;
 
-const orderDateUTC =
-    new Date(createdAtUTC);
+// UTC time me manually +5 hours 30 minutes
+const orderDateUTC = new Date(createdAtUTC);
 
-// Manually add 5 hours 30 minutes for IST
-const orderDateIST =
-    new Date(
-        orderDateUTC.getTime() +
-        (5 * 60 + 30) * 60 * 1000
-    );
-
-const orderDate =
-    orderDateIST.toLocaleString(
-        "en-IN",
-        {
-            timeZone: "UTC",
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true
-        }
-    );
-                doc.text(
-    `Date: ${orderDate} (+5:30)`,
-    left,
-    infoTop + 47
+const orderDateIST = new Date(
+    orderDateUTC.getTime() +
+    (5 * 60 + 30) * 60 * 1000
 );
+
+const orderDate = orderDateIST.toLocaleString(
+    "en-IN",
+    {
+        timeZone: "UTC",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+    }
+);
+
+                doc.text(
+                    `Date: ${orderDate}`,
+                    left,
+                    infoTop + 47
+                );
 
 
                 doc
@@ -3997,7 +3995,7 @@ const orderDate =
 
 
 /* =====================================================
-   GENERATE BILL API
+   ADMIN - GENERATE BILL
 ===================================================== */
 
 app.post(
@@ -4007,297 +4005,262 @@ app.post(
 
         try {
 
-            const orderId =
-                req.body.orderId;
-
+            const orderId = req.body.orderId;
 
             if (!orderId) {
-
                 return res.status(400).json({
-
                     success: false,
-
-                    message:
-                        "Order ID is required."
-
+                    message: "Order ID is required."
                 });
-
             }
 
+            /* =================================================
+               1. GET ORDER
+            ================================================= */
 
             const {
                 data: order,
                 error: orderError
-            } =
-                await supabase
-                    .from("orders")
-                    .select("*")
-                    .eq(
-                        "id",
-                        orderId
-                    )
-                    .maybeSingle();
-
+            } = await supabase
+                .from("orders")
+                .select("*")
+                .eq("id", orderId)
+                .maybeSingle();
 
             if (orderError) {
+                console.error(
+                    "Order fetch error:",
+                    orderError
+                );
 
                 return res.status(500).json({
-
                     success: false,
-
-                    message:
-                        "Supabase order fetch failed.",
-
-                    error:
-                        orderError.message
-
+                    message: "Could not fetch order.",
+                    error: orderError.message
                 });
-
             }
-
 
             if (!order) {
-
                 return res.status(404).json({
-
                     success: false,
-
-                    message:
-                        "Order not found in Supabase."
-
+                    message: "Order not found."
                 });
-
             }
 
 
-            /* =====================================
-               CUSTOMER
-            ===================================== */
+            /* =================================================
+               2. GET CUSTOMER
+            ================================================= */
 
             const {
-                data: customer
-            } =
-                await supabase
-                    .from("profiles")
-                    .select(
-                        "id, full_name, phone, role"
-                    )
-                    .eq(
-                        "id",
-                        order.customer_id
-                    )
-                    .maybeSingle();
+                data: customer,
+                error: customerError
+            } = await supabase
+                .from("profiles")
+                .select(
+                    "id, full_name, phone, role"
+                )
+                .eq("id", order.customer_id)
+                .maybeSingle();
 
-
-            /* =====================================
-               ADDRESS
-            ===================================== */
-
-            let address =
-                null;
-
-
-            if (
-                order.address_id
-            ) {
-
-                const {
-                    data: addressData
-                } =
-                    await supabase
-                        .from("addresses")
-                        .select("*")
-                        .eq(
-                            "id",
-                            order.address_id
-                        )
-                        .maybeSingle();
-
-
-                address =
-                    addressData;
-
+            if (customerError) {
+                console.error(
+                    "Customer fetch error:",
+                    customerError
+                );
             }
 
 
-            /* =====================================
-               ITEMS
-            ===================================== */
+            /* =================================================
+               3. GET ADDRESS
+            ================================================= */
+
+            let address = null;
+
+            if (order.address_id) {
+
+                const {
+                    data: addressData,
+                    error: addressError
+                } = await supabase
+                    .from("addresses")
+                    .select("*")
+                    .eq("id", order.address_id)
+                    .maybeSingle();
+
+                if (addressError) {
+                    console.error(
+                        "Address fetch error:",
+                        addressError
+                    );
+                }
+
+                address = addressData;
+            }
+
+
+            /* =================================================
+               4. GET ORDER ITEMS
+            ================================================= */
 
             const {
                 data: items,
                 error: itemsError
-            } =
-                await supabase
-                    .from("order_items")
-                    .select("*")
-                    .eq(
-                        "order_id",
-                        orderId
-                    )
-                    .order(
-                        "id"
-                    );
-
+            } = await supabase
+                .from("order_items")
+                .select("*")
+                .eq("order_id", orderId)
+                .order("id");
 
             if (itemsError) {
 
+                console.error(
+                    "Order items fetch error:",
+                    itemsError
+                );
+
                 return res.status(500).json({
-
                     success: false,
-
-                    message:
-                        "Could not load order items.",
-
-                    error:
-                        itemsError.message
-
+                    message: "Could not fetch order items.",
+                    error: itemsError.message
                 });
-
             }
 
 
-            if (
-                !items ||
-                items.length === 0
-            ) {
+            /* =================================================
+               5. CHECK EXISTING BILL
+            ================================================= */
 
-                return res.status(400).json({
+            const {
+                data: existingBill,
+                error: existingBillError
+            } = await supabase
+                .from("bills")
+                .select("*")
+                .eq("order_id", orderId)
+                .maybeSingle();
 
+            if (existingBillError) {
+
+                console.error(
+                    "Existing bill check error:",
+                    existingBillError
+                );
+
+                return res.status(500).json({
                     success: false,
-
-                    message:
-                        "This order has no items."
-
+                    message: "Could not check existing bill.",
+                    error: existingBillError.message
                 });
-
             }
 
 
-            /* =====================================
-               EXISTING BILL
-            ===================================== */
+            /* =================================================
+               6. CHECK EXISTING DELIVERY OTP
+            ================================================= */
 
             const {
-                data: existingBill
-            } =
-                await supabase
-                    .from("bills")
-                    .select("*")
-                    .eq(
-                        "order_id",
-                        orderId
-                    )
-                    .maybeSingle();
+                data: existingOTPRecord,
+                error: otpRecordError
+            } = await supabase
+                .from("delivery_otps")
+                .select("*")
+                .eq("order_id", orderId)
+                .order("created_at", {
+                    ascending: false
+                })
+                .limit(1)
+                .maybeSingle();
 
-            /* =====================================
-               EXISTING OTP
-            ===================================== */
+            if (otpRecordError) {
 
-            const {
-                data: existingOTPRecord
-            } =
-                await supabase
-                    .from("delivery_otps")
-                    .select("*")
-                    .eq(
-                        "order_id",
-                        orderId
-                    )
-                    .order(
-                        "created_at",
-                        {
-                            ascending:
-                                false
-                        }
-                    )
-                    .limit(1)
-                    .maybeSingle();
+                console.error(
+                    "OTP record check error:",
+                    otpRecordError
+                );
+            }
 
+
+            /* =================================================
+               7. IF BILL ALREADY EXISTS
+            ================================================= */
 
             if (existingBill) {
 
-                let signedUrl =
-                    null;
+                let signedUrl = null;
 
-
-                if (
-                    existingBill.pdf_path
-                ) {
+                if (existingBill.pdf_path) {
 
                     const {
-                        data:
-                            signedData
-                    } =
-                        await supabase
-                            .storage
-                            .from(
-                                "bills"
-                            )
-                            .createSignedUrl(
-                                existingBill.pdf_path,
-                                3600
-                            );
+                        data: signedData,
+                        error: signedError
+                    } = await supabase
+                        .storage
+                        .from("bills")
+                        .createSignedUrl(
+                            existingBill.pdf_path,
+                            3600
+                        );
 
+                    if (signedError) {
 
-                    if (
-                        signedData
-                    ) {
+                        console.error(
+                            "Existing bill signed URL error:",
+                            signedError
+                        );
+
+                    } else if (signedData) {
 
                         signedUrl =
                             signedData.signedUrl;
-
                     }
-
                 }
+
+
+                console.log(
+                    "BILL ALREADY EXISTS:",
+                    existingBill.bill_no
+                );
 
 
                 return res.json({
 
-                    success:
-                        true,
+                    success: true,
 
                     message:
                         "Bill already exists.",
 
-                    bill:
-                        existingBill,
+                    bill: existingBill,
 
-                    pdfUrl:
-                        signedUrl,
+                    pdfUrl: signedUrl,
 
                     deliveryOtpCreated:
-                        Boolean(
-                            existingOTPRecord
-                        )
-
+                        Boolean(existingOTPRecord)
                 });
-
             }
 
 
-            /* =====================================
-               BILL NUMBER
-            ===================================== */
+            /* =================================================
+               8. GENERATE BILL NUMBER
+            ================================================= */
 
             const billNumber =
                 generateBillNumber();
 
 
-            /* =====================================
-               QR TOKEN
-            ===================================== */
+            /* =================================================
+               9. GENERATE QR TOKEN
+            ================================================= */
 
             const qrToken =
                 generateQRToken();
 
 
-            /* =====================================
-               DELIVERY OTP
-            ===================================== */
+            /* =================================================
+               10. CREATE DELIVERY OTP
+            ================================================= */
 
             let deliveryOTPData;
-
 
             try {
 
@@ -4306,9 +4269,12 @@ app.post(
                         orderId
                     );
 
-            }
+            } catch (otpError) {
 
-            catch (otpError) {
+                console.error(
+                    "Create delivery OTP error:",
+                    otpError
+                );
 
                 return res.status(500).json({
 
@@ -4319,9 +4285,7 @@ app.post(
 
                     error:
                         otpError.message
-
                 });
-
             }
 
 
@@ -4329,9 +4293,24 @@ app.post(
                 deliveryOTPData.otp;
 
 
-            /* =====================================
-               CREATE PDF
-            ===================================== */
+            /* =================================================
+               11. CREATE PDF
+            ================================================= */
+
+            console.log(
+                "CREATING NEW BILL PDF..."
+            );
+
+            console.log(
+                "Order created_at:",
+                order.created_at
+            );
+
+            console.log(
+                "Bill number:",
+                billNumber
+            );
+
 
             const pdfBuffer =
                 await createBillPDF(
@@ -4345,176 +4324,188 @@ app.post(
                 );
 
 
-            /* =====================================
-               FILE PATH
-            ===================================== */
+            /* =================================================
+               12. PDF FILE PATH
+            ================================================= */
 
             const filePath =
-                `${
-                    new Date().getFullYear()
-                }/${
-                    order.order_no
-                }.pdf`;
+                `${new Date().getFullYear()}/${order.order_no}.pdf`;
 
 
-            /* =====================================
-               UPLOAD PDF
-            ===================================== */
+            /* =================================================
+               13. UPLOAD PDF TO SUPABASE STORAGE
+            ================================================= */
 
             const {
-                error:
-                    uploadError
-            } =
-                await supabase
-                    .storage
-                    .from("bills")
-                    .upload(
-                        filePath,
-                        pdfBuffer,
-                        {
-                            contentType:
-                                "application/pdf",
+                error: uploadError
+            } = await supabase
+                .storage
+                .from("bills")
+                .upload(
+                    filePath,
+                    pdfBuffer,
+                    {
+                        contentType:
+                            "application/pdf",
 
-                            upsert:
-                                true
-                        }
-                    );
-
+                        upsert: true
+                    }
+                );
 
             if (uploadError) {
+
+                console.error(
+                    "PDF upload error:",
+                    uploadError
+                );
 
                 return res.status(500).json({
 
                     success: false,
 
                     message:
-                        "PDF upload failed. Make sure the bills bucket exists.",
+                        "Could not upload bill PDF.",
 
                     error:
                         uploadError.message
-
                 });
-
             }
 
 
-            /* =====================================
-               SAVE BILL
-            ===================================== */
+            /* =================================================
+               14. SAVE BILL IN DATABASE
+            ================================================= */
 
             const {
                 data: bill,
                 error: billError
-            } =
-                await supabase
-                    .from("bills")
-                    .insert({
+            } = await supabase
+                .from("bills")
+                .insert({
 
-                        order_id:
-                            orderId,
+                    order_id:
+                        orderId,
 
-                        bill_no:
-                            billNumber,
+                    bill_no:
+                        billNumber,
 
-                        pdf_path:
-                            filePath,
+                    pdf_path:
+                        filePath,
 
-                        qr_token:
-                            qrToken
-
-                    })
-                    .select()
-                    .single();
+                    qr_token:
+                        qrToken
+                })
+                .select()
+                .single();
 
 
             if (billError) {
+
+                console.error(
+                    "Bill database insert error:",
+                    billError
+                );
 
                 return res.status(500).json({
 
                     success: false,
 
                     message:
-                        "Could not save bill information.",
+                        "Could not save bill.",
 
                     error:
                         billError.message
-
                 });
-
             }
 
 
-            /* =====================================
-               UPDATE ORDER
-            ===================================== */
+            /* =================================================
+               15. UPDATE ORDER
+            ================================================= */
 
             const {
-                error:
-                    updateError
-            } =
-                await supabase
-                    .from("orders")
-                    .update({
+                error: orderUpdateError
+            } = await supabase
+                .from("orders")
+                .update({
 
-                        bill_generated:
-                            true,
+                    bill_generated:
+                        true,
 
-                        status:
-                            "bill_generated"
+                    status:
+                        "bill_generated"
 
-                    })
-                    .eq(
-                        "id",
-                        orderId
-                    );
+                })
+                .eq(
+                    "id",
+                    orderId
+                );
 
 
-            if (updateError) {
+            if (orderUpdateError) {
 
                 console.error(
                     "Order update error:",
-                    updateError
+                    orderUpdateError
                 );
-
             }
 
 
-            /* =====================================
-               SIGNED URL
-            ===================================== */
+            /* =================================================
+               16. CREATE SIGNED PDF URL
+            ================================================= */
 
-            let pdfUrl =
-                null;
-
+            let pdfUrl = null;
 
             const {
-                data:
-                    signedData
-            } =
-                await supabase
-                    .storage
-                    .from("bills")
-                    .createSignedUrl(
-                        filePath,
-                        3600
-                    );
+                data: signedData,
+                error: signedError
+            } = await supabase
+                .storage
+                .from("bills")
+                .createSignedUrl(
+                    filePath,
+                    3600
+                );
 
 
-            if (
-                signedData
-            ) {
+            if (signedError) {
+
+                console.error(
+                    "Signed URL error:",
+                    signedError
+                );
+
+            } else if (signedData) {
 
                 pdfUrl =
                     signedData.signedUrl;
-
             }
 
+
+            /* =================================================
+               17. SUCCESS LOG
+            ================================================= */
 
             console.log(
                 "BILL GENERATED:",
                 billNumber
             );
 
+            console.log(
+                "PDF PATH:",
+                filePath
+            );
+
+            console.log(
+                "PDF URL CREATED:",
+                Boolean(pdfUrl)
+            );
+
+
+            /* =================================================
+               18. RESPONSE
+            ================================================= */
 
             return res.json({
 
@@ -4532,19 +4523,18 @@ app.post(
 
             });
 
-        }
 
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Generate bill error:",
                 error
             );
 
-
             return res.status(500).json({
 
-                success: false,
+                success:
+                    false,
 
                 message:
                     "Internal server error.",
@@ -4553,12 +4543,9 @@ app.post(
                     error.message
 
             });
-
         }
-
     }
 );
-
 
 /* =====================================================
    VIEW BILL
