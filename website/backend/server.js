@@ -2844,21 +2844,31 @@ async function createBillPDF(
                 );
 
 
-                const orderDate =
-                    new Date(
-                        order.created_at
-                    ).toLocaleString(
-                        "en-IN",
-                        {
-                            dateStyle:
-                                "medium",
+                const createdAtUTC = order.created_at;
 
-                            timeStyle:
-                                "short"
-                        }
-                    );
+const orderDateUTC =
+    new Date(createdAtUTC);
 
+// Manually add 5 hours 30 minutes for IST
+const orderDateIST =
+    new Date(
+        orderDateUTC.getTime() +
+        (5 * 60 + 30) * 60 * 1000
+    );
 
+const orderDate =
+    orderDateIST.toLocaleString(
+        "en-IN",
+        {
+            timeZone: "UTC",
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+        }
+    );
                 doc.text(
                     `Date: ${orderDate}`,
                     left,
@@ -3712,17 +3722,20 @@ async function createBillPDF(
                     );
 
 
-                const otpExpiryText =
-                    otpExpiryDate.toLocaleString(
-                        "en-IN",
-                        {
-                            dateStyle:
-                                "medium",
+               const otpExpiryText =
+    otpExpiryDate.toLocaleString(
+        "en-IN",
+        {
+            timeZone:
+                "Asia/Kolkata",
 
-                            timeStyle:
-                                "short"
-                        }
-                    );
+            dateStyle:
+                "medium",
+
+            timeStyle:
+                "short"
+        }
+    );
 
 
                 doc
@@ -4176,7 +4189,6 @@ app.post(
                         orderId
                     )
                     .maybeSingle();
-
 
             /* =====================================
                EXISTING OTP
