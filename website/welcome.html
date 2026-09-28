@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Welcome | Pooja Paper Solution</title>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+body {
+
+    background: #f7faff;
+
+    color: #172033;
+
+}
+
+
+/* =========================================================
+   MAIN SCREEN
+========================================================= */
+
+.welcome-screen {
+
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(99,102,241,.08),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f5f8ff 50%,
+            #eef8ff 100%
+        );
+
+}
+
+
+/* =========================================================
+   MOVING BACKGROUND LIGHTS
+========================================================= */
+
+.bg-orb {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    filter: blur(2px);
+
+    opacity: .55;
+
+}
+
+
+.orb-1 {
+
+    width: 260px;
+    height: 260px;
+
+    top: -120px;
+    left: -100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(99,102,241,.18),
+            transparent 70%
+        );
+
+    animation:
+        orbMove1
+        8s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.orb-2 {
+
+    width: 330px;
+    height: 330px;
+
+    right: -150px;
+    bottom: -150px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(6,182,212,.16),
+            transparent 70%
+        );
+
+    animation:
+        orbMove2
+        10s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.orb-3 {
+
+    width: 170px;
+    height: 170px;
+
+    top: 22%;
+    right: 13%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(129,140,248,.10),
+            transparent 70%
+        );
+
+    animation:
+        orbMove3
+        7s
+        ease-in-out
+        infinite alternate;
+}
+
+
+@keyframes orbMove1 {
+
+    from {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate(80px,60px)
+            scale(1.15);
+    }
+
+}
+
+
+@keyframes orbMove2 {
+
+    from {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate(-70px,-60px)
+            scale(1.12);
+    }
+
+}
+
+
+@keyframes orbMove3 {
+
+    from {
+        transform:
+            translate(0,0);
+    }
+
+    to {
+        transform:
+            translate(-35px,35px);
+    }
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   LOGO AREA
+========================================================= */
+
+.logo-area {
+
+    position: relative;
+
+    width: 145px;
+    height: 145px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   ROTATING RING
+========================================================= */
+
+.logo-ring {
+
+    position: absolute;
+
+    width: 145px;
+    height: 145px;
+
+    border-radius: 50%;
+
+    border:
+
+        1px solid
+        rgba(79,70,229,.18);
+
+    border-top-color:
+        rgba(37,99,235,.65);
+
+    border-right-color:
+        rgba(6,182,212,.35);
+
+    opacity: 0;
+
+    transform:
+        translateY(-250px)
+        rotate(-90deg);
+
+    animation:
+
+        ringDrop
+        1.15s
+        cubic-bezier(.22,.9,.3,1.2)
+        .15s
+        forwards,
+
+        ringRotate
+        7s
+        linear
+        1.5s
+        infinite;
+
+}
+
+
+/* =========================================================
+   INNER RING
+========================================================= */
+
+.logo-ring::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 8px;
+
+    border-radius: 50%;
+
+    border:
+        1px dashed
+        rgba(37,99,235,.12);
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 116px;
+    height: 116px;
+
+    padding: 7px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+
+        0 18px 45px
+        rgba(37,99,235,.18),
+
+        0 0 0 5px
+        rgba(255,255,255,.75);
+
+    opacity: 0;
+
+    transform:
+        translateY(-260px)
+        scale(.65);
+
+    animation:
+
+        logoDrop
+        1.15s
+        cubic-bezier(.22,.9,.3,1.22)
+        .15s
+        forwards;
+
+}
+
+
+.logo img {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+}
+
+
+/* =========================================================
+   LOGO GLOW
+========================================================= */
+
+.logo-glow {
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(59,130,246,.20),
+            transparent 68%
+        );
+
+    filter: blur(8px);
+
+    opacity: 0;
+
+    animation:
+
+        glowAppear
+        1.2s
+        ease
+        1.05s
+        forwards,
+
+        glowPulse
+        3s
+        ease-in-out
+        2.2s
+        infinite;
+
+}
+
+
+/* =========================================================
+   WELCOME TO
+========================================================= */
+
+.welcome-title {
+
+    margin-top: 30px;
+
+    font-size:
+        clamp(18px, 3vw, 28px);
+
+    font-weight: 600;
+
+    letter-spacing:
+        clamp(3px, .8vw, 6px);
+
+    color: #64748b;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   LETTER
+========================================================= */
+
+.letter {
+
+    display: inline-block;
+
+    opacity: 0;
+
+    transform:
+        translateY(-130px)
+        rotateX(70deg);
+
+    animation:
+
+        letterDrop
+        .62s
+        cubic-bezier(.22,.9,.3,1.25)
+        forwards;
+
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+
+    margin-top: 12px;
+
+    padding: 0 18px;
+
+    font-size:
+        clamp(30px, 6vw, 58px);
+
+    font-weight: 800;
+
+    line-height: 1.08;
+
+    letter-spacing:
+        clamp(.2px, .15vw, 1px);
+
+    color: #172033;
+
+}
+
+
+/* =========================================================
+   BRAND LETTER
+========================================================= */
+
+.brand .letter {
+
+    transform:
+        translateY(-180px)
+        rotateX(75deg)
+        scale(.92);
+
+    animation:
+
+        brandLetterDrop
+        .72s
+        cubic-bezier(.22,.9,.3,1.25)
+        forwards;
+
+}
+
+
+/* =========================================================
+   BRAND GRADIENT
+========================================================= */
+
+.brand .highlight {
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #4f46e5 0%,
+            #2563eb 48%,
+            #06b6d4 100%
+        );
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+}
+
+
+/* =========================================================
+   UNDERLINE
+========================================================= */
+
+.brand-line {
+
+    width: 0;
+
+    height: 3px;
+
+    margin-top: 19px;
+
+    border-radius: 20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #4f46e5,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+
+        0 3px 12px
+        rgba(37,99,235,.20);
+
+    animation:
+
+        lineGrow
+        .9s
+        cubic-bezier(.22,.9,.3,1)
+        3.65s
+        forwards;
+
+}
+
+
+/* =========================================================
+   TAGLINE
+========================================================= */
+
+.tagline {
+
+    margin-top: 18px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 3.5px;
+
+    color: #94a3b8;
+
+    opacity: 0;
+
+    transform:
+        translateY(12px);
+
+    animation:
+
+        taglineShow
+        .8s
+        ease
+        4s
+        forwards;
+
+}
+
+
+/* =========================================================
+   PROGRESS AREA
+========================================================= */
+
+.progress-area {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 32px;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(300px, 68vw);
+
+}
+
+
+/* =========================================================
+   PROGRESS TEXT
+========================================================= */
+
+.progress-text {
+
+    margin-bottom: 9px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: #94a3b8;
+
+}
+
+
+/* =========================================================
+   PROGRESS LINE
+========================================================= */
+
+.progress {
+
+    width: 100%;
+
+    height: 3px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        rgba(148,163,184,.16);
+
+}
+
+
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
+
+.progress-bar {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #4f46e5,
+            #2563eb,
+            #06b6d4
+        );
+
+    animation:
+
+        progress
+        5.5s
+        linear
+        forwards;
+
+}
+
+
+/* =========================================================
+   EXIT ANIMATION
+========================================================= */
+
+.welcome-screen.exit {
+
+    animation:
+
+        screenExit
+        .65s
+        cubic-bezier(.4,0,.2,1)
+        forwards;
+
+}
+
+
+@keyframes screenExit {
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            scale(1.035);
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGO ANIMATION
+========================================================= */
+
+@keyframes logoDrop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-260px)
+            scale(.65);
+
+    }
+
+    65% {
+
+        opacity: 1;
+
+        transform:
+            translateY(13px)
+            scale(1.04);
+
+    }
+
+    82% {
+
+        transform:
+            translateY(-6px)
+            scale(1);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes ringDrop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-250px)
+            rotate(-90deg);
+
+    }
+
+    70% {
+
+        opacity: 1;
+
+        transform:
+            translateY(10px)
+            rotate(15deg);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+    }
+
+}
+
+
+@keyframes ringRotate {
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+@keyframes glowAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.5);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+
+        transform:
+            scale(1);
+
+        opacity: .65;
+
+    }
+
+    50% {
+
+        transform:
+            scale(1.13);
+
+        opacity: .9;
+
+    }
+
+}
+
+
+/* =========================================================
+   LETTER DROP
+========================================================= */
+
+@keyframes letterDrop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-130px)
+            rotateX(70deg);
+
+    }
+
+    65% {
+
+        opacity: 1;
+
+        transform:
+            translateY(9px)
+            rotateX(0);
+
+    }
+
+    82% {
+
+        transform:
+            translateY(-4px);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            rotateX(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   BRAND DROP
+========================================================= */
+
+@keyframes brandLetterDrop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-180px)
+            rotateX(75deg)
+            scale(.92);
+
+    }
+
+    65% {
+
+        opacity: 1;
+
+        transform:
+            translateY(10px)
+            rotateX(0)
+            scale(1.02);
+
+    }
+
+    82% {
+
+        transform:
+            translateY(-4px)
+            scale(1);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            rotateX(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   OTHER ANIMATIONS
+========================================================= */
+
+@keyframes lineGrow {
+
+    from {
+
+        width: 0;
+
+    }
+
+    to {
+
+        width: 125px;
+
+    }
+
+}
+
+
+@keyframes taglineShow {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+@keyframes progress {
+
+    from {
+
+        width: 0%;
+
+    }
+
+    to {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .logo-area {
+
+        width: 120px;
+        height: 120px;
+
+    }
+
+
+    .logo-ring {
+
+        width: 120px;
+        height: 120px;
+
+    }
+
+
+    .logo {
+
+        width: 96px;
+        height: 96px;
+
+    }
+
+
+    .logo-glow {
+
+        width: 115px;
+        height: 115px;
+
+    }
+
+
+    .welcome-title {
+
+        margin-top: 25px;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .brand {
+
+        margin-top: 10px;
+
+        font-size: 28px;
+
+    }
+
+
+    .brand-line {
+
+        margin-top: 15px;
+
+    }
+
+
+    .tagline {
+
+        margin-top: 15px;
+
+        font-size: 9px;
+
+        letter-spacing: 2px;
+
+    }
+
+
+    .progress-area {
+
+        bottom: 25px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media (max-width: 370px) {
+
+    .brand {
+
+        font-size: 24px;
+
+    }
+
+
+    .welcome-title {
+
+        font-size: 17px;
+
+    }
+
+
+    .tagline {
+
+        font-size: 8px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     WELCOME SCREEN
+======================================================== -->
+
+<div class="welcome-screen" id="welcomeScreen">
+
+
+    <!-- BACKGROUND -->
+
+    <div class="bg-orb orb-1"></div>
+
+    <div class="bg-orb orb-2"></div>
+
+    <div class="bg-orb orb-3"></div>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================== -->
+
+    <main class="content">
+
+
+        <!-- LOGO -->
+
+        <div class="logo-area">
+
+            <div class="logo-glow"></div>
+
+            <div class="logo-ring"></div>
+
+            <div class="logo">
+
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUDa4_-71zOHOAUJf_u_fEP7EgbqIl1INkBraLJxtyQ&s=10"
+                    alt="Pooja Paper Solution Logo"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- WELCOME -->
+
+        <div
+            class="welcome-title"
+            id="welcomeTitle"
+        >
+            WELCOME TO
+        </div>
+
+
+        <!-- BRAND -->
+
+        <div
+            class="brand"
+            id="brand"
+        >
+            POOJA PAPER SOLUTION
+        </div>
+
+
+        <!-- UNDERLINE -->
+
+        <div class="brand-line"></div>
+
+
+        <!-- TAGLINE -->
+
+        <div class="tagline">
+
+            QUALITY
+            <span>•</span>
+            CONVENIENCE
+            <span>•</span>
+            TRUST
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =================================================
+         PROGRESS
+    ================================================== -->
+
+    <div class="progress-area">
+
+        <div class="progress-text">
+
+            <span>Preparing your experience</span>
+
+            <span id="percent">0%</span>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CREATE LETTERS
+========================================================= */
+
+function animateLetters(
+    element,
+    startDelay,
+    className
+) {
+
+    const text = element.textContent;
+
+    element.textContent = "";
+
+    let delay = startDelay;
+
+
+    for (let i = 0; i < text.length; i++) {
+
+        const span =
+            document.createElement("span");
+
+
+        span.className =
+            className;
+
+
+        if (text[i] === " ") {
+
+            span.innerHTML =
+                "&nbsp;";
+
+        } else {
+
+            span.textContent =
+                text[i];
+
+        }
+
+
+        span.style.animationDelay =
+            delay + "s";
+
+
+        element.appendChild(span);
+
+
+        delay += 0.055;
+
+    }
+
+}
+
+
+/* =========================================================
+   WELCOME LETTERS
+========================================================= */
+
+animateLetters(
+
+    document.getElementById("welcomeTitle"),
+
+    1.25,
+
+    "letter"
+
+);
+
+
+/* =========================================================
+   BRAND LETTERS
+========================================================= */
+
+animateLetters(
+
+    document.getElementById("brand"),
+
+    2.05,
+
+    "letter highlight"
+
+);
+
+
+/* =========================================================
+   PROGRESS %
+========================================================= */
+
+const percent =
+    document.getElementById("percent");
+
+
+let startTime =
+    performance.now();
+
+
+const duration =
+    5500;
+
+
+function updateProgress(time) {
+
+    const elapsed =
+        time - startTime;
+
+
+    let value =
+        Math.min(
+            100,
+            Math.floor(
+                (elapsed / duration) * 100
+            )
+        );
+
+
+    percent.textContent =
+        value + "%";
+
+
+    if (value < 100) {
+
+        requestAnimationFrame(
+            updateProgress
+        );
+
+    }
+
+}
+
+
+requestAnimationFrame(
+    updateProgress
+);
+
+
+/* =========================================================
+   OPEN MAIN WEBSITE
+========================================================= */
+
+setTimeout(function () {
+
+
+    const screen =
+        document.getElementById(
+            "welcomeScreen"
+        );
+
+
+    screen.classList.add("exit");
+
+
+    setTimeout(function () {
+
+        window.location.href =
+            "index.html";
+
+    }, 600);
+
+
+}, 5800);
+
+</script>
+
+
+</body>
+
+</html>
