@@ -5175,3 +5175,82 @@ header {
     }
 }
 
+/* =====================================================
+   FLOATING ACTION BUTTONS
+   Back To Top + WhatsApp
+===================================================== */
+
+.floating-actions {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Keep existing Back To Top design */
+.floating-actions .back-to-top {
+    position: static !important;
+}
+
+/* WhatsApp Button */
+.whatsapp-float {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    text-decoration: none;
+
+    background: #25D366;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* WhatsApp Icon */
+.whatsapp-float svg {
+    width: 29px;
+    height: 29px;
+    fill: #ffffff;
+}
+
+/* Hover */
+.whatsapp-float:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 9px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* Click */
+.whatsapp-float:active {
+    transform: scale(0.94);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .floating-actions {
+        right: 15px;
+        bottom: 15px;
+        gap: 10px;
+    }
+
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+    }
+
+    .whatsapp-float svg {
+        width: 27px;
+        height: 27px;
+    }
+}

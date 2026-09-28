@@ -7,7 +7,7 @@
 
 <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 >
 
 <title>Welcome | Pooja Paper Solution</title>
@@ -27,7 +27,7 @@
 
 
 /* =========================================================
-   BODY
+   HTML + BODY
 ========================================================= */
 
 html,
@@ -45,8 +45,13 @@ body {
         "Segoe UI",
         Arial,
         sans-serif;
+
 }
 
+
+/* =========================================================
+   BODY
+========================================================= */
 
 body {
 
@@ -96,7 +101,7 @@ body {
 
 
 /* =========================================================
-   MOVING BACKGROUND LIGHTS
+   BACKGROUND ORBS
 ========================================================= */
 
 .bg-orb {
@@ -123,6 +128,7 @@ body {
     left: -100px;
 
     background:
+
         radial-gradient(
             circle,
             rgba(99,102,241,.18),
@@ -133,7 +139,9 @@ body {
         orbMove1
         8s
         ease-in-out
-        infinite alternate;
+        infinite
+        alternate;
+
 }
 
 
@@ -146,6 +154,7 @@ body {
     bottom: -150px;
 
     background:
+
         radial-gradient(
             circle,
             rgba(6,182,212,.16),
@@ -156,7 +165,9 @@ body {
         orbMove2
         10s
         ease-in-out
-        infinite alternate;
+        infinite
+        alternate;
+
 }
 
 
@@ -169,6 +180,7 @@ body {
     right: 13%;
 
     background:
+
         radial-gradient(
             circle,
             rgba(129,140,248,.10),
@@ -179,22 +191,32 @@ body {
         orbMove3
         7s
         ease-in-out
-        infinite alternate;
+        infinite
+        alternate;
+
 }
 
+
+/* =========================================================
+   ORB ANIMATIONS
+========================================================= */
 
 @keyframes orbMove1 {
 
     from {
+
         transform:
             translate(0,0)
             scale(1);
+
     }
 
     to {
+
         transform:
             translate(80px,60px)
             scale(1.15);
+
     }
 
 }
@@ -203,15 +225,19 @@ body {
 @keyframes orbMove2 {
 
     from {
+
         transform:
             translate(0,0)
             scale(1);
+
     }
 
     to {
+
         transform:
             translate(-70px,-60px)
             scale(1.12);
+
     }
 
 }
@@ -220,13 +246,17 @@ body {
 @keyframes orbMove3 {
 
     from {
+
         transform:
             translate(0,0);
+
     }
 
     to {
+
         transform:
             translate(-35px,35px);
+
     }
 
 }
@@ -244,11 +274,18 @@ body {
 
     width: 100%;
 
+    max-width: 1200px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
+
+    justify-content: center;
 
     text-align: center;
 
@@ -265,6 +302,8 @@ body {
 
     width: 145px;
     height: 145px;
+
+    flex-shrink: 0;
 
     display: flex;
 
@@ -289,7 +328,6 @@ body {
     border-radius: 50%;
 
     border:
-
         1px solid
         rgba(79,70,229,.18);
 
@@ -358,6 +396,8 @@ body {
 
     padding: 7px;
 
+    flex-shrink: 0;
+
     border-radius: 50%;
 
     background: #ffffff;
@@ -415,6 +455,7 @@ body {
     border-radius: 50%;
 
     background:
+
         radial-gradient(
             circle,
             rgba(59,130,246,.20),
@@ -443,12 +484,14 @@ body {
 
 
 /* =========================================================
-   WELCOME TO
+   WELCOME TITLE
 ========================================================= */
 
 .welcome-title {
 
     margin-top: 30px;
+
+    width: 100%;
 
     font-size:
         clamp(18px, 3vw, 28px);
@@ -462,6 +505,12 @@ body {
 
     white-space: nowrap;
 
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
 }
 
 
@@ -472,6 +521,8 @@ body {
 .letter {
 
     display: inline-block;
+
+    flex-shrink: 0;
 
     opacity: 0;
 
@@ -497,7 +548,13 @@ body {
 
     margin-top: 12px;
 
-    padding: 0 18px;
+    width: 100%;
+
+    max-width: 100%;
+
+    padding:
+        0
+        clamp(5px, 2vw, 18px);
 
     font-size:
         clamp(30px, 6vw, 58px);
@@ -511,6 +568,14 @@ body {
 
     color: #172033;
 
+    white-space: nowrap;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
 }
 
 
@@ -521,6 +586,7 @@ body {
 .brand .letter {
 
     transform:
+
         translateY(-180px)
         rotateX(75deg)
         scale(.92);
@@ -648,6 +714,8 @@ body {
     width:
         min(300px, 68vw);
 
+    max-width: 300px;
+
 }
 
 
@@ -665,6 +733,8 @@ body {
 
     align-items: center;
 
+    gap: 15px;
+
     font-size: 9px;
 
     letter-spacing: 1.5px;
@@ -672,6 +742,8 @@ body {
     text-transform: uppercase;
 
     color: #94a3b8;
+
+    white-space: nowrap;
 
 }
 
@@ -728,7 +800,7 @@ body {
 
 
 /* =========================================================
-   EXIT ANIMATION
+   EXIT
 ========================================================= */
 
 .welcome-screen.exit {
@@ -758,7 +830,7 @@ body {
 
 
 /* =========================================================
-   LOGO ANIMATION
+   LOGO DROP
 ========================================================= */
 
 @keyframes logoDrop {
@@ -804,6 +876,10 @@ body {
 }
 
 
+/* =========================================================
+   RING DROP
+========================================================= */
+
 @keyframes ringDrop {
 
     0% {
@@ -839,6 +915,10 @@ body {
 }
 
 
+/* =========================================================
+   RING ROTATE
+========================================================= */
+
 @keyframes ringRotate {
 
     to {
@@ -850,6 +930,10 @@ body {
 
 }
 
+
+/* =========================================================
+   GLOW
+========================================================= */
 
 @keyframes glowAppear {
 
@@ -995,7 +1079,7 @@ body {
 
 
 /* =========================================================
-   OTHER ANIMATIONS
+   LINE
 ========================================================= */
 
 @keyframes lineGrow {
@@ -1014,6 +1098,10 @@ body {
 
 }
 
+
+/* =========================================================
+   TAGLINE
+========================================================= */
 
 @keyframes taglineShow {
 
@@ -1038,6 +1126,10 @@ body {
 }
 
 
+/* =========================================================
+   PROGRESS
+========================================================= */
+
 @keyframes progress {
 
     from {
@@ -1056,39 +1148,52 @@ body {
 
 
 /* =========================================================
-   MOBILE
+   TABLET
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+
+    .content {
+
+        padding-left: 15px;
+
+        padding-right: 15px;
+
+    }
+
 
     .logo-area {
 
-        width: 120px;
-        height: 120px;
+        width: 125px;
+
+        height: 125px;
 
     }
 
 
     .logo-ring {
 
-        width: 120px;
-        height: 120px;
+        width: 125px;
+
+        height: 125px;
 
     }
 
 
     .logo {
 
-        width: 96px;
-        height: 96px;
+        width: 100px;
+
+        height: 100px;
 
     }
 
 
     .logo-glow {
 
-        width: 115px;
-        height: 115px;
+        width: 120px;
+
+        height: 120px;
 
     }
 
@@ -1097,7 +1202,11 @@ body {
 
         margin-top: 25px;
 
-        letter-spacing: 3px;
+        font-size:
+            clamp(17px, 4.5vw, 25px);
+
+        letter-spacing:
+            clamp(2px, .7vw, 4px);
 
     }
 
@@ -1106,7 +1215,10 @@ body {
 
         margin-top: 10px;
 
-        font-size: 28px;
+        font-size:
+            clamp(23px, 6.5vw, 42px);
+
+        letter-spacing: 0;
 
     }
 
@@ -1128,10 +1240,186 @@ body {
 
     }
 
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .welcome-screen {
+
+        padding:
+            15px;
+
+    }
+
+
+    .content {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        padding:
+            0
+            4px;
+
+    }
+
+
+    /* LOGO */
+
+    .logo-area {
+
+        width: 110px;
+
+        height: 110px;
+
+    }
+
+
+    .logo-ring {
+
+        width: 110px;
+
+        height: 110px;
+
+    }
+
+
+    .logo-ring::after {
+
+        inset: 7px;
+
+    }
+
+
+    .logo {
+
+        width: 88px;
+
+        height: 88px;
+
+        padding: 6px;
+
+    }
+
+
+    .logo-glow {
+
+        width: 105px;
+
+        height: 105px;
+
+    }
+
+
+    /* WELCOME */
+
+    .welcome-title {
+
+        width: auto;
+
+        max-width: 100%;
+
+        margin-top: 23px;
+
+        font-size:
+            clamp(16px, 5.5vw, 23px);
+
+        letter-spacing:
+            clamp(1.5px, 1vw, 3px);
+
+        white-space: nowrap;
+
+    }
+
+
+    /* BRAND */
+
+    .brand {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        margin-top: 9px;
+
+        padding:
+            0
+            2px;
+
+        font-size:
+            clamp(16px, 5.9vw, 27px);
+
+        font-weight: 800;
+
+        letter-spacing: 0;
+
+        line-height: 1;
+
+        white-space: nowrap;
+
+        transform-origin: center;
+
+    }
+
+
+    .brand .letter {
+
+        transform-origin: center;
+
+    }
+
+
+    /* LINE */
+
+    .brand-line {
+
+        height: 2px;
+
+        margin-top: 14px;
+
+    }
+
+
+    /* TAGLINE */
+
+    .tagline {
+
+        margin-top: 13px;
+
+        font-size:
+            clamp(7px, 2.2vw, 10px);
+
+        letter-spacing:
+            clamp(1px, .7vw, 2px);
+
+        white-space: nowrap;
+
+    }
+
+
+    /* PROGRESS */
 
     .progress-area {
 
-        bottom: 25px;
+        bottom: 20px;
+
+        width:
+            min(280px, 78vw);
+
+    }
+
+
+    .progress-text {
+
+        font-size: 8px;
+
+        letter-spacing: 1px;
 
     }
 
@@ -1139,28 +1427,238 @@ body {
 
 
 /* =========================================================
-   VERY SMALL SCREEN
+   SMALL MOBILE
 ========================================================= */
 
-@media (max-width: 370px) {
+@media (max-width: 400px) {
 
-    .brand {
+    .content {
 
-        font-size: 24px;
+        padding-left: 2px;
+
+        padding-right: 2px;
+
+    }
+
+
+    .logo-area {
+
+        width: 100px;
+
+        height: 100px;
+
+    }
+
+
+    .logo-ring {
+
+        width: 100px;
+
+        height: 100px;
+
+    }
+
+
+    .logo {
+
+        width: 80px;
+
+        height: 80px;
+
+    }
+
+
+    .logo-glow {
+
+        width: 95px;
+
+        height: 95px;
 
     }
 
 
     .welcome-title {
 
-        font-size: 17px;
+        font-size:
+            clamp(15px, 5.2vw, 20px);
+
+        letter-spacing: 1.5px;
+
+    }
+
+
+    .brand {
+
+        font-size:
+            clamp(14px, 5.5vw, 22px);
+
+        letter-spacing: 0;
 
     }
 
 
     .tagline {
 
-        font-size: 8px;
+        font-size: 7px;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .progress-area {
+
+        width: 76vw;
+
+        bottom: 17px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 340px) {
+
+    .logo-area {
+
+        width: 90px;
+
+        height: 90px;
+
+    }
+
+
+    .logo-ring {
+
+        width: 90px;
+
+        height: 90px;
+
+    }
+
+
+    .logo {
+
+        width: 72px;
+
+        height: 72px;
+
+        padding: 5px;
+
+    }
+
+
+    .logo-glow {
+
+        width: 85px;
+
+        height: 85px;
+
+    }
+
+
+    .welcome-title {
+
+        margin-top: 20px;
+
+        font-size: 14px;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .brand {
+
+        margin-top: 8px;
+
+        font-size: 12.8px;
+
+        letter-spacing: 0;
+
+    }
+
+
+    .brand-line {
+
+        margin-top: 11px;
+
+    }
+
+
+    .tagline {
+
+        margin-top: 10px;
+
+        font-size: 6.5px;
+
+        letter-spacing: .7px;
+
+    }
+
+
+    .progress-area {
+
+        width: 74vw;
+
+        bottom: 14px;
+
+    }
+
+
+    .progress-text {
+
+        font-size: 7px;
+
+        letter-spacing: .7px;
+
+    }
+
+}
+
+
+/* =========================================================
+   LANDSCAPE MOBILE
+========================================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .content {
+
+        transform:
+            scale(.72);
+
+    }
+
+
+    .progress-area {
+
+        bottom: 10px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
 
     }
 
@@ -1178,7 +1676,10 @@ body {
      WELCOME SCREEN
 ======================================================== -->
 
-<div class="welcome-screen" id="welcomeScreen">
+<div
+    class="welcome-screen"
+    id="welcomeScreen"
+>
 
 
     <!-- BACKGROUND -->
@@ -1191,13 +1692,15 @@ body {
 
 
     <!-- =================================================
-         CONTENT
+         MAIN CONTENT
     ================================================== -->
 
     <main class="content">
 
 
-        <!-- LOGO -->
+        <!-- =================================================
+             LOGO
+        ================================================== -->
 
         <div class="logo-area">
 
@@ -1217,7 +1720,9 @@ body {
         </div>
 
 
-        <!-- WELCOME -->
+        <!-- =================================================
+             WELCOME TITLE
+        ================================================== -->
 
         <div
             class="welcome-title"
@@ -1227,7 +1732,9 @@ body {
         </div>
 
 
-        <!-- BRAND -->
+        <!-- =================================================
+             BRAND
+        ================================================== -->
 
         <div
             class="brand"
@@ -1237,12 +1744,16 @@ body {
         </div>
 
 
-        <!-- UNDERLINE -->
+        <!-- =================================================
+             UNDERLINE
+        ================================================== -->
 
         <div class="brand-line"></div>
 
 
-        <!-- TAGLINE -->
+        <!-- =================================================
+             TAGLINE
+        ================================================== -->
 
         <div class="tagline">
 
@@ -1266,9 +1777,13 @@ body {
 
         <div class="progress-text">
 
-            <span>Preparing your experience</span>
+            <span>
+                Preparing your experience
+            </span>
 
-            <span id="percent">0%</span>
+            <span id="percent">
+                0%
+            </span>
 
         </div>
 
@@ -1291,7 +1806,7 @@ body {
 <script>
 
 /* =========================================================
-   CREATE LETTERS
+   CREATE LETTER ANIMATIONS
 ========================================================= */
 
 function animateLetters(
@@ -1300,14 +1815,20 @@ function animateLetters(
     className
 ) {
 
-    const text = element.textContent;
+    const text =
+        element.textContent.trim();
 
     element.textContent = "";
 
-    let delay = startDelay;
+    let delay =
+        startDelay;
 
 
-    for (let i = 0; i < text.length; i++) {
+    for (
+        let i = 0;
+        i < text.length;
+        i++
+    ) {
 
         const span =
             document.createElement("span");
@@ -1317,18 +1838,36 @@ function animateLetters(
             className;
 
 
+        /* ================================================
+           SPACE
+        ================================================= */
+
         if (text[i] === " ") {
 
             span.innerHTML =
                 "&nbsp;";
 
-        } else {
+            /*
+             * Space ko thoda fixed width dete hain.
+             * Isse mobile par word spacing stable rahegi.
+             */
+
+            span.style.width =
+                "0.28em";
+
+        }
+
+        else {
 
             span.textContent =
                 text[i];
 
         }
 
+
+        /* ================================================
+           ANIMATION DELAY
+        ================================================= */
 
         span.style.animationDelay =
             delay + "s";
@@ -1350,7 +1889,9 @@ function animateLetters(
 
 animateLetters(
 
-    document.getElementById("welcomeTitle"),
+    document.getElementById(
+        "welcomeTitle"
+    ),
 
     1.25,
 
@@ -1365,7 +1906,9 @@ animateLetters(
 
 animateLetters(
 
-    document.getElementById("brand"),
+    document.getElementById(
+        "brand"
+    ),
 
     2.05,
 
@@ -1375,14 +1918,16 @@ animateLetters(
 
 
 /* =========================================================
-   PROGRESS %
+   PROGRESS PERCENTAGE
 ========================================================= */
 
 const percent =
-    document.getElementById("percent");
+    document.getElementById(
+        "percent"
+    );
 
 
-let startTime =
+const startTime =
     performance.now();
 
 
@@ -1396,7 +1941,7 @@ function updateProgress(time) {
         time - startTime;
 
 
-    let value =
+    const value =
         Math.min(
             100,
             Math.floor(
@@ -1438,7 +1983,9 @@ setTimeout(function () {
         );
 
 
-    screen.classList.add("exit");
+    screen.classList.add(
+        "exit"
+    );
 
 
     setTimeout(function () {
