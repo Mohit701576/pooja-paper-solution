@@ -3965,6 +3965,53 @@ console.error("Address Error Hint:", error?.hint);
 
         }
 
+                /* =============================================
+           STEP 3.5 - DECREASE PRODUCT STOCK
+        ============================================= */
+
+        for (const item of cart) {
+
+            const {
+                data: stockUpdated,
+                error: stockError
+            } =
+                await supabaseClient.rpc(
+                    "decrease_product_stock",
+                    {
+                        p_product_id:
+                            Number(item.id),
+
+                        p_quantity:
+                            Number(item.quantity)
+                    }
+                );
+
+            if (stockError) {
+
+                console.error(
+                    "Stock Update Error:",
+                    stockError
+                );
+
+                throw new Error(
+                    "Stock could not be updated for " +
+                    item.name +
+                    "."
+                );
+
+            }
+
+            if (stockUpdated !== true) {
+
+                throw new Error(
+                    "Not enough stock available for " +
+                    item.name +
+                    "."
+                );
+
+            }
+        }
+
         /* =============================================
            STEP 4 - SAVE USER
         ============================================= */
